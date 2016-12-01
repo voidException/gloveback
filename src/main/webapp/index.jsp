@@ -16,11 +16,7 @@
 	<a href="http://localhost:8080/glove/pages/faq">常见问题</a><br/>
 	<a href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
 	<script type="text/babel">
-        var HelloMessage = React.createClass({
-            render: function() {
-                return <h1>Hello {this.props.name}</h1>;
-            }
-        });
+
        class Bottom extends React.Component{
             constructor(props){
                 super(props);
@@ -41,7 +37,7 @@
 				<a  href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
 
 				<h1>Hello, world!</h1>
-				<HelloMessage name="John" />
+
 			   <Bottom/>
 			</div>,
             document.getElementById('root')
