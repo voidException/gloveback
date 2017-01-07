@@ -1,7 +1,6 @@
 package org.geilove.util;
 import java.io.File;  
-import java.io.IOException;  
-import org.geilove.util.TimeUtil; 
+import java.io.IOException;
 public class CreateFileUtil {  
      
     public static boolean createFile(String destFileName) {  

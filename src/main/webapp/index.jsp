@@ -9,12 +9,15 @@
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<script src="https://unpkg.com/react@15/dist/react.min.js"></script>
 	<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
     <title>首页用来测试</title>
 </head>
 <body id="root">
 	<a href="http://localhost:8080/glove/pages/aboutus">关于我们</a><br/>
 	<a href="http://localhost:8080/glove/pages/faq">常见问题</a><br/>
 	<a href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
+	<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>
+	<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>
 	<script type="text/babel">
 
        class Bottom extends React.Component{
@@ -35,6 +38,8 @@
 				<a  href="http://localhost:8080/glove/pages/aboutus">关于我们</a><br/>
 				<a  href="http://localhost:8080/glove/pages/faq">常见问题</a><br/>
 				<a  href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
+				<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>
+				<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>
 
 				<h1>Hello, world!</h1>
 

@@ -21,7 +21,8 @@ public class WatchServiceImpl implements WatchService{
 	@Override
 	public Integer doWatch(DoubleFans dbfans){
 		watchtag=dbMapper.insert(dbfans);
-		System.out.print(watchtag);//打印下，看看插入成功和失败的返回值
+		//这里应该检查是否已经关注了，非常重要
+		//System.out.print(watchtag);//打印下，看看插入成功和失败的返回值
 		return watchtag;
 	}
 	
@@ -36,5 +37,19 @@ public class WatchServiceImpl implements WatchService{
 		List<PartHelpPojo> fansList=new ArrayList<PartHelpPojo>();
 		fansList=dbMapper.selectHelpMen(map);
 		return fansList;
+	}
+    //查询一个人是否关注另一个人
+	@Override
+	public Integer  watchMayNot (Map<String,Object> map ){
+		PartWatchPojo partWatchPojo ;
+		Integer watchTag;
+		partWatchPojo=dbMapper.watchOrNot(map);
+		if (partWatchPojo==null){
+			watchTag=1;
+			return watchTag;
+		}else {
+			watchTag=2;
+			return watchTag;
+		}
 	}
 }

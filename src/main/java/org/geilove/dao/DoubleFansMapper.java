@@ -35,6 +35,8 @@ public interface DoubleFansMapper {
     List<PartHelpPojo> selectHelpMen(Map<String,Object> map); //自定义，获得帮助人-被帮助人关系表
     
     Integer cancelWatch(Map<String,Object> map); //取消关注一个人
+
+    PartWatchPojo watchOrNot(Map<String,Object> map); //查询是否关注一个人
     
 }
 

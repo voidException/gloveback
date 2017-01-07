@@ -115,7 +115,7 @@ public class CashController {
                               imgPathArray.add(needPath);                             
                         }else{
                         	commonRsp.setMsg("创建磁盘目录失败");
-                        	commonRsp.setRetcode(2005);
+                        	commonRsp.setRetcode(2002);
                         	return commonRsp;
                         }                              
                     }//if  

@@ -6,7 +6,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value="/pages")  
 public class JspPageController {
-      
+
+	@RequestMapping(value="/helpApp",method = RequestMethod.GET)
+	public String helpApp(){
+		String index="front/helpApp"; // jsp/front/login.jsp 页面所在地
+		return index;
+	}
+	@RequestMapping(value="/helpAixinshe",method = RequestMethod.GET)
+	public String helpAixinshe(){
+		String index="front/helpAixinshe"; // jsp/front/login.jsp 页面所在地
+		return index;
+	}
 	@RequestMapping(value="/aboutus",method = RequestMethod.GET)
 	public String aboutus(){
 		String index="front/aboutus"; // jsp/front/login.jsp 页面所在地

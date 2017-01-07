@@ -1,22 +1,19 @@
 package org.geilove.controller;
-
+//为轮播图获得照片的，已废弃
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.geilove.service.PictureService;
 import org.geilove.sqlpojo.PicturePojo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.geilove.requestParam.PicListParam;
 import org.geilove.response.PicListRsp;
+
 @Controller
 @RequestMapping(value="/picture")
 public class PictureController {

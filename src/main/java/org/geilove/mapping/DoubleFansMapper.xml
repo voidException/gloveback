@@ -24,14 +24,28 @@
     from 
     	doublefans
     where 
-     	userIDFollowe= #{userid,jdbcType=INTEGER} 
+     	userIDFollowe= #{userid,jdbcType=BIGINT}
     order by 
      	payDate  desc
     limit 
      	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}       
   </select>
   <!--自定义结束 -->
-  
+  <!--  自定义，获取关注者id-被关注者id-->
+  <select id="watchOrNot" resultType="org.geilove.sqlpojo.PartWatchPojo" parameterType="java.util.HashMap" >
+    select
+        userIDFollowe, userIDBeFocus,payDate, payTag,doubleFans
+    from
+        doublefans
+    where
+        userIDFollowe= #{myUserid} AND userIDBeFocus= #{taUserid}
+    order by
+     	payDate  desc
+    limit
+     	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
  <!--  自定义，获取我所关注的用户ids,查看我关注的人微博使用,仅仅主页使用，-->
   <select id="getWatchids" resultType="java.lang.Long" parameterType="java.util.HashMap" >
     select      

@@ -1,7 +1,7 @@
 package org.geilove.requestParam;
 
 public class TweetListParam {
-	private  String token; //
+	private  String   token; //
 	private  String    lastUpdate;
 	private  String    lastItemstart;
 	private  Integer   flag;

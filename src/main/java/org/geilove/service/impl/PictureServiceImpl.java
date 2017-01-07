@@ -22,8 +22,8 @@ public class PictureServiceImpl implements PictureService {
 		List<PicturePojo> picList=pictureMapper.selectByMap(map);
 		return picList;
 	}
-	    public int insertRecord(Picture record){
-	    	int tag=pictureMapper.insertSelective(record);
-	    	return tag;
-	    }
+	public int insertRecord(Picture record){
+		int tag=pictureMapper.insertSelective(record);
+		return tag;
+	}
 }
