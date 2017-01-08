@@ -31,9 +31,10 @@ public interface DoubleFansMapper {
     
     List<IwatchPeopleVo> getMyFansids(Map<String,Object> map);  //根据用户的id获得用户粉丝的ids,初始加载以及刷新
     List<IwatchPeopleVo>   getMyFansidsLoadMore(Map<String,Object> map);  //根据用户的id获得用户粉丝的ids,loadMore
-    
+
+    //这个实现有问题，暂时不知道什么地方用到了，以后要改
     List<PartHelpPojo> selectHelpMen(Map<String,Object> map); //自定义，获得帮助人-被帮助人关系表
-    
+
     Integer cancelWatch(Map<String,Object> map); //取消关注一个人
 
     PartWatchPojo watchOrNot(Map<String,Object> map); //查询是否关注一个人

@@ -5,6 +5,7 @@ import java.util.Date;
 public class IwatchPeopleVo {
 	private Date paydate;
 	private Long useridfollowe;
+
 	public Date getPaydate() {
 		return paydate;
 	}

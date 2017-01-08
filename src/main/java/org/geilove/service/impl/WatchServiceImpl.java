@@ -31,25 +31,19 @@ public class WatchServiceImpl implements WatchService{
 		List<PartWatchPojo> lp=dbMapper.getPartWatchProfile(map);
 		return lp;
 	}
-	//这个方法和上个方法一样
+	//该方法实现是错误的，应该没有类使用
 	@Override
 	public List<PartHelpPojo> getWatchList(Map<String,Object> map){
 		List<PartHelpPojo> fansList=new ArrayList<PartHelpPojo>();
 		fansList=dbMapper.selectHelpMen(map);
 		return fansList;
 	}
+
     //查询一个人是否关注另一个人
 	@Override
-	public Integer  watchMayNot (Map<String,Object> map ){
+	public PartWatchPojo  watchMayNot (Map<String,Object> map ){
 		PartWatchPojo partWatchPojo ;
-		Integer watchTag;
 		partWatchPojo=dbMapper.watchOrNot(map);
-		if (partWatchPojo==null){
-			watchTag=1;
-			return watchTag;
-		}else {
-			watchTag=2;
-			return watchTag;
-		}
+		return  partWatchPojo;
 	}
 }

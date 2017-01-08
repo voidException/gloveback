@@ -5,17 +5,27 @@ package org.geilove.response;
  */
 public class QueryIfWatchRsp {
 
-    private  Integer tag;
-    private Integer retcode ;
-    private String msg;
+    private Byte paytag;   //关注标识，1主动关注，2被动关注，
+    private Byte doublefans;  //是否相互关注
+    private  Integer retcode ;
+    private  String msg;
 
-    public Integer getTag() {
-        return tag;
+    public Byte getPaytag() {
+        return paytag;
     }
 
-    public void setTag(Integer tag) {
-        this.tag = tag;
+    public void setPaytag(Byte paytag) {
+        this.paytag = paytag;
     }
+
+    public Byte getDoublefans() {
+        return doublefans;
+    }
+
+    public void setDoublefans(Byte doublefans) {
+        this.doublefans = doublefans;
+    }
+
     public Integer getRetcode() {
         return retcode;
     }

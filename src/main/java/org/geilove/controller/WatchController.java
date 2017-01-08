@@ -9,6 +9,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.geilove.requestParam.QueryWatchIfParam;
 import org.geilove.response.QueryIfWatchRsp;
 import org.geilove.sqlpojo.PartHelpPojo;
+import org.geilove.sqlpojo.PartWatchPojo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -116,43 +117,39 @@ public class WatchController {
 	 //这里是查询是否关注一个人，传入两个人的userid，进行查询。
 	@RequestMapping(value="/querywatchif",method=RequestMethod.POST)
 	public @ResponseBody QueryIfWatchRsp queryWatchIf(@RequestBody QueryWatchIfParam param ){
+
 		QueryIfWatchRsp commonRsp=new QueryIfWatchRsp();
 		Long taUserid=param.getTaUserid();
 		Long myUserid=param.getMyUserid();
+
 		if (taUserid.equals(null) || myUserid.equals(null)){
 			commonRsp.setMsg("参数为空");
 			commonRsp.setRetcode(2001);
-			commonRsp.setTag(5);
+			commonRsp.setPaytag((byte) 3); //3是随便设置的，前端用不到
+			commonRsp.setDoublefans((byte)0); //0代表没有关注
 		}
 		Map<String,Object> map= new HashMap<String,Object>();;
 		map.put("taUserid",taUserid);
 		map.put("myUserid",myUserid);
 
-		Integer watchTag=0;
+		PartWatchPojo partWatchPojo ;
 		//写service
 		try{
-			watchTag=watchService.watchMayNot(map);
-//			List<PartHelpPojo> lp=watchService.getWatchList(map);
-//			System.out.print(lp);
-
+			partWatchPojo=watchService.watchMayNot(map);
 		}catch (Exception e){
-			System.out.print(e);
-			System.out.print('\n');
-
 			commonRsp.setMsg("出错了");
 			commonRsp.setRetcode(2001);
-			commonRsp.setTag(5);
 			return  commonRsp;
 		}
-		if (watchTag==2){
+		if (partWatchPojo!=null){
 			commonRsp.setMsg("成功");
 			commonRsp.setRetcode(2000); //返回这个代表成功
-			commonRsp.setTag(2);
+			commonRsp.setDoublefans(partWatchPojo.getDoublefans());
+			commonRsp.setPaytag(partWatchPojo.getPaytag());
 			return  commonRsp;
-		}else { //watchTag==1  //没有关注，但这次查询是成功的
-			commonRsp.setMsg("成功");
-			commonRsp.setRetcode(2000); //返回这个代表成功
-			commonRsp.setTag(1);  //代表未关注
+		}else { //数据为空
+			commonRsp.setMsg("数据为空");
+			commonRsp.setRetcode(2001); //返回这个代表成功
 			return  commonRsp;
 		}
 
