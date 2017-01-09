@@ -22,7 +22,6 @@ public class WatchServiceImpl implements WatchService{
 	public Integer doWatch(DoubleFans dbfans){
 		watchtag=dbMapper.insert(dbfans);
 		//这里应该检查是否已经关注了，非常重要
-		//System.out.print(watchtag);//打印下，看看插入成功和失败的返回值
 		return watchtag;
 	}
 	

@@ -52,9 +52,9 @@ public class WatchController {
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("用户验证失败，非法");
 			return commonRsp;
-		}		
+		}
 		DoubleFans  dbfans=new DoubleFans();
-		dbfans.setUseridfollowe(followParam.getUserIDFollow());
+		dbfans.setUseridfollowe(userid);
 	    dbfans.setUseridbefocus(followParam.getUserIDBeFocus());
 	    dbfans.setPaytag(followParam.getPaytag());
 	    Date date=new Date();
@@ -62,13 +62,26 @@ public class WatchController {
 	    dbfans.setGroupid((byte)1);
 	    dbfans.setSpecialfollow((byte)1);
 	    dbfans.setDoublefans((byte)1);
-	    try{ //应该先查询下是否有关注
+		//应该先查询下是否有关注
+		Map<String,Object> map= new HashMap<>();
+		map.put("taUserid",followParam.getUserIDBeFocus());
+		map.put("myUserid",userid);
+		PartWatchPojo partWatchPojo ;
+		try{
+			partWatchPojo=watchService.watchMayNot(map);
+		}catch (Exception e){
+			commonRsp.setMsg("关注时预查询出错了");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
+		if (partWatchPojo!=null){
+			commonRsp.setMsg("已经关注");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
 
+	    try{
 	    	 Integer tag=watchService.doWatch(dbfans);
-	    	 if(tag!=1){
-	    		 commonRsp.setMsg("关注失败");
-	    		 commonRsp.setRetcode(2001);
-	    	 }
 	    }catch(Exception e){
 			commonRsp.setMsg("关注失败");
 			commonRsp.setRetcode(2001);
@@ -94,6 +107,7 @@ public class WatchController {
 			commonRsp.setMsg("用户验证失败，非法");
 			return commonRsp;
 		}
+
 		Long canceluserid=cancelParam.getBeCancel();
 		//查询关注 和被关注列表
 		//根据这组数据，选出id列表
@@ -102,9 +116,9 @@ public class WatchController {
 		map.put("userIDFollowe", userid);
 		map.put("userIDBeFocus",canceluserid); //
 		try{
-
 			Integer returnTag=relationService.unWatchManService(map);
-			//System.out.println(returnTag);
+			System.out.println(returnTag);
+			System.out.println("cancelWatch");
 		}catch(Exception e){
 			commonRsp.setMsg("取消关注失败");
 			commonRsp.setRetcode(2001);
@@ -128,11 +142,11 @@ public class WatchController {
 			commonRsp.setPaytag((byte) 3); //3是随便设置的，前端用不到
 			commonRsp.setDoublefans((byte)0); //0代表没有关注
 		}
-		Map<String,Object> map= new HashMap<String,Object>();;
+		Map<String,Object> map= new HashMap<>();
 		map.put("taUserid",taUserid);
 		map.put("myUserid",myUserid);
-
 		PartWatchPojo partWatchPojo ;
+		//System.out.print("收到请求");
 		//写service
 		try{
 			partWatchPojo=watchService.watchMayNot(map);

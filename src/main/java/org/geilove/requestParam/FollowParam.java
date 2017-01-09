@@ -2,16 +2,16 @@ package org.geilove.requestParam;
 
 public class FollowParam {
 	private String token; //请求凭证
-	private Long  userIDFollow;
+	//private Long  userIDFollow;
 	private Long  userIDBeFocus;
     private Byte   paytag;//关注标志
     
-	public Long getUserIDFollow() {
-		return userIDFollow;
-	}
-	public void setUserIDFollow(Long userIDFollow) {
-		this.userIDFollow = userIDFollow;
-	}
+//	public Long getUserIDFollow() {
+//		return userIDFollow;
+//	}
+//	public void setUserIDFollow(Long userIDFollow) {
+//		this.userIDFollow = userIDFollow;
+//	}
 	public Long getUserIDBeFocus() {
 		return userIDBeFocus;
 	}
