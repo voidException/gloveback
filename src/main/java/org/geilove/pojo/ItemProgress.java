@@ -7,9 +7,15 @@ public class ItemProgress {
 
     private Long userid;
 
-    private Long itemid;
+    private String userphoto;
 
-    private Integer relationtag;
+    private String usernickname;
+
+    private String uuid;
+
+    private String itemuuid;
+
+    private Long itemid;
 
     private Date updatetime;
 
@@ -55,20 +61,44 @@ public class ItemProgress {
         this.userid = userid;
     }
 
+    public String getUserphoto() {
+        return userphoto;
+    }
+
+    public void setUserphoto(String userphoto) {
+        this.userphoto = userphoto == null ? null : userphoto.trim();
+    }
+
+    public String getUsernickname() {
+        return usernickname;
+    }
+
+    public void setUsernickname(String usernickname) {
+        this.usernickname = usernickname == null ? null : usernickname.trim();
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid == null ? null : uuid.trim();
+    }
+
+    public String getItemuuid() {
+        return itemuuid;
+    }
+
+    public void setItemuuid(String itemuuid) {
+        this.itemuuid = itemuuid == null ? null : itemuuid.trim();
+    }
+
     public Long getItemid() {
         return itemid;
     }
 
     public void setItemid(Long itemid) {
         this.itemid = itemid;
-    }
-
-    public Integer getRelationtag() {
-        return relationtag;
-    }
-
-    public void setRelationtag(Integer relationtag) {
-        this.relationtag = relationtag;
     }
 
     public Date getUpdatetime() {

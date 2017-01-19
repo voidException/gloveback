@@ -117,8 +117,7 @@ public class WatchController {
 		map.put("userIDBeFocus",canceluserid); //
 		try{
 			Integer returnTag=relationService.unWatchManService(map);
-			System.out.println(returnTag);
-			System.out.println("cancelWatch");
+
 		}catch(Exception e){
 			commonRsp.setMsg("取消关注失败");
 			commonRsp.setRetcode(2001);

@@ -7,10 +7,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
 
-<title>Insert title here</title>
+<title>关于我们</title>
 </head>
 <body>
-	<div>这个是aboutus</div>
+    <div class="header"></div>
+
+
+	<div id="app">
+	    {{ message }}
+	</div>
+
+	<script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+	</script>
 </body>
 </html>

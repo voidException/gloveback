@@ -13,13 +13,13 @@ public class MoneySource {
 
     private Date helptime;
 
-    private String backupone;
+    private String backupone;  //帮助人昵称
 
-    private String backuptwo;
+    private String backuptwo; //帮助人头像地址
 
-    private String backupthree;
+    private String backupthree; //帮助人的uuid
 
-    private String backupfour;
+    private String backupfour; //受助人的uuid
 
     private Integer backupfive;
 

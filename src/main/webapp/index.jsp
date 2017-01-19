@@ -40,9 +40,7 @@
 				<a  href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
 				<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>
 				<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>
-
 				<h1>Hello, world!</h1>
-
 			   <Bottom/>
 			</div>,
             document.getElementById('root')

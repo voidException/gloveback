@@ -63,7 +63,7 @@ public class Cash {
 
     private Integer provefour;
     
-    private String promisemiaoshu;
+    private String promisemiaoshu; //承诺描述
     
     public Long getCashid() {
         return cashid;

@@ -2,10 +2,10 @@ package org.geilove.pojo;
 
 import java.util.Date;
 
-public class ItemPgComment {
-    private Long itempgcommentid;
+public class MoneysrcPinglun {
+    private Long moneysrcpinglunid;
 
-    private Long itemprogressid;
+    private Long moneysourceid;
 
     private Long useridsender;
 
@@ -23,38 +23,26 @@ public class ItemPgComment {
 
     private String reciverphoto;
 
-    private Date commenttime;
+    private Date pingluntime;
 
-    private String content;
+    private String pingluntext;
 
     private Integer refer;
 
-    private String backupone;
-
-    private String backuptwo;
-
-    private String backupthree;
-
-    private String backupfour;
-
-    private Integer backupfive;
-
-    private Integer backupsix;
-
-    public Long getItempgcommentid() {
-        return itempgcommentid;
+    public Long getMoneysrcpinglunid() {
+        return moneysrcpinglunid;
     }
 
-    public void setItempgcommentid(Long itempgcommentid) {
-        this.itempgcommentid = itempgcommentid;
+    public void setMoneysrcpinglunid(Long moneysrcpinglunid) {
+        this.moneysrcpinglunid = moneysrcpinglunid;
     }
 
-    public Long getItemprogressid() {
-        return itemprogressid;
+    public Long getMoneysourceid() {
+        return moneysourceid;
     }
 
-    public void setItemprogressid(Long itemprogressid) {
-        this.itemprogressid = itemprogressid;
+    public void setMoneysourceid(Long moneysourceid) {
+        this.moneysourceid = moneysourceid;
     }
 
     public Long getUseridsender() {
@@ -121,20 +109,20 @@ public class ItemPgComment {
         this.reciverphoto = reciverphoto == null ? null : reciverphoto.trim();
     }
 
-    public Date getCommenttime() {
-        return commenttime;
+    public Date getPingluntime() {
+        return pingluntime;
     }
 
-    public void setCommenttime(Date commenttime) {
-        this.commenttime = commenttime;
+    public void setPingluntime(Date pingluntime) {
+        this.pingluntime = pingluntime;
     }
 
-    public String getContent() {
-        return content;
+    public String getPingluntext() {
+        return pingluntext;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setPingluntext(String pingluntext) {
+        this.pingluntext = pingluntext == null ? null : pingluntext.trim();
     }
 
     public Integer getRefer() {
@@ -143,53 +131,5 @@ public class ItemPgComment {
 
     public void setRefer(Integer refer) {
         this.refer = refer;
-    }
-
-    public String getBackupone() {
-        return backupone;
-    }
-
-    public void setBackupone(String backupone) {
-        this.backupone = backupone == null ? null : backupone.trim();
-    }
-
-    public String getBackuptwo() {
-        return backuptwo;
-    }
-
-    public void setBackuptwo(String backuptwo) {
-        this.backuptwo = backuptwo == null ? null : backuptwo.trim();
-    }
-
-    public String getBackupthree() {
-        return backupthree;
-    }
-
-    public void setBackupthree(String backupthree) {
-        this.backupthree = backupthree == null ? null : backupthree.trim();
-    }
-
-    public String getBackupfour() {
-        return backupfour;
-    }
-
-    public void setBackupfour(String backupfour) {
-        this.backupfour = backupfour == null ? null : backupfour.trim();
-    }
-
-    public Integer getBackupfive() {
-        return backupfive;
-    }
-
-    public void setBackupfive(Integer backupfive) {
-        this.backupfive = backupfive;
-    }
-
-    public Integer getBackupsix() {
-        return backupsix;
-    }
-
-    public void setBackupsix(Integer backupsix) {
-        this.backupsix = backupsix;
     }
 }

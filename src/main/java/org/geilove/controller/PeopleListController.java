@@ -181,7 +181,17 @@ public class PeopleListController {
 		}
 		//循环lp，将用户密码统一设置为null
 		rsp.setData(lp);
-	    lp.get(listPVo.size()-1).setRegisterdate(watchsDate); //最后一项数据的注册时间更改为关注时间，妥协的做法
+		//这里报错，看看什么原因
+		try {
+			lp.get(listPVo.size() - 2).setRegisterdate(watchsDate); //最后一项数据的注册时间更改为关注时间，妥协的做法
+		}
+		catch(Exception e){
+		    System.out.print(e);
+			rsp.setMsg("获取关注人列表失败");
+			rsp.setRetcode(2001);
+			rsp.setData(null);
+			return  rsp;
+		}
 		rsp.setMsg("获取关注人列表成功");
 		rsp.setRetcode(2000);
 		return rsp;  //这个需要更改返回值

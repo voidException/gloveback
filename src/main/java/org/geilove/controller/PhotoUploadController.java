@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import org.geilove.pojo.Picture;
+import org.geilove.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,26 +46,39 @@ public class PhotoUploadController {//上传用户头像
          CommonsMultipartFile orginalFile = (CommonsMultipartFile) multipartRequest.getFile("photo");
          String filename = orginalFile.getOriginalFilename();
          //System.out.println(filename);
-         DataOutputStream out = new DataOutputStream(new FileOutputStream("/Users/mfhj-dz-001-424/Documents/aaa" + filename+".jpg"));
-         InputStream is = null;// 附件输入流
+		 InputStream is = null;// 附件输入流
          try {
+			  DataOutputStream out = new DataOutputStream(new FileOutputStream("/Users/mfhj-dz-001-424/Documents/aaa" + filename+".jpg"));
 	          is = orginalFile.getInputStream();
 	          byte[] b=new byte[is.available()];
 	          is.read(b);
 	          out.write(b);
-	         } 
+	         }
          catch (IOException exception) {
-	        	  exception.printStackTrace();
+			    exception.printStackTrace();
 	        	commonRsp.setMsg("上传头像失败");
 	          	commonRsp.setRetcode(2001);
 	          	return commonRsp;
 	         }
          finally {
-	        	 if (is != null) {
-	        		 is.close();
+			 if (is != null) {
+				 is.close();
 	         }
          }
-        //插入数据库并判断是否成功
+        //插入数据库并判断是否成功,注意设置User表的photoUpload为2
+		User user=new User();
+        user.setUserid(userid);
+        user.setUserphoto("/Users/mfhj-dz-001-424/Documents/aaa");
+        user.setPhotoupload((byte)2); //更新标志设置为2
+        //调用user表的更新方法
+		try {
+			rlService.updateUserSelective(user);
+		}catch (Exception e){
+			commonRsp.setMsg("上传头像失败更新数据库失败");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
+
     	commonRsp.setMsg("发布成功");
     	commonRsp.setRetcode(2000);
     	return commonRsp;
