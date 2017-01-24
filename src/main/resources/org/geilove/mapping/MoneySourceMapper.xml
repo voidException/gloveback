@@ -14,6 +14,23 @@
     <result column="backupFive" property="backupfive" jdbcType="INTEGER" />
     <result column="backupSix" property="backupsix" jdbcType="INTEGER" />
   </resultMap>
+
+  <!--  自定义，获取"支持了" 列表-->
+  <select id="getMoneySourceList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    moneysource
+    where
+    userIDBehelped= #{userBeHelpID,jdbcType=INTEGER} AND helpTime &lt; #{lastTime}
+    order by
+    helpTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
+
   <!--  自定义，获取帮助我的人的ids，刷新-->
   <select id="selectMenHelpMe" resultType="org.geilove.sqlpojo.PartHelpPojo" >
     select      
