@@ -25,4 +25,8 @@ public class MoneySourceServiceImpl implements MoneySourceService {
     	 List<PartHelpPojo> php=moneySourceMapper.selectMenHelpMe(map);
 		 return php;
      }
+	public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map){
+     	List<MoneySource>  lms=moneySourceMapper.getMoneySourceList(map); //
+		return  lms; //
+	}
 }

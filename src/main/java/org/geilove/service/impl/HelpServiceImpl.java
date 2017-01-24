@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.geilove.dao.MoneySourceMapper;
 import org.geilove.dao.UserMapper;
+import org.geilove.pojo.User;
 import org.geilove.service.HelpService;
 import org.geilove.sqlpojo.OtherPartHelpPojo;
 import org.geilove.sqlpojo.PartHelpPojo;
@@ -19,6 +20,7 @@ public class HelpServiceImpl implements HelpService{
 	MoneySourceMapper moneySourceMapper;
 	@Resource
 	private UserMapper userMapper;
+
 	public List<PartHelpPojo> getPartHelpList(Map<String,Object> map){
 		List<PartHelpPojo> lp=new ArrayList<PartHelpPojo>();
 		lp=moneySourceMapper.selectMenHelpMe(map);   //这个错了，需要改正
@@ -54,5 +56,10 @@ public class HelpServiceImpl implements HelpService{
 		lp=userMapper.selectUserPartProfile(lst);
 		return lp;
 	}
-	
+
+	//给定一个人的id，获取这个用户的user资料
+	public User getUserPartProfileByID(Long  userid){
+		User user=userMapper.selectByPrimaryKey(userid); //获取这个用户的资料
+		return  user;
+	}
 }

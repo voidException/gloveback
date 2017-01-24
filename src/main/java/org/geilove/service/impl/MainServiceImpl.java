@@ -143,6 +143,13 @@ public class MainServiceImpl implements MainService {
 		}		
 		return lsTweet;
 	}
+
+	@Override
+	public Tweet getTweetByID(Long tweetid){
+		Tweet tweet=null;
+		tweet=tweetMapper.selectByPrimaryKey(tweetid);
+		return  tweet;
+	}
 	
 }
 
