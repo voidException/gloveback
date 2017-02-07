@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by mfhj-dz-001-424 on 17/1/24.
+ * Dynamic 包含了一条"支持了"和对应的评论列表
  */
 public class Dynamic {
 

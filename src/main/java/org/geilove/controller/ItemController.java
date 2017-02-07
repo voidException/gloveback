@@ -1,6 +1,7 @@
 package org.geilove.controller;
 
 //这个是项目表，提供项目相关的发布，删除等接口，项目列表，我关注的项目列表，发布的项目列表
+//已废弃
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

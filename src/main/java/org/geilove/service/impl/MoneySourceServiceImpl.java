@@ -29,8 +29,9 @@ public class MoneySourceServiceImpl implements MoneySourceService {
     	 List<PartHelpPojo> php=moneySourceMapper.selectMenHelpMe(map);
 		 return php;
      }
+     //获取"支持了"列表
 	public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map){
-     	List<MoneySource>  lms=moneySourceMapper.getMoneySourceList(map); //
+     	List<MoneySource>  lms=moneySourceMapper.getMoneySourceList(map);
 		return  lms;
 	}
 

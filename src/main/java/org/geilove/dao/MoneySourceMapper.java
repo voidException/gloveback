@@ -21,6 +21,7 @@ public interface MoneySourceMapper {
     
     List<PartHelpPojo> selectIhelp(Map<String,Object> map);  //获取我帮助的人,刷新
     List<PartHelpPojo> selectIhelploadMore(Map<String,Object> map); //获取我帮助的人，加载更多
+
     //获取完整的MoneySource列表，按照时间获取
     List<MoneySource> getMoneySourceList(Map<String,Object>  map); // xml文件等待实现
 

@@ -3,18 +3,18 @@ package org.geilove.response;
 import java.util.List;
 
 /**
- * Created by mfhj-dz-001-424 on 17/1/23.
+ * Created by mfhj-dz-001-424 on 17/2/7.
  */
-public class DynamicRsp {
-    private List<Dynamic> lp; //返回的数据域
-    private  String msg;  //返回的提示信息
-    private Integer  retcode;  //返回码
+public class ProgressUpdateRsp {
+    private List<ProgressUpdate> lp; //返回的数据域
+    private  String msg;           //返回的提示信息
+    private Integer  retcode;      //返回码
 
-    public List<Dynamic> getLp() {
+    public List<ProgressUpdate> getLp() {
         return lp;
     }
 
-    public void setLp(List<Dynamic> lp) {
+    public void setLp(List<ProgressUpdate> lp) {
         this.lp = lp;
     }
 
