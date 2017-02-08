@@ -21,7 +21,7 @@ public class MoneySource {
 
     private String backupfour; //受助人的uuid
 
-    private Integer backupfive;
+    private Integer backupfive; //1 或者2表明是第几次被帮助
 
     private Integer backupsix;
 

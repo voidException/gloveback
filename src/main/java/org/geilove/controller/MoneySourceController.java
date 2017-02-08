@@ -7,7 +7,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.geilove.pojo.*;
+import org.geilove.requestParam.BackUpParam;
+import org.geilove.requestParam.ItemProgressListParam;
 import org.geilove.requestParam.MoneySourceParam;
+import org.geilove.response.CommonRsp;
 import org.geilove.response.Dynamic;
 import org.geilove.response.DynamicRsp;
 import org.geilove.service.*;
@@ -16,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+
+import java.util.*;
 
 @Controller
 @RequestMapping("/moneysource")
@@ -27,7 +28,7 @@ public class MoneySourceController {
      @Resource
      private MoneySourceService moneySourceService;
 
-     @RequestMapping(value="/backup",method=RequestMethod.POST)
+     @RequestMapping(value="/backuplist",method=RequestMethod.POST)
      @ResponseBody
      public Object getMoneySourceList(@RequestBody MoneySourceParam moneySourceParam,HttpServletRequest request ){
          //根据受助人的ID获取这个人的"支持了"列表
@@ -108,6 +109,38 @@ public class MoneySourceController {
         dynamicRsp.setRetcode(2000); //返回码
         return dynamicRsp;
     }
-    /*增加一条"支持了"*/ //这个应该是在
+    /*增加一条"支持了"*/
+    //这个应该是在微信支付时调用，需要更改moneysource表User表和HelpInfo表,这个较为复杂
+    @RequestMapping(value="/backup",method=RequestMethod.POST)
+    @ResponseBody
+    public Object addBackUp(@RequestBody BackUpParam backUpParam, HttpServletRequest request ){
+        //这里需要对微信开发了解后，进行相应的验证
+        CommonRsp commonRsp=new CommonRsp();
+        if (backUpParam==null){
+            commonRsp.setMsg("请求参数为空");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
+        //确保所有的字段不能为空，应先验证，先略过
+        //调用Service，执行插入
 
+        return 0;
+    }
+    /*对"支持了" 进行评论*/
+    @RequestMapping(value="/addmoneysourcecomment",method=RequestMethod.POST)
+    @ResponseBody
+    public Object addMoneySourceComment(@RequestBody BackUpParam  updateListParam, HttpServletRequest request ){
+
+
+        return 0;
+    }
+
+    /* 对评论进行删除 */
+    @RequestMapping(value="/deletemoneysourcecomment",method=RequestMethod.POST)
+    @ResponseBody
+    public Object deleteMoneySourceComment(@RequestBody BackUpParam  updateListParam, HttpServletRequest request ){
+
+
+        return 0;
+    }
 }

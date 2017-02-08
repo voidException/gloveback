@@ -26,10 +26,10 @@ public class ItemProgressController {
 
     @Resource
     private ItemProgressService  itemProgressService;
-    @RequestMapping(value="/backup",method=RequestMethod.POST)
-    @ResponseBody
 
     /*获取救助推文的进度更新及其评论*/
+    @RequestMapping(value="/updatelist",method=RequestMethod.POST)
+    @ResponseBody
     public Object getProgressUpdateList(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
         ProgressUpdateRsp progressUpdateRsp=new ProgressUpdateRsp();
         List<ProgressUpdate> listProgress=new ArrayList<>(); //进度更新及其评论列表
@@ -107,7 +107,31 @@ public class ItemProgressController {
     }
 
     /*更新项目的进度*/
+    @RequestMapping(value="/addupdate",method=RequestMethod.POST)
+    @ResponseBody
+    public Object addItemProgressUpdate(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
+
+
+        return 0;
+    }
+
+
     /*对进度进行评论*/
+    @RequestMapping(value="/addupdatecomment",method=RequestMethod.POST)
+    @ResponseBody
+    public Object addItemPgComment(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
+
+
+        return 0;
+    }
+    /*对进度的评论进行删除(仅评论人可以删除)*/
+    @RequestMapping(value="/deleteitemupdatecomment",method=RequestMethod.POST)
+    @ResponseBody
+    public Object deleteItemPgComment(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
+
+
+        return 0;
+    }
 
 }
 
