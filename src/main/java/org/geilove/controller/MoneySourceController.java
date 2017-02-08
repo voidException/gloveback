@@ -32,9 +32,9 @@ public class MoneySourceController {
      public Object getMoneySourceList(@RequestBody MoneySourceParam moneySourceParam,HttpServletRequest request ){
          //根据受助人的ID获取这个人的"支持了"列表
         DynamicRsp dynamicRsp=new DynamicRsp(); //最终要返回的
-        List<Dynamic> listDynamic=new ArrayList<>(); //DynamicRsp 的一个数据域，"支持了及其评论回复" 的列表
+        List<Dynamic> listDynamic=new ArrayList<Dynamic>(); //DynamicRsp 的一个数据域，"支持了及其评论回复" 的列表
 
-        Map<String,Object>  map=new HashMap<>();
+        Map<String,Object>  map=new HashMap<String,Object>();
         if (moneySourceParam==null){
             dynamicRsp.setRetcode(2001);
             dynamicRsp.setMsg("参数为空");
@@ -68,8 +68,8 @@ public class MoneySourceController {
         }
 
         //for 循环，将每一个lms列表项，放入到listDynamic中,同时取出来每一个列表项的moneySourceID，组成List<moneySourceID>和List<UserIDgoodguy>
-        List<Long> moneySourceIDs=new ArrayList<>();
-        List<Dynamic> dynamics=new ArrayList<>();
+        List<Long> moneySourceIDs=new ArrayList<Long>();
+        List<Dynamic> dynamics=new ArrayList<Dynamic>();
 
         for(int i=0;i<lms.size();i++){
             moneySourceIDs.add(lms.get(i).getMoneysourceid());
@@ -85,7 +85,7 @@ public class MoneySourceController {
             Long moneySourceID=moneySourceIDs.get(i); //一个"支持了" 项的id
             //用moneySourceID 查询数据表moneySrcPingLun，获得一个列表,假设获得该列表是moneySrcPingLunList
             List<MoneysrcPinglun> moneySrcPingLunList=new ArrayList<>();
-            Map<String,Object> map2=new HashMap<>();
+            Map<String,Object> map2=new HashMap<String,Object>();
             map2.put("moneySourceID",moneySourceID); //"支持了" 的ID
             map2.put("page",0);
             map2.put("pageSize",20);
@@ -108,5 +108,6 @@ public class MoneySourceController {
         dynamicRsp.setRetcode(2000); //返回码
         return dynamicRsp;
     }
+    /*增加一条"支持了"*/ //这个应该是在
 
 }

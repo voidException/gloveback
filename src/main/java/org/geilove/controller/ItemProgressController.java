@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+
+import java.util.*;
 
 @Controller
 @RequestMapping("/itemprogress")
@@ -35,7 +33,7 @@ public class ItemProgressController {
     public Object getProgressUpdateList(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
         ProgressUpdateRsp progressUpdateRsp=new ProgressUpdateRsp();
         List<ProgressUpdate> listProgress=new ArrayList<>(); //进度更新及其评论列表
-        Map<String,Object>  map=new HashMap<>();
+        Map<String,Object>  map=new HashMap<String,Object>();
         if (updateListParam==null){
             progressUpdateRsp.setRetcode(2001);
             progressUpdateRsp.setMsg("参数为空");
@@ -55,7 +53,7 @@ public class ItemProgressController {
         map.put("pageSize",pageSize);
         map.put("lastTime",timeStamp);
 
-        List<ItemProgress>  lip=new ArrayList<>(); //单纯的更新列表
+        List<ItemProgress>  lip=new ArrayList<ItemProgress>(); //单纯的更新列表
         try{
             lip=itemProgressService.getItemProgressUpdate(map);  //从数据库获取
             if (lip==null){
@@ -68,8 +66,8 @@ public class ItemProgressController {
             progressUpdateRsp.setRetcode(2001);
             progressUpdateRsp.setLp(null);
         }
-        List<Long> itemProgressIDs=new ArrayList<>(); //存放获取的"进度更新的"iDs
-        List<ProgressUpdate> progressUpdates=new ArrayList<>(); // 包含有"评论了"的 进度更新列表
+        List<Long> itemProgressIDs=new ArrayList<Long>(); //存放获取的"进度更新的"iDs
+        List<ProgressUpdate> progressUpdates=new ArrayList<ProgressUpdate>(); // 包含有"评论了"的 进度更新列表
 
         for(int i=0;i<lip.size();i++){
             itemProgressIDs.add(lip.get(i).getItemprogressid());
@@ -84,7 +82,7 @@ public class ItemProgressController {
             //用这个iD查找其对应的，评论回复列表
             List<ItemPgComment> pgCommentList=new ArrayList<>();
 
-            Map<String,Object> map2=new HashMap<>();
+            Map<String,Object> map2=new HashMap<String,Object>();
             map2.put("itemProgressiD",itemProgressiD); //
             map2.put("page",0);
             map2.put("pageSize",20);
