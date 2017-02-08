@@ -1,7 +1,7 @@
 package org.geilove.controller;
 
 /**
- * 通过这个，获取"支持了"列表，及其对应的评论
+ * 通过这个，获取"支持了"列表，及其对应的评论，对支持了进行评论
  */
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

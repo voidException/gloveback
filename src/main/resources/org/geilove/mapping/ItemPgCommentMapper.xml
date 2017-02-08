@@ -27,6 +27,22 @@
     userIDReciver, userUUIDReciver, reciverNickname, reciverPhoto, commentTime, content, 
     refer, backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix
   </sql>
+
+  <!--  自定义，获取"进度更新" 的评论列表-->
+  <select id="getItemPgComments" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    itemPgComment
+    where
+    itemProgressID= #{itemProgressiD,jdbcType=BIGINT}
+    order by
+    commentTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

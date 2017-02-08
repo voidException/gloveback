@@ -29,6 +29,22 @@
     content, imgAddressOne, imgAddressTwo, imgAddressThree, imgAddressFour, imgAddressFive, 
     imgAddressSix, backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix
   </sql>
+  <!--  自定义，获取"进度更新" 列表-->
+  <select id="getItemProgressList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    itemProgress
+    where
+    itemID= #{tweetid,jdbcType=BIGINT} AND updateTime &lt; #{lastTime}
+    order by
+    updateTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

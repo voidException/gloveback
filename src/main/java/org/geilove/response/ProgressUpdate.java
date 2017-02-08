@@ -10,7 +10,7 @@ import java.util.List;
 public class ProgressUpdate {
 
     private ItemProgress itemProgress;  //进度更新
-    private List<ItemPgComment> lmp;  //进度更新 评论回复列表
+    private List<ItemPgComment> lmp;  //进度更新的评论回复列表
 
     public ItemProgress getItemProgress() {
         return itemProgress;

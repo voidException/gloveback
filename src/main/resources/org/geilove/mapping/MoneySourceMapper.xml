@@ -22,7 +22,7 @@
     from
       moneysource
     where
-      userIDBehelped= #{userBeHelpID,jdbcType=INTEGER} AND helpTime &lt; #{lastTime}
+      userIDBehelped= #{userBeHelpID,jdbcType=BIGINT} AND helpTime &lt; #{lastTime}
     order by
       helpTime  desc
     limit

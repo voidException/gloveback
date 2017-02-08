@@ -28,7 +28,7 @@
     from
     moneysrcpinglun
     where
-    moneySourceID= #{moneySourceID,jdbcType=INTEGER}
+    moneySourceID= #{moneySourceID,jdbcType=BIGINT}
     order by
     pinglunTime  desc
     limit

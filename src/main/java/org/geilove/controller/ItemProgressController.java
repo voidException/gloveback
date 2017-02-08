@@ -26,8 +26,12 @@ import java.util.HashMap;
 @RequestMapping("/itemprogress")
 public class ItemProgressController {
 
+    @Resource
+    private ItemProgressService  itemProgressService;
     @RequestMapping(value="/backup",method=RequestMethod.POST)
     @ResponseBody
+
+    /*获取救助推文的进度更新及其评论*/
     public Object getProgressUpdateList(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
         ProgressUpdateRsp progressUpdateRsp=new ProgressUpdateRsp();
         List<ProgressUpdate> listProgress=new ArrayList<>(); //进度更新及其评论列表
@@ -43,15 +47,17 @@ public class ItemProgressController {
         Integer pageSize=updateListParam.getPageSize();
         String  timeStamp=updateListParam.getTimeStamp();
         Long  userBeHelpID=updateListParam.getUserIDBehelped();
+        Long tweetid=updateListParam.getTweetid();
 
-        map.put("userBeHelpID",userBeHelpID);
+        map.put("tweetid",tweetid); //xml中使用了
+        map.put("userBeHelpID",userBeHelpID); //xml中未使用，以后要加上
         map.put("page",page);
         map.put("pageSize",pageSize);
         map.put("lastTime",timeStamp);
 
         List<ItemProgress>  lip=new ArrayList<>(); //单纯的更新列表
         try{
-            lip=null;  //从数据库获取,待完成
+            lip=itemProgressService.getItemProgressUpdate(map);  //从数据库获取
             if (lip==null){
                 progressUpdateRsp.setMsg("暂时没有动态更新哦");
                 progressUpdateRsp.setRetcode(2001);
@@ -84,7 +90,7 @@ public class ItemProgressController {
             map2.put("pageSize",20);
 
             try {
-                pgCommentList=null; // 查找"进度更新" 的评论列表，连接数据库，待完成
+                pgCommentList=itemProgressService.getOneItemProgressUpdateComments(map2); // 查找"进度更新" 的评论列表
 
             }catch (Exception e){
                 pgCommentList=null;
@@ -101,6 +107,9 @@ public class ItemProgressController {
 
         return progressUpdateRsp;
     }
+
+    /*更新项目的进度*/
+    /*对进度进行评论*/
 
 }
 
