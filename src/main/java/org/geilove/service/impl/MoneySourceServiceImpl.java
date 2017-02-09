@@ -38,6 +38,35 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 		return  lms;
 	}
 
+	//对"支持了" 进行评论
+	public  CommonRsp addOneComment(MoneysrcPinglun  moneysrcPinglun){
+		   CommonRsp  commonRsp=new CommonRsp();
+		   int returnTag=moneysrcPinglunMapper.insertSelective(moneysrcPinglun); //
+		   if (returnTag==1){
+			   commonRsp.setMsg("插入成功");
+			   commonRsp.setRetcode(2000);
+		   }else{
+		   		commonRsp.setMsg("插入失败");
+		   		commonRsp.setRetcode(2001);
+		   }
+		   return  commonRsp;
+	}
+
+   //删除了"支持了"的评论
+   public  CommonRsp deleteOneComment(Long  moneySrcPingluniD ){
+		CommonRsp  commonRsp=new CommonRsp();
+        int deleteTag= moneysrcPinglunMapper.deleteByPrimaryKey(moneySrcPingluniD);
+        if (deleteTag==1){
+        	commonRsp.setMsg("删除成功");
+        	commonRsp.setRetcode(2000);
+		}else {
+        	commonRsp.setMsg("删除失败");
+        	commonRsp.setRetcode(2001);
+		}
+
+	   return  commonRsp;
+   }
+
 	//根据MoneySourceID 获取其对应的评论
 	public  List<MoneysrcPinglun> getMoneySourcePingLuns(Map<String,Object>  map){
 		List<MoneysrcPinglun> lmp=moneysrcPinglunMapper.getMoneySourcePingLunList(map);
@@ -76,12 +105,7 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 
 		}
 
-
 		//4.最后检查Cash表，如果资金大于给定资金或者日期超出，要设置相关数据域
-
-
-
-
 
 
 		return commonRsp;

@@ -8,7 +8,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.geilove.pojo.*;
+import org.geilove.requestParam.AddItemPgCommentParam;
+import org.geilove.requestParam.AddItemProgressParam;
+import org.geilove.requestParam.DeleteItemPgCommentParam;
 import org.geilove.requestParam.ItemProgressListParam;
+import org.geilove.response.CommonRsp;
 import org.geilove.response.ProgressUpdate;
 import org.geilove.response.ProgressUpdateRsp;
 import org.geilove.service.*;
@@ -27,6 +31,8 @@ public class ItemProgressController {
     @Resource
     private ItemProgressService  itemProgressService;
 
+    @Resource
+    private RegisterLoginService rlService;
     /*获取救助推文的进度更新及其评论*/
     @RequestMapping(value="/updatelist",method=RequestMethod.POST)
     @ResponseBody
@@ -109,28 +115,149 @@ public class ItemProgressController {
     /*更新项目的进度*/
     @RequestMapping(value="/addupdate",method=RequestMethod.POST)
     @ResponseBody
-    public Object addItemProgressUpdate(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
+    public Object addItemProgressUpdate(@RequestBody AddItemProgressParam  addItemProgressParam ){
+        CommonRsp commonRsp=new CommonRsp();
 
+        if (addItemProgressParam==null){
+            commonRsp.setMsg("请求参数为空");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
 
-        return 0;
+        String token=addItemProgressParam.getToken();
+        if(token.length()<33){
+            commonRsp.setMsg("凭证不合法");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+        String useridStr=token.substring(32); //取得userid部分
+        Long userid=Long.valueOf(useridStr).longValue();  //转换成long类型
+        String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+        if(!userPassword.equals(passwdTrue)){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("用户密码不对，非法");
+            return commonRsp;
+        }
+
+        ItemProgress itemProgress=new ItemProgress();
+        itemProgress.setUserid(userid);
+        itemProgress.setUserphoto(addItemProgressParam.getUserphoto());
+        itemProgress.setUsernickname(addItemProgressParam.getUsernickname());
+        itemProgress.setUuid(addItemProgressParam.getUuid());
+        itemProgress.setItemid(addItemProgressParam.getItemid());
+        itemProgress.setItemuuid(addItemProgressParam.getItemuuid());
+        itemProgress.setContent(addItemProgressParam.getContent());
+        itemProgress.setImgaddressone(addItemProgressParam.getImgaddressone());
+        itemProgress.setImgaddresstwo(addItemProgressParam.getImgaddresstwo());
+        itemProgress.setImgaddressthree(addItemProgressParam.getImgaddressthree());
+        itemProgress.setImgaddressfour(addItemProgressParam.getImgaddressfour());
+        itemProgress.setImgaddressfive(addItemProgressParam.getImgaddressfive());
+        itemProgress.setImgaddresssix(addItemProgressParam.getImgaddresssix());
+        itemProgress.setUpdatetime(new Date());
+
+        try{
+            commonRsp=itemProgressService.addOneItemProgress(itemProgress);
+        }catch (Exception e){
+            commonRsp.setMsg("增加项目更新出现异常");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
+
+        return commonRsp;
     }
 
 
     /*对进度进行评论*/
     @RequestMapping(value="/addupdatecomment",method=RequestMethod.POST)
     @ResponseBody
-    public Object addItemPgComment(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
+    public Object addItemPgComment(@RequestBody AddItemPgCommentParam itemPgCommentParam ){
+        CommonRsp commonRsp=new CommonRsp();
 
+        if (itemPgCommentParam==null){
+            commonRsp.setMsg("请求参数为空");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
 
-        return 0;
+        String token=itemPgCommentParam.getToken();
+        if(token.length()<33){
+            commonRsp.setMsg("凭证不合法");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+        String useridStr=token.substring(32); //取得userid部分
+        Long userid=Long.valueOf(useridStr).longValue();  //转换成long类型
+        String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+        if(!userPassword.equals(passwdTrue)){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("用户密码不对，非法");
+            return commonRsp;
+        }
+
+        //写入数据库
+        ItemPgComment  itemPgComment=new ItemPgComment();
+        itemPgComment.setItemprogressid(itemPgCommentParam.getItemprogressid());
+        itemPgComment.setUseridsender(userid);
+        itemPgComment.setUseruuidsender(itemPgCommentParam.getUseruuidsender());
+        itemPgComment.setSendernickname(itemPgCommentParam.getSendernickname());
+        itemPgComment.setSenderphoto(itemPgCommentParam.getSenderphoto());
+        itemPgComment.setUseridreciver(itemPgCommentParam.getUseridreciver());
+        itemPgComment.setUseruuidreciver(itemPgCommentParam.getUseruuidreciver());
+        itemPgComment.setRecivernickname(itemPgCommentParam.getRecivernickname());
+        itemPgComment.setContent(itemPgCommentParam.getContent());
+        itemPgComment.setRefer(itemPgCommentParam.getRefer());
+        itemPgComment.setCommenttime(new Date());
+
+        try{
+            commonRsp=itemProgressService.addItemPgComment(itemPgComment);
+        }catch (Exception e){
+            commonRsp.setMsg("对进度更新评论出现异常");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
+
+        return commonRsp;
     }
+
     /*对进度的评论进行删除(仅评论人可以删除)*/
     @RequestMapping(value="/deleteitemupdatecomment",method=RequestMethod.POST)
     @ResponseBody
-    public Object deleteItemPgComment(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
+    public Object deleteItemPgComment(@RequestBody DeleteItemPgCommentParam deleteItemPgCommentParam ){
+        CommonRsp commonRsp=new CommonRsp();
 
+        if (deleteItemPgCommentParam==null){
+            commonRsp.setMsg("请求参数为空");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
 
-        return 0;
+        String token=deleteItemPgCommentParam.getToken();
+        if(token.length()<33){
+            commonRsp.setMsg("凭证不合法");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+        String useridStr=token.substring(32); //取得userid部分
+        Long userid=Long.valueOf(useridStr).longValue();  //转换成long类型
+        String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+        if(!userPassword.equals(passwdTrue)){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("用户密码不对，非法");
+            return commonRsp;
+        }
+
+        try {
+            commonRsp=itemProgressService.deleteItemPgComment(deleteItemPgCommentParam.getMoneysrcpinglunid());
+        }catch (Exception e){
+            commonRsp.setMsg("删除项目更新进度的评论出现异常");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+
+        return commonRsp;
     }
 
 }

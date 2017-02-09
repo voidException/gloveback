@@ -3,6 +3,7 @@ package org.geilove.pojo;
 import java.util.Date;
 
 public class ItemPgComment {
+
     private Long itempgcommentid;
 
     private Long itemprogressid;

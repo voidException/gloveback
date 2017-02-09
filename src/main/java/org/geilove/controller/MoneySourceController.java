@@ -7,9 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.geilove.pojo.*;
-import org.geilove.requestParam.BackUpParam;
-import org.geilove.requestParam.ItemProgressListParam;
-import org.geilove.requestParam.MoneySourceParam;
+import org.geilove.requestParam.*;
 import org.geilove.response.CommonRsp;
 import org.geilove.response.Dynamic;
 import org.geilove.response.DynamicRsp;
@@ -27,6 +25,8 @@ import java.util.*;
 public class MoneySourceController {
      @Resource
      private MoneySourceService moneySourceService;
+     @Resource
+     private RegisterLoginService rlService;
 
      @RequestMapping(value="/backuplist",method=RequestMethod.POST)
      @ResponseBody
@@ -124,23 +124,119 @@ public class MoneySourceController {
         //确保所有的字段不能为空，应先验证，先略过
         //调用Service，执行插入
 
-        return 0;
+        //先来测试
+        commonRsp.setMsg("支持成功");
+        commonRsp.setRetcode(2000);
+        return commonRsp;
     }
     /*对"支持了" 进行评论*/
     @RequestMapping(value="/addmoneysourcecomment",method=RequestMethod.POST)
     @ResponseBody
-    public Object addMoneySourceComment(@RequestBody BackUpParam  updateListParam, HttpServletRequest request ){
+    public Object addMoneySourceComment(@RequestBody MoneySrcPingLunParam moneySrcPingLunParam, HttpServletRequest request ){
+        CommonRsp  commonRsp=new CommonRsp();
 
+        if (moneySrcPingLunParam==null){
+            commonRsp.setMsg("请求参数为空");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
+        String token=moneySrcPingLunParam.getToken();
+        if(token.length()<33){
+            commonRsp.setMsg("凭证不合法");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+        String useridStr=token.substring(32); //取得userid部分
+        Long userid=Long.valueOf(useridStr).longValue();  //转换成long类型
 
-        return 0;
+        String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+
+        if(!userPassword.equals(passwdTrue)){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("用户密码不对，非法");
+            return commonRsp;
+        }
+        //验证通过后，插入，还应该验证字段是否为空，先省略
+        MoneysrcPinglun moneysrcPinglun=new MoneysrcPinglun();
+        moneysrcPinglun.setMoneysourceid(moneySrcPingLunParam.getMoneysourceid()); //支持了 记录的iD
+        moneysrcPinglun.setUseridsender(moneySrcPingLunParam.getUseridsender());   //评论人的iD
+        moneysrcPinglun.setSendernickname(moneySrcPingLunParam.getSendernickname()); // 评论人的昵称
+
+        moneysrcPinglun.setUseridreciver(moneySrcPingLunParam.getUseridreciver()); //被评论人的iD
+        moneysrcPinglun.setRecivernickname(moneySrcPingLunParam.getRecivernickname()); //被评论人的昵称
+
+        moneysrcPinglun.setPingluntext(moneySrcPingLunParam.getPingluntext()); //评论的内容
+
+        moneysrcPinglun.setRefer(moneySrcPingLunParam.getRefer()); //0 还是1
+
+        moneysrcPinglun.setPingluntime(new Date()); //评论的时间
+        try {
+            commonRsp = moneySourceService.addOneComment(moneysrcPinglun);
+        }catch (Exception e){
+            commonRsp.setMsg("评论失败");
+            commonRsp.setRetcode(2001);
+        }
+        return commonRsp;
     }
 
-    /* 对评论进行删除 */
-    @RequestMapping(value="/deletemoneysourcecomment",method=RequestMethod.POST)
+    /* 对"支持了"评论进行删除 */
+    @RequestMapping(value="/deletemoneysrcpinlun",method=RequestMethod.POST)
     @ResponseBody
-    public Object deleteMoneySourceComment(@RequestBody BackUpParam  updateListParam, HttpServletRequest request ){
+    public Object deleteMoneySourceComment(@RequestBody DeleteMoneySrcPingLunParam deleteMoneySrcPingLunParam, HttpServletRequest request ){
+        CommonRsp  commonRsp=new CommonRsp();
 
+        if (deleteMoneySrcPingLunParam==null){
+            commonRsp.setMsg("请求参数为空");
+            commonRsp.setRetcode(2001);
+            return  commonRsp;
+        }
+        String token=deleteMoneySrcPingLunParam.getToken();
+        if(token.length()<33){
+            commonRsp.setMsg("凭证不合法");
+            commonRsp.setRetcode(2001);
+            return commonRsp;
+        }
+        String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+        String useridStr=token.substring(32); //取得userid部分
+        Long userid=Long.valueOf(useridStr).longValue();  //转换成long类型
+        String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
 
-        return 0;
+        if(!userPassword.equals(passwdTrue)){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("用户密码不对，非法");
+            return commonRsp;
+        }
+       try{
+           commonRsp=moneySourceService.deleteOneComment(deleteMoneySrcPingLunParam.getMoneySrcPingluniD());
+       }catch (Exception e){
+            commonRsp.setMsg("删除'支持了'出现异常");
+            commonRsp.setRetcode(2001);
+       }
+        return commonRsp;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -35,7 +35,7 @@ public class ItemProgress {
 
     private String backupone;  //项目更新、项目结束、项目提前结束等
 
-    private String backuptwo; //用户的昵称
+    private String backuptwo;
 
     private String backupthree;
 

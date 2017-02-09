@@ -386,7 +386,7 @@ public class TweetController {
 		}catch(Exception e){
 			System.out.println(e);
 		}
-		System.out.println(updateTag);
+
 		if(updateTag==1){
 			commonRsp.setMsg("删除推文成功");
 			commonRsp.setRetcode(2000);
