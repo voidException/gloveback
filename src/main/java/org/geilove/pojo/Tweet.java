@@ -51,13 +51,13 @@ public class Tweet {
     
     private String backupeight;
 
-    private String backupneight;
+    private String backupneight; //推文的UUID
 
-    private String backupnine;
+    private String backupnine;//usernickname 发布推文的用户昵称
 
-    private String backupten;
+    private String backupten; //用户简介
 
-    private String backupeleven;
+    private String backupeleven; //用户的头像地址
 
     private String backuptwelve;
 

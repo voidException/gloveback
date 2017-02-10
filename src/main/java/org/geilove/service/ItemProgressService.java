@@ -1,6 +1,5 @@
 package org.geilove.service;
 
-import org.geilove.pojo.Item;
 import org.geilove.pojo.ItemPgComment;
 import org.geilove.pojo.ItemProgress;
 import org.geilove.response.CommonRsp;
