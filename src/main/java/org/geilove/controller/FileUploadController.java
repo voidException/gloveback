@@ -130,7 +130,7 @@ public class FileUploadController {	 //发布推文,带图片的
         tweet.setPromise(null); //如果是救助一个人，则必须有文字
         tweet.setTweetbackupseven(null);
         tweet.setTweetbackupfour(1); //备用4等于1代表是一个普通的推文2代表的是救助     
-        tweet.setTweetbackupfive(1); //2代表党推文是救助时cash表
+        tweet.setTweetbackupfive(new Long(1)); //2代表党推文是救助时cash表
         for(int i=0;i<imgPathArray.size();i++){
         	if(tweet.getTweetbackupone()==null){
         		tweet.setTweetbackupone(imgPathArray.get(i));

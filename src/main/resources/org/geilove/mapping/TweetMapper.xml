@@ -20,7 +20,7 @@
     <result column="tweetbackUpTwo" property="tweetbackuptwo" jdbcType="VARCHAR" />
     <result column="tweetbackUpThree" property="tweetbackupthree" jdbcType="VARCHAR" />
     <result column="tweetbackupFour" property="tweetbackupfour" jdbcType="INTEGER" />
-    <result column="tweetbackupFive" property="tweetbackupfive" jdbcType="INTEGER" />
+    <result column="tweetbackupFive" property="tweetbackupfive" jdbcType="BIGINT" />
     <result column="tweetbackupSix" property="tweetbackupsix" jdbcType="INTEGER" />
     <result column="promise" jdbcType="VARCHAR" property="promise" />
     <result column="tweetbackupSeven" jdbcType="VARCHAR" property="tweetbackupseven" />
@@ -182,7 +182,7 @@
       #{publishtime,jdbcType=TIMESTAMP}, #{reportedtimes,jdbcType=INTEGER}, #{publicsee,jdbcType=TINYINT}, 
       #{deletetag,jdbcType=TINYINT}, #{videoaddress,jdbcType=VARCHAR}, #{tweetbackupone,jdbcType=VARCHAR}, 
       #{tweetbackuptwo,jdbcType=VARCHAR}, #{tweetbackupthree,jdbcType=VARCHAR}, #{tweetbackupfour,jdbcType=INTEGER}, 
-      #{tweetbackupfive,jdbcType=INTEGER}, #{tweetbackupsix,jdbcType=INTEGER}, #{promise,jdbcType=VARCHAR}, 
+      #{tweetbackupfive,jdbcType=BIGINT}, #{tweetbackupsix,jdbcType=INTEGER}, #{promise,jdbcType=VARCHAR},
       #{tweetbackupseven,jdbcType=VARCHAR}, #{backupeight,jdbcType=VARCHAR}, #{backupneight,jdbcType=VARCHAR}, 
       #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR}, #{backupeleven,jdbcType=VARCHAR}, 
       #{backuptwelve,jdbcType=VARCHAR}, #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, 
@@ -341,7 +341,7 @@
         #{tweetbackupfour,jdbcType=INTEGER},
       </if>
       <if test="tweetbackupfive != null" >
-        #{tweetbackupfive,jdbcType=INTEGER},
+        #{tweetbackupfive,jdbcType=BIGINT},
       </if>
       <if test="tweetbackupsix != null" >
         #{tweetbackupsix,jdbcType=INTEGER},
@@ -436,7 +436,7 @@
         tweetbackupFour = #{tweetbackupfour,jdbcType=INTEGER},
       </if>
       <if test="tweetbackupfive != null" >
-        tweetbackupFive = #{tweetbackupfive,jdbcType=INTEGER},
+        tweetbackupFive = #{tweetbackupfive,jdbcType=BIGINT},
       </if>
       <if test="tweetbackupsix != null" >
         tweetbackupSix = #{tweetbackupsix,jdbcType=INTEGER},
@@ -496,7 +496,7 @@
       tweetbackUpTwo = #{tweetbackuptwo,jdbcType=VARCHAR},
       tweetbackUpThree = #{tweetbackupthree,jdbcType=VARCHAR},
       tweetbackupFour = #{tweetbackupfour,jdbcType=INTEGER},
-      tweetbackupFive = #{tweetbackupfive,jdbcType=INTEGER},
+      tweetbackupFive = #{tweetbackupfive,jdbcType=BIGINT},
       tweetbackupSix = #{tweetbackupsix,jdbcType=INTEGER},
       promise = #{promise,jdbcType=VARCHAR},
       tweetbackupSeven = #{tweetbackupseven,jdbcType=VARCHAR}

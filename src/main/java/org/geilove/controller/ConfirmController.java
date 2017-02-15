@@ -48,7 +48,7 @@ public class ConfirmController {
 		map.put("tag", tag);
 		map.put("page", page);
 		map.put("pageSize", pageSize);
-		System.out.println(id);
+		//System.out.println(id);
 		List<Confirm> lc=confirmService.getConfirmLists(map);
 		//System.out.println(lc);
 		if(lc==null || lc.isEmpty()){

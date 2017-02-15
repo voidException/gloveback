@@ -41,7 +41,7 @@ public class Tweet {
 
     private Integer tweetbackupfour;
 
-    private Integer tweetbackupfive;
+    private Long tweetbackupfive; //关联的cash的iD
 
     private Integer tweetbackupsix;
     
@@ -210,11 +210,11 @@ public class Tweet {
         this.tweetbackupfour = tweetbackupfour;
     }
 
-    public Integer getTweetbackupfive() {
+    public Long getTweetbackupfive() {
         return tweetbackupfive;
     }
 
-    public void setTweetbackupfive(Integer tweetbackupfive) {
+    public void setTweetbackupfive(Long tweetbackupfive) {
         this.tweetbackupfive = tweetbackupfive;
     }
 

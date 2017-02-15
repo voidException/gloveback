@@ -1,6 +1,5 @@
 package org.geilove.vo;
 
-import org.geilove.vo.Tuiwen;
 public class WeiBo {   
 	
 	private Tuiwen tuiwen;
