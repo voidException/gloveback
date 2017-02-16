@@ -12,7 +12,7 @@
     <result column="backupThree" property="backupthree" jdbcType="VARCHAR" />
     <result column="backupFour" property="backupfour" jdbcType="VARCHAR" />
     <result column="backupFive" property="backupfive" jdbcType="INTEGER" />
-    <result column="backupSix" property="backupsix" jdbcType="INTEGER" />
+    <result column="backupSix" property="backupsix" jdbcType="BIGINT" />
   </resultMap>
 
   <!--  自定义，获取"支持了" 列表-->
@@ -109,7 +109,7 @@
     values (#{moneysourceid,jdbcType=BIGINT}, #{useridbehelped,jdbcType=BIGINT}, #{useridgoodguy,jdbcType=BIGINT}, 
       #{moneynum,jdbcType=INTEGER}, #{helptime,jdbcType=TIMESTAMP}, #{backupone,jdbcType=VARCHAR}, 
       #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR}, 
-      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER})
+      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.MoneySource" >
     insert into moneysource
@@ -180,7 +180,7 @@
         #{backupfive,jdbcType=INTEGER},
       </if>
       <if test="backupsix != null" >
-        #{backupsix,jdbcType=INTEGER},
+        #{backupsix,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -215,7 +215,7 @@
         backupFive = #{backupfive,jdbcType=INTEGER},
       </if>
       <if test="backupsix != null" >
-        backupSix = #{backupsix,jdbcType=INTEGER},
+        backupSix = #{backupsix,jdbcType=BIGINT},
       </if>
     </set>
     where moneySourceID = #{moneysourceid,jdbcType=BIGINT}
@@ -231,7 +231,7 @@
       backupThree = #{backupthree,jdbcType=VARCHAR},
       backupFour = #{backupfour,jdbcType=VARCHAR},
       backupFive = #{backupfive,jdbcType=INTEGER},
-      backupSix = #{backupsix,jdbcType=INTEGER}
+      backupSix = #{backupsix,jdbcType=BIGINT}
     where moneySourceID = #{moneysourceid,jdbcType=BIGINT}
   </update>
 </mapper>

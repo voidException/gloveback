@@ -23,7 +23,7 @@ public class MoneySource {
 
     private Integer backupfive; //1 或者2表明是第几次被帮助
 
-    private Integer backupsix;
+    private Long backupsix;  //cashiD  关联的cashiD
 
     public Long getMoneysourceid() {
         return moneysourceid;
@@ -105,11 +105,12 @@ public class MoneySource {
         this.backupfive = backupfive;
     }
 
-    public Integer getBackupsix() {
+    public Long getBackupsix() {
         return backupsix;
     }
 
-    public void setBackupsix(Integer backupsix) {
+    public void setBackupsix(Long backupsix) {
         this.backupsix = backupsix;
     }
+
 }
