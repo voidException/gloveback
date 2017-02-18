@@ -52,9 +52,10 @@ public class ItemProgressController {
         String  timeStamp=updateListParam.getTimeStamp();
         Long  userBeHelpID=updateListParam.getUserIDBehelped();
         Long tweetid=updateListParam.getTweetid();
-
+        Long cashid=updateListParam.getCashid();
         map.put("tweetid",tweetid); //xml中使用了
-        map.put("userBeHelpID",userBeHelpID); //xml中未使用，以后要加上
+        map.put("cashid",cashid); //xml中使用了
+       // map.put("userBeHelpID",userBeHelpID); //xml中未使用，以后要加上
         map.put("page",page);
         map.put("pageSize",pageSize);
         map.put("lastTime",timeStamp);
@@ -71,6 +72,7 @@ public class ItemProgressController {
             progressUpdateRsp.setMsg("暂时没有动态更新哦");
             progressUpdateRsp.setRetcode(2001);
             progressUpdateRsp.setLp(null);
+            return  progressUpdateRsp;
         }
         List<Long> itemProgressIDs=new ArrayList<Long>(); //存放获取的"进度更新的"iDs
         List<ProgressUpdate> progressUpdates=new ArrayList<ProgressUpdate>(); // 包含有"评论了"的 进度更新列表
@@ -98,6 +100,9 @@ public class ItemProgressController {
 
             }catch (Exception e){
                 pgCommentList=null;
+                progressUpdateRsp.setMsg("对进度的评论查找失败");
+                progressUpdateRsp.setRetcode(2000);
+                return progressUpdateRsp;
             }
             //这样保险
             if(itemProgressiD==  listProgress.get(i).getItemProgress().getItemprogressid()){

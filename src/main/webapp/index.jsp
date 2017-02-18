@@ -6,11 +6,12 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<script type="text/javascript" src="<%=contextPath%>/resources/jquery/jquery-1.11.1.js"></script>
+	<%--<script type="text/javascript" src="<%=contextPath%>/resources/jquery/jquery-1.11.1.js"></script>--%>
 	<%--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>--%>
 	<%--<script src="https://unpkg.com/react@15/dist/react.min.js"></script>--%>
 	<%--<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>--%>
-	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<%--<script src="https://unpkg.com/vue/dist/vue.js"></script>--%>
+
     <title>首页用来测试</title>
 </head>
 <body id="root">

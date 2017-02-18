@@ -5,9 +5,11 @@
 //    String path = request.getContextPath();
 //    String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>分享到微信圈</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
@@ -19,7 +21,6 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/zhengming.css">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/jquery-1.11.1.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/spin.min.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
 </head>
 
@@ -196,26 +197,64 @@
             他是我们那里的人,这个是真实的
         </div>
     </div>
-    <div style="display: flex;justify-content: space-between;height: 30px;align-items:center;padding: 10px;background:#F5F5F5">
-        <div style="font-size: 16px;font-weight: bolder">留言<strong>(600)</strong></div>
-        <div style="font-size: 16px;font-weight: bolder">评论</div>
-    </div>
-    <div style="display: flex;align-items: center;color: #43AC43">
-        <div style="display: flex;height: 40px;width: 49%;justify-content: center;align-items:center;border-bottom: #43AC43 solid 1px">
-            筹款动态(100)
+</div>
+
+<!--进度更新-->
+<div id="progressUpdate">
+    <div style="display: flex;align-items: center;color: #43AC43;border-bottom: rgba(0,0,0,.15) solid 1px">
+        <div style="display: flex;height: 40px;margin-left:10px;width: 50%;justify-content: flex-start;align-items:center;">
+            进度更新(33)
         </div>
-        <div style="border-right: #43AC43 solid 1px;height: 16px"></div>
-        <div style="display: flex;height: 40px;width: 50%;justify-content: center;align-items:center; ">
-            <span>进度更新</span>
+        <div style="display: flex;height: 40px;width: 50%;justify-content: center;align-items:center;">
+            <span></span>
         </div>
     </div>
+    <template v-for="item in lp">
+        <div  :key="item.itemProgress.itemprogressid"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
+            <div style="display: flex;justify-content: space-between;align-items: flex-end;padding: 10px;">
+                <div style="display: flex">
+                    <img :src="item.itemProgress.userphoto" style="height: 36px;width: 36px;border-radius: 18px">
+                    <div style="margin-left: 10px">
+                        <div style="display: flex;align-items: flex-start">
+                            <div>{{item.itemProgress.usernickname}}</div>
+                            <div style="margin-left: 10px">{{item.itemProgress.backupone}}</div>
+                        </div>
+                        <div style="margin-top: 5px">{{item.itemProgress.updatetime}}</div>
+                    </div>
+                </div>
+                <img src="<%=contextPath%>/resources/image/pinglun2.png" style="height: 18px;width: 18px;cursor: pointer;">
+            </div>
+            <div style="padding-left: 30px">
+                <template v-for="comment in item.lmp">
+                    <div style="display: flex;background: #F5F5F5;padding-top: 5px;padding-bottom: 5px;margin-right: 10px;margin-left: 20px">
+                        <div  style="color: #4284B6;">
+                            <span  v-bind:data-reciver="comment.useridsender"  v-on:click="test" style="cursor: pointer;">{{comment.sendernickname}}</span><span>:</span>
+                            <span v-if="comment.refer==1 " >
+                                <span style="color: #0f0f0f">回复</span><span  v-bind:data-reciver="comment.itempgcommentid" v-on:click="test"  style="color: #4284B6;cursor: pointer;">{{comment.recivernickname}}</span><span>:</span>
+                            </span>
+                            <span style="color: #666">{{comment.content}}</span>
+                        </div>
+
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
 </div>
 
 <!--筹款动态-->
-
 <div id="dynamic">
+    <div style="display: flex;align-items: center;color: #43AC43;border-bottom: rgba(0,0,0,.15) solid 1px">
+        <div style="display: flex;height: 40px;margin-left:10px;width: 50%;justify-content: flex-start;align-items:center;">
+            筹款动态(100)
+        </div>
+        <div style="display: flex;height: 40px;width: 50%;justify-content: center;align-items:center;">
+            <span></span>
+        </div>
+    </div>
+
     <template v-for="item in lp">
-        <div  :key="item.moneySource.moneysourceid"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
+        <div v-show="updateORprogress" :key="item.moneySource.moneysourceid"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
             <div style="display: flex;justify-content: space-between;align-items: flex-end;padding: 10px;">
                 <div style="display: flex">
                     <img :src="item.moneySource.backuptwo" style="height: 36px;width: 36px;border-radius: 18px">
@@ -249,8 +288,16 @@
 </div>
 
 
-<div id="foo" style="height: 100px"></div>
-<div class="footer"></div>
+<div id="foo" style="height: 50px"></div>
+<div class="footer">
+    <div class="zhuafa" style="width: 46%;display: flex;align-items: center;justify-content: center">
+        <span>转发</span>
+        <img  style="height: 30px;width: 30px" src="<%=contextPath%>/resources/image/zhuanfa.png">
+    </div>
+    <div class="donate"  style="width: 46%;height: 40px;border-radius:20px;display: flex;align-items: center;justify-content: center;background-color: #2FAC4C">
+        <span style="color: #ffffff">捐助Ta</span>
+    </div>
+</div>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/indexDynamic.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/indexUpPart.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/indexProgressUpdate.js"></script>

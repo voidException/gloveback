@@ -23,11 +23,14 @@
     <result column="backupFour" jdbcType="VARCHAR" property="backupfour" />
     <result column="backupFive" jdbcType="INTEGER" property="backupfive" />
     <result column="backupSix" jdbcType="INTEGER" property="backupsix" />
+    <result column="cashiD" property="cashid" jdbcType="BIGINT" />
+    <result column="cashUUID" property="cashuuid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
     itemProgressID, userID, userPhoto, userNickName, uuid, itemuuid, itemID, updateTime, 
     content, imgAddressOne, imgAddressTwo, imgAddressThree, imgAddressFour, imgAddressFive, 
-    imgAddressSix, backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix
+    imgAddressSix, backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix,
+    cashiD, cashUUID
   </sql>
   <!--  自定义，获取"进度更新" 列表-->
   <select id="getItemProgressList" resultMap="BaseResultMap" >
@@ -36,7 +39,7 @@
     from
     itemProgress
     where
-    itemID= #{tweetid,jdbcType=BIGINT} AND updateTime &lt; #{lastTime}
+    cashiD=#{cashid,jdbcType=BIGINT}  AND itemID= #{tweetid,jdbcType=BIGINT} AND updateTime &lt; #{lastTime}
     order by
     updateTime  desc
     limit
@@ -62,7 +65,8 @@
       imgAddressOne, imgAddressTwo, imgAddressThree, 
       imgAddressFour, imgAddressFive, imgAddressSix, 
       backupOne, backupTwo, backupThree, 
-      backupFour, backupFive, backupSix
+      backupFour, backupFive, backupSix,
+      cashiD, cashUUID
       )
     values (#{itemprogressid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{userphoto,jdbcType=VARCHAR}, 
       #{usernickname,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, #{itemuuid,jdbcType=VARCHAR}, 
@@ -70,7 +74,7 @@
       #{imgaddressone,jdbcType=VARCHAR}, #{imgaddresstwo,jdbcType=VARCHAR}, #{imgaddressthree,jdbcType=VARCHAR}, 
       #{imgaddressfour,jdbcType=VARCHAR}, #{imgaddressfive,jdbcType=VARCHAR}, #{imgaddresssix,jdbcType=VARCHAR}, 
       #{backupone,jdbcType=VARCHAR}, #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, 
-      #{backupfour,jdbcType=VARCHAR}, #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}
+      #{backupfour,jdbcType=VARCHAR}, #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER} ,#{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.ItemProgress">
@@ -139,6 +143,12 @@
       <if test="backupsix != null">
         backupSix,
       </if>
+      <if test="cashid != null" >
+        cashiD,
+      </if>
+      <if test="cashuuid != null" >
+        cashUUID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="itemprogressid != null">
@@ -203,6 +213,12 @@
       </if>
       <if test="backupsix != null">
         #{backupsix,jdbcType=INTEGER},
+      </if>
+      <if test="cashid != null" >
+        #{cashid,jdbcType=BIGINT},
+      </if>
+      <if test="cashuuid != null" >
+        #{cashuuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -269,6 +285,12 @@
       <if test="backupsix != null">
         backupSix = #{backupsix,jdbcType=INTEGER},
       </if>
+      <if test="cashid != null" >
+        cashiD = #{cashid,jdbcType=BIGINT},
+      </if>
+      <if test="cashuuid != null" >
+        cashUUID = #{cashuuid,jdbcType=VARCHAR},
+      </if>
     </set>
     where itemProgressID = #{itemprogressid,jdbcType=BIGINT}
   </update>
@@ -293,7 +315,9 @@
       backupThree = #{backupthree,jdbcType=VARCHAR},
       backupFour = #{backupfour,jdbcType=VARCHAR},
       backupFive = #{backupfive,jdbcType=INTEGER},
-      backupSix = #{backupsix,jdbcType=INTEGER}
+      backupSix = #{backupsix,jdbcType=INTEGER},
+      cashiD = #{cashid,jdbcType=BIGINT},
+      cashUUID = #{cashuuid,jdbcType=VARCHAR}
     where itemProgressID = #{itemprogressid,jdbcType=BIGINT}
   </update>
 

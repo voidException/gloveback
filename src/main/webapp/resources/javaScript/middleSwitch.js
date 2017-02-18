@@ -1,3 +1,6 @@
+/**
+ * Created by mfhj-dz-001-424 on 17/2/17.
+ */
 // /**
 //  * Created by mfhj-dz-001-424 on 17/2/15.
 //  */
@@ -81,7 +84,7 @@ new Vue({
 
         this.$http.post('http://localhost:8080/glove/moneysource/backuplist',param).then(response => {
             console.log(response.body);
-           this.lp=response.body.lp;
+            this.lp=response.body.lp;
         }, err => {
             console.log(err);
         });
