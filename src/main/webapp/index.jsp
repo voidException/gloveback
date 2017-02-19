@@ -24,6 +24,7 @@
 		分享到朋友圈
 	</a><br/>
 
+	<a href="http://localhost:8080/glove/backPages/checkProfileList">checkProfileList</a><br/>
 	<%--<script type="text/babel">--%>
 
        <%--class Bottom extends React.Component{--%>
