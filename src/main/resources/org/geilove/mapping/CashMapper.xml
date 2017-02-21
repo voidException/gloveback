@@ -56,6 +56,10 @@
     <result column="backupFive" property="backupfive" jdbcType="INTEGER" />
     <result column="backupSix" property="backupsix" jdbcType="INTEGER" />
     <result column="promiseDsp" property="promisedsp" jdbcType="INTEGER" />
+    <result column="cashTweetiD" property="cashtweetid" jdbcType="BIGINT" />
+    <result column="cashTweetUUID" property="cashtweetuuid" jdbcType="VARCHAR" />
+    <result column="cashCityName" property="cashcityname" jdbcType="VARCHAR" />
+    <result column="cashCityCode" property="cashcitycode" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     cashID, cashUUID, userIDCash, beHelpUserID, beHelpUserNickName, beHelpUserName, dutyUserID, 
@@ -65,7 +69,8 @@
     closeTime, getMoneyTag, cashOK, spendMoney, sumaffirm, sumZhuanfa, sumAttention, 
     sumBackup, sumManBackup, sumDays, progressState, createDate, offlinePassDate, moneyUseUpDate, 
     lastend, acceptMoneyMan, acceptMoneyManiD, checkUseriD, checkUserUUID, checkUserNickname, 
-    backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix, promiseDsp
+    backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix, promiseDsp, 
+    cashTweetiD, cashTweetUUID, cashCityName, cashCityCode
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -95,8 +100,9 @@
       acceptMoneyMan, acceptMoneyManiD, checkUseriD, 
       checkUserUUID, checkUserNickname, backupOne, 
       backupTwo, backupThree, backupFour, 
-      backupFive, backupSix, promiseDsp
-      )
+      backupFive, backupSix, promiseDsp, 
+      cashTweetiD, cashTweetUUID, cashCityName, 
+      cashCityCode)
     values (#{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR}, #{useridcash,jdbcType=BIGINT}, 
       #{behelpuserid,jdbcType=BIGINT}, #{behelpusernickname,jdbcType=VARCHAR}, #{behelpusername,jdbcType=VARCHAR}, 
       #{dutyuserid,jdbcType=BIGINT}, #{dutyusernickname,jdbcType=VARCHAR}, #{dutyusername,jdbcType=VARCHAR}, 
@@ -114,8 +120,9 @@
       #{acceptmoneyman,jdbcType=VARCHAR}, #{acceptmoneymanid,jdbcType=VARCHAR}, #{checkuserid,jdbcType=BIGINT}, 
       #{checkuseruuid,jdbcType=VARCHAR}, #{checkusernickname,jdbcType=VARCHAR}, #{backupone,jdbcType=VARCHAR}, 
       #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR}, 
-      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}, #{promisedsp,jdbcType=INTEGER}
-      )
+      #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}, #{promisedsp,jdbcType=INTEGER}, 
+      #{cashtweetid,jdbcType=BIGINT}, #{cashtweetuuid,jdbcType=VARCHAR}, #{cashcityname,jdbcType=VARCHAR}, 
+      #{cashcitycode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.Cash" >
     insert into cash
@@ -282,6 +289,18 @@
       <if test="promisedsp != null" >
         promiseDsp,
       </if>
+      <if test="cashtweetid != null" >
+        cashTweetiD,
+      </if>
+      <if test="cashtweetuuid != null" >
+        cashTweetUUID,
+      </if>
+      <if test="cashcityname != null" >
+        cashCityName,
+      </if>
+      <if test="cashcitycode != null" >
+        cashCityCode,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cashid != null" >
@@ -445,6 +464,18 @@
       </if>
       <if test="promisedsp != null" >
         #{promisedsp,jdbcType=INTEGER},
+      </if>
+      <if test="cashtweetid != null" >
+        #{cashtweetid,jdbcType=BIGINT},
+      </if>
+      <if test="cashtweetuuid != null" >
+        #{cashtweetuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcityname != null" >
+        #{cashcityname,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcitycode != null" >
+        #{cashcitycode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -610,6 +641,18 @@
       <if test="promisedsp != null" >
         promiseDsp = #{promisedsp,jdbcType=INTEGER},
       </if>
+      <if test="cashtweetid != null" >
+        cashTweetiD = #{cashtweetid,jdbcType=BIGINT},
+      </if>
+      <if test="cashtweetuuid != null" >
+        cashTweetUUID = #{cashtweetuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcityname != null" >
+        cashCityName = #{cashcityname,jdbcType=VARCHAR},
+      </if>
+      <if test="cashcitycode != null" >
+        cashCityCode = #{cashcitycode,jdbcType=VARCHAR},
+      </if>
     </set>
     where cashID = #{cashid,jdbcType=BIGINT}
   </update>
@@ -667,7 +710,11 @@
       backupFour = #{backupfour,jdbcType=VARCHAR},
       backupFive = #{backupfive,jdbcType=INTEGER},
       backupSix = #{backupsix,jdbcType=INTEGER},
-      promiseDsp = #{promisedsp,jdbcType=INTEGER}
+      promiseDsp = #{promisedsp,jdbcType=INTEGER},
+      cashTweetiD = #{cashtweetid,jdbcType=BIGINT},
+      cashTweetUUID = #{cashtweetuuid,jdbcType=VARCHAR},
+      cashCityName = #{cashcityname,jdbcType=VARCHAR},
+      cashCityCode = #{cashcitycode,jdbcType=VARCHAR}
     where cashID = #{cashid,jdbcType=BIGINT}
   </update>
 </mapper>

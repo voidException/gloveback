@@ -111,6 +111,14 @@ public class Cash {
 
     private Integer promisedsp;
 
+    private Long cashtweetid;
+
+    private String cashtweetuuid;
+
+    private String cashcityname;
+
+    private String cashcitycode;
+
     public Long getCashid() {
         return cashid;
     }
@@ -541,5 +549,37 @@ public class Cash {
 
     public void setPromisedsp(Integer promisedsp) {
         this.promisedsp = promisedsp;
+    }
+
+    public Long getCashtweetid() {
+        return cashtweetid;
+    }
+
+    public void setCashtweetid(Long cashtweetid) {
+        this.cashtweetid = cashtweetid;
+    }
+
+    public String getCashtweetuuid() {
+        return cashtweetuuid;
+    }
+
+    public void setCashtweetuuid(String cashtweetuuid) {
+        this.cashtweetuuid = cashtweetuuid == null ? null : cashtweetuuid.trim();
+    }
+
+    public String getCashcityname() {
+        return cashcityname;
+    }
+
+    public void setCashcityname(String cashcityname) {
+        this.cashcityname = cashcityname == null ? null : cashcityname.trim();
+    }
+
+    public String getCashcitycode() {
+        return cashcitycode;
+    }
+
+    public void setCashcitycode(String cashcitycode) {
+        this.cashcitycode = cashcitycode == null ? null : cashcitycode.trim();
     }
 }

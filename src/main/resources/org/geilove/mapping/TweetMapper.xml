@@ -33,6 +33,8 @@
     <result column="tobeuseone" property="tobeuseone" jdbcType="INTEGER" />
     <result column="tobeusetwo" property="tobeusetwo" jdbcType="INTEGER" />
     <result column="tobeusethree" property="tobeusethree" jdbcType="INTEGER" />
+    <result column="cityCode" property="citycode" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityname" jdbcType="VARCHAR" />
   </resultMap>
   
   
@@ -41,7 +43,7 @@
     publishTime, reportedTimes, publicSee, deleteTag, videoAddress, tweetbackUpOne, tweetbackUpTwo, 
     tweetbackUpThree, tweetbackupFour, tweetbackupFive, tweetbackupSix,promise, tweetbackupSeven,
     backupeight, backupneight, backupnine, backupten, backupeleven, backuptwelve, tobeuseone, 
-    tobeusetwo, tobeusethree
+    tobeusetwo, tobeusethree, cityCode, cityName
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -175,7 +177,7 @@
       tweetbackupSeven, backupeight, backupneight, 
       backupnine, backupten, backupeleven, 
       backuptwelve, tobeuseone, tobeusetwo, 
-      tobeusethree)
+      tobeusethree, cityCode, cityName)
     values (#{tweetid,jdbcType=BIGINT}, #{useridtweet,jdbcType=BIGINT}, #{sourcemsgid,jdbcType=BIGINT}, 
       #{tagid,jdbcType=TINYINT}, #{msgcontent,jdbcType=VARCHAR}, #{topic,jdbcType=BIGINT}, 
       #{commenttimes,jdbcType=INTEGER}, #{ok,jdbcType=INTEGER}, #{boxtimes,jdbcType=INTEGER}, 
@@ -186,7 +188,7 @@
       #{tweetbackupseven,jdbcType=VARCHAR}, #{backupeight,jdbcType=VARCHAR}, #{backupneight,jdbcType=VARCHAR}, 
       #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR}, #{backupeleven,jdbcType=VARCHAR}, 
       #{backuptwelve,jdbcType=VARCHAR}, #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, 
-      #{tobeusethree,jdbcType=INTEGER})
+      #{tobeusethree,jdbcType=INTEGER}, #{citycode,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.Tweet" >
     insert into tweet
@@ -284,6 +286,12 @@
       <if test="tobeusethree != null" >
         tobeusethree,
       </if>
+      <if test="citycode != null" >
+        cityCode,
+      </if>
+      <if test="cityname != null" >
+        cityName,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tweetid != null" >
@@ -378,6 +386,12 @@
       </if>
       <if test="tobeusethree != null" >
         #{tobeusethree,jdbcType=INTEGER},
+      </if>
+      <if test="citycode != null" >
+        #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        #{cityname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -474,6 +488,12 @@
       <if test="tobeusethree != null" >
         tobeusethree = #{tobeusethree,jdbcType=INTEGER},
       </if>
+      <if test="citycode != null" >
+        cityCode = #{citycode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
     </set>
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </update>
@@ -508,7 +528,9 @@
       backuptwelve = #{backuptwelve,jdbcType=VARCHAR},
       tobeuseone = #{tobeuseone,jdbcType=INTEGER},
       tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
-      tobeusethree = #{tobeusethree,jdbcType=INTEGER}
+      tobeusethree = #{tobeusethree,jdbcType=INTEGER},
+      cityCode = #{citycode,jdbcType=VARCHAR},
+      cityName = #{cityname,jdbcType=VARCHAR}
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </update>
 </mapper>
