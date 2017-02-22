@@ -63,7 +63,7 @@ public class WatchController {
 	    dbfans.setSpecialfollow((byte)1);
 	    dbfans.setDoublefans((byte)1);
 		//应该先查询下是否有关注
-		Map<String,Object> map= new HashMap<>();
+		Map<String,Object> map= new HashMap<String,Object>();
 		map.put("taUserid",followParam.getUserIDBeFocus());
 		map.put("myUserid",userid);
 		PartWatchPojo partWatchPojo ;
