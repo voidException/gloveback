@@ -85,7 +85,7 @@ public class MoneySourceController {
         for (int i=0;i<moneySourceIDs.size();i++){ //能走到这一步，说明必然有数据
             Long moneySourceID=moneySourceIDs.get(i); //一个"支持了" 项的id
             //用moneySourceID 查询数据表moneySrcPingLun，获得一个列表,假设获得该列表是moneySrcPingLunList
-            List<MoneysrcPinglun> moneySrcPingLunList=new ArrayList<>();
+            List<MoneysrcPinglun> moneySrcPingLunList=new ArrayList<MoneysrcPinglun>();
             Map<String,Object> map2=new HashMap<String,Object>();
             map2.put("moneySourceID",moneySourceID); //"支持了" 的ID
             map2.put("page",0);
