@@ -71,6 +71,11 @@ public class Tweet {
 
     private String cityname;
 
+    private Long cashid;
+
+    private String cashuuid;
+
+
     public Long getTweetid() {
         return tweetid;
     }
@@ -330,5 +335,20 @@ public class Tweet {
 
     public void setCityname(String cityname) {
         this.cityname = cityname == null ? null : cityname.trim();
+    }
+    public Long getCashid() {
+        return cashid;
+    }
+
+    public void setCashid(Long cashid) {
+        this.cashid = cashid;
+    }
+
+    public String getCashuuid() {
+        return cashuuid;
+    }
+
+    public void setCashuuid(String cashuuid) {
+        this.cashuuid = cashuuid == null ? null : cashuuid.trim();
     }
 }
