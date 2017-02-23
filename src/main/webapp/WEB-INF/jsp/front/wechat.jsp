@@ -196,6 +196,13 @@
         <div style="display:flex;align-items:center;height: 30px;margin-top: 0px;margin-bottom: 10px;background: #F5F5F5">
             他是我们那里的人,这个是真实的
         </div>
+        <%--这个是受助人承诺--%>
+        <div>
+            <div>受助人承诺诺</div>
+            <div>承诺诺类型（A）</div>
+            <div>承诺20年内帮助100人</div>
+        </div>
+
     </div>
 </div>
 

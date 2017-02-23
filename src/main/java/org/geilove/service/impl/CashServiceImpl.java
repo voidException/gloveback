@@ -16,7 +16,13 @@ public class CashServiceImpl implements CashService {
 		 cash= cashMapper.selectByPrimaryKey(cashid);
 		 return cash;
 	}
-	
+
+	public  Cash  getCashRecordByUUID(String  cashuuid){
+		Cash cash=new Cash();
+		cash= cashMapper.selectByCashUUID(cashuuid);
+		return cash;
+	}
+
 	public int cashInsert(Cash cash){
 		int tag=cashMapper.insert(cash);
 		return tag;

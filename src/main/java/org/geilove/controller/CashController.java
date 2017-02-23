@@ -63,13 +63,13 @@ public class CashController {
 	@ResponseBody
 	public CommonRsp addHelpMan(HttpServletRequest request)throws IllegalStateException, IOException{	
 		CommonRsp commonRsp=new CommonRsp();
-		System.out.println("接收到请求");
+		//System.out.println("接收到请求");
 		String token=request.getParameter("token");			
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32);		
 		Long userid=Long.valueOf(useridStr).longValue();
 		String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
-		System.out.println(passwdTrue);
+		//System.out.println(passwdTrue);
 		if(!userPassword.equals(passwdTrue)){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("用户密码不对，非法");

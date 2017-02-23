@@ -24,7 +24,13 @@ public class ConfirmServiceImpl implements ConfirmService {
 		
 		return lc;
 	 }
-	 
+
+	public List<Confirm> getConfirmListsByUUID(Map<String,Object> map){
+		List<Confirm> lc=new ArrayList<Confirm>();
+		lc=confirmMapper.getConfirmListByUUID(map);
+
+		return lc;
+	}
 	 public Integer getPeopleConfirms(Map<String,Object> map){
 		 Integer counts=confirmMapper.getCount(map);
 		 return counts;

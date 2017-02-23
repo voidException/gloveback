@@ -88,7 +88,7 @@ public class ItemProgressController {
         for (int i=0;i<itemProgressIDs.size();i++){
             Long  itemProgressiD=itemProgressIDs.get(i); //获取一个iD
             //用这个iD查找其对应的，评论回复列表
-            List<ItemPgComment> pgCommentList=new ArrayList<>();
+            List<ItemPgComment> pgCommentList=new ArrayList<ItemPgComment>();
 
             Map<String,Object> map2=new HashMap<String,Object>();
             map2.put("itemProgressiD",itemProgressiD); //

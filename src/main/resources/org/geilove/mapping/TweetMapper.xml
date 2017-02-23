@@ -53,6 +53,15 @@
     from tweet
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </select>
+<!--根据tweet的uuid获取一条推文，也就是backupneight，这个是推文的uuid-->
+  <select id="selectByTweetUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tweet
+    where backupneight = #{tweetuuid,jdbcType=BIGINT}
+  </select>
+
+
   <!--  以下是自定义，根据用户的id获取一组推文,开始与刷新，适合查看自己发布的推文 -->
   <select id="selectByMainKey" resultMap="BaseResultMap" parameterType="java.util.HashMap">
        select

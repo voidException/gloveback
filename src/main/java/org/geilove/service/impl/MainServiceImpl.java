@@ -150,6 +150,13 @@ public class MainServiceImpl implements MainService {
 		tweet=tweetMapper.selectByPrimaryKey(tweetid);
 		return  tweet;
 	}
+
+	@Override
+	public Tweet  getTweetByUUID(String  tweetuuid){
+		Tweet tweet=null;
+		tweet=tweetMapper.selectByTweetUUID(tweetuuid);
+		return  tweet;
+	}
 	
 }
 

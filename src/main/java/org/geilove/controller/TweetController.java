@@ -4,9 +4,7 @@
 */
 package org.geilove.controller;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.geilove.pojo.Tweet;
 import org.geilove.requestParam.DeleteTweetByKeyParam;
 import org.geilove.requestParam.PublishTweetParam;
@@ -483,6 +481,15 @@ public class TweetController {
 			tweetsListRsp.setRetcode(2000);
 		}
 		return tweetsListRsp;
+	}
+
+	/* 在朋友圈中，根据tweet的uuid 获取一条推文 */
+	@RequestMapping(value="/getTweetbyUUID/{tweetuuid}",method = RequestMethod.GET)
+	public @ResponseBody TweetRsp getTweetByUUID(@PathVariable("tweetuuid") String tweetuuid){
+		TweetRsp  tweetRsp=new TweetRsp();
+
+
+		return  tweetRsp ;
 	}
 	
 		

@@ -13,6 +13,8 @@ public interface TweetMapper {
     int insertSelective(Tweet record);
 
     Tweet selectByPrimaryKey(Long tweetid);
+
+    Tweet selectByTweetUUID(String  tweetuuid);
     
     List< Tweet> selectBySourceMsgIDKey(Map<String, Object> map); //根据推文的id，取得它的转发列表
         

@@ -11,7 +11,10 @@ public interface CashMapper {
 
     Cash selectByPrimaryKey(Long cashid);
 
+    Cash selectByCashUUID(String  cashuuid); //根据uuid获取
+
     int updateByPrimaryKeySelective(Cash record);
 
     int updateByPrimaryKey(Cash record);
+
 }

@@ -32,6 +32,10 @@ public interface  MainService {
 	
 	public List<Tweet> getWeiBoList(Map<String,Object> maps);
 
-	//根据一条推文的id
+	//根据一条推文的id获取tweet
     public Tweet getTweetByID(Long tweetid);
+
+	//根据一条推文的uuid获取tweet
+    public Tweet  getTweetByUUID(String  tweetuuid);
+
 }

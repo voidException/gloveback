@@ -78,6 +78,15 @@
     from cash
     where cashID = #{cashid,jdbcType=BIGINT}
   </select>
+<!--自定义-->
+  <select id="selectByCashUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from cash
+    where cashUUID = #{cashuuid,jdbcType=VARCHAR}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from cash
     where cashID = #{cashid,jdbcType=BIGINT}

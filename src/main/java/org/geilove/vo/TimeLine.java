@@ -11,19 +11,14 @@ import java.util.List;
  * Created by mfhj-dz-001-424 on 17/2/14.
  */
 public class TimeLine {
-    private Tweet tweet;
+    private  Tweet tweet;
     private  Cash  cash;
-    private  UserPartProfile userPartProfile;
+    private  List<Confirm> confirmList;
 
-    public UserPartProfile getUserPartProfile() {
-        return userPartProfile;
-    }
 
     public void setUserPartProfile(UserPartProfile userPartProfile) {
         this.userPartProfile = userPartProfile;
     }
-
-    private List<Confirm> confirmList;
 
     public Tweet getTweet() {
         return tweet;
@@ -41,12 +36,17 @@ public class TimeLine {
         this.cash = cash;
     }
 
-
     public List<Confirm> getConfirmList() {
         return confirmList;
     }
 
     public void setConfirmList(List<Confirm> confirmList) {
         this.confirmList = confirmList;
+    }
+
+    private  UserPartProfile userPartProfile;
+
+    public UserPartProfile getUserPartProfile() {
+        return userPartProfile;
     }
 }

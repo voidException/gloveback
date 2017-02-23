@@ -31,7 +31,21 @@
       limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!--  自定义select结束 -->
-  
+
+  <!--  以下是自定义，根据cash表的uuid获取证实人列表 -->
+  <select id="getConfirmListByUUID" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    confirm
+    where
+    confirmbackupOne= #{cashuuid,jdbcType=VARCHAR}  AND tag=#{tag,jdbcType=INTEGER}
+    order by publishTime  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--  自定义select结束 -->
+
+
    <!-- 自定义获取某条推文的总条数 -->
   <select id="getCount" resultType="int" parameterType="java.util.HashMap" >
     select count(*)

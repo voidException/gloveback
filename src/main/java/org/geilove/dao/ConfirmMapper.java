@@ -18,7 +18,10 @@ public interface ConfirmMapper {
 
     int updateByPrimaryKey(Confirm record);
     
-    List<Confirm> getConfirmList(Map<String,Object> map); //获取证实人列表
+    List<Confirm> getConfirmList(Map<String,Object> map); //通过tweet的id获取证实人列表
+
+    List<Confirm> getConfirmListByUUID(Map<String,Object> map); //通过uuid获取证实人列表
+
     
     Integer  getCount(Map<String,Object> map); //获取指定推文或者项目的证实人数
     //map.put("id",)
