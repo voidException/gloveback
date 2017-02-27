@@ -483,16 +483,46 @@ public class TweetController {
 		return tweetsListRsp;
 	}
 
-	/* 在朋友圈中，根据tweet的uuid 获取一条推文 */
+
+
+	/* 根据tweet的id获取一条推文*/
+	@RequestMapping(value="/getTweetbyID/{tweetid}",method = RequestMethod.GET)
+	public @ResponseBody TweetRsp getTweetByID(@PathVariable("tweetid") Long tweetid){
+		TweetRsp  tweetRsp=new TweetRsp();
+		Tweet tweet;
+		try{
+			tweet=mainService.getTweetByID(tweetid);
+		}catch (Exception e){
+			tweetRsp.setMsg("根据ID查询推文出现异常");
+			tweetRsp.setRetcode(2001);
+			return tweetRsp;
+		}
+
+		tweetRsp.setMsg("查询成功");
+		tweetRsp.setRetcode(2000);
+		tweetRsp.setLp(tweet);
+		return  tweetRsp ;
+	}
+
+	/* 在朋友圈中，根据tweet的uuid 获取一条推文 ,分享到朋友圈的web页面用到此接口*/
 	@RequestMapping(value="/getTweetbyUUID/{tweetuuid}",method = RequestMethod.GET)
 	public @ResponseBody TweetRsp getTweetByUUID(@PathVariable("tweetuuid") String tweetuuid){
 		TweetRsp  tweetRsp=new TweetRsp();
+		Tweet tweet;
+		try{
+			tweet=mainService.getTweetByUUID(tweetuuid);
+		}catch (Exception e){
+			tweetRsp.setMsg("根据UUID查询推文出现异常");
+			tweetRsp.setRetcode(2001);
+			return tweetRsp;
+		}
 
-
+        tweetRsp.setMsg("查询成功");
+		tweetRsp.setRetcode(2000);
+		tweetRsp.setLp(tweet);
 		return  tweetRsp ;
 	}
-	
-		
+
 }
 
 

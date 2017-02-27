@@ -1,4 +1,10 @@
 package org.geilove.controller;
+/*
+*
+* 我的页面使用这个接口
+*
+* */
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

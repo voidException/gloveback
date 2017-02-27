@@ -39,7 +39,7 @@ public class TimeLineTweetController {
     @Resource
     private ConfirmService confirmService;
 
-    //该接口可以废弃，使用根据uuid获取一条推文 和 根据cashuuid获取资金和证实情况组合代替 ，
+    //该接口可以废弃，使用根据uuid获取一条推文 和 根据cashuuid获取资金和证实情况组合代替，分享到朋友圈时要传输这两个参数
    // @RequestMapping("/info/{useriD}/{tweetiD}/{cashiD}") //用这个也行
     @RequestMapping(value = "/info/{tweetiD}",method = RequestMethod.GET)
     public @ResponseBody  Object getInfoByTweetID(@PathVariable("tweetiD") Long tweetid){
@@ -195,15 +195,15 @@ public class TimeLineTweetController {
             return  cashConfirmRsp;
         }
         /* 证实列表*/
-        List<Confirm> confirmList=new ArrayList<Confirm>();
+        List<Confirm> confirmList=new ArrayList<Confirm>();  //保证不能是null 是[]
         Map<String,Object> map=new HashMap<String,Object>();
-
+        //System.out.print(cashUUID);
         map.put("cashuuid",cashUUID); //应该根据表中confirmbackupOne字段获取，即对应的cash的UUID
         map.put("tag", 1);
         map.put("page", 0);
         map.put("pageSize", 8);
         try{
-            confirmList=confirmService.getConfirmLists(map);
+            confirmList=confirmService.getConfirmListsByUUID(map);
             cashConfirm.setConfirmList(confirmList);
 
         }catch (Exception e){

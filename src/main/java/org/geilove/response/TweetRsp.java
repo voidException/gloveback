@@ -6,7 +6,7 @@ import org.geilove.pojo.Tweet;
  * Created by mfhj-dz-001-424 on 17/2/23.
  */
 public class TweetRsp {
-    private Tweet  lp;
+    private  Tweet  lp;
     private  String  msg;
     private  Integer  retcode;
 
