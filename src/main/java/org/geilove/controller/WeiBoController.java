@@ -1,7 +1,7 @@
 package org.geilove.controller;
 /*
 *
-* 我的页面使用这个接口
+* 我的页面使用这个接口，已废弃
 *
 * */
 
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.geilove.response.*;
 import org.geilove.vo.WeiBo;
 import org.geilove.vo.Tuiwen;
-
+@Deprecated
 @Controller
 @RequestMapping("/userpage")
 public class WeiBoController {

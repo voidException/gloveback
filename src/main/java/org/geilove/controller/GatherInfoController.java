@@ -17,6 +17,7 @@ public class GatherInfoController {
 	
 	@RequestMapping(value="/byid")
 	public @ResponseBody GatherInfoRsp getMenList(@RequestBody GatherInfoParam gatherInfoParam ){
+		System.out.print("GatherInfoController");
 		GatherInfoRsp rsp=new GatherInfoRsp();
 		Integer gatherinfoid=gatherInfoParam.getGatherinfoid();
 		GatherInfo gatherInfo=new GatherInfo();

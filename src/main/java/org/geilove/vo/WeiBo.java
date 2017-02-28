@@ -1,5 +1,6 @@
 package org.geilove.vo;
 
+@Deprecated
 public class WeiBo {   
 	
 	private Tuiwen tuiwen;

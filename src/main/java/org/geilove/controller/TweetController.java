@@ -29,6 +29,7 @@ import org.geilove.vo.Tuiwen;
 /*
  * 这个用来提供有关推文的操作
 */
+@Deprecated
 @Controller
 @RequestMapping("/weibos")
 public class TweetController {
@@ -36,7 +37,7 @@ public class TweetController {
 	private MainService mainService;
 	@Resource
 	private RegisterLoginService rlService;
-	@RequestMapping(value="/gettweetbyuserid")//比如查看用户自己发布、转发的推文
+	@RequestMapping(value="/gettweetbyuserid")//查看用户自己发布、转发的推文
 	public  @ResponseBody TweetsListRsp getTweetByUserID(@RequestBody TweetListParam tweetListParam,HttpServletRequest request){
 		TweetsListRsp tweetsListRsp=new TweetsListRsp();
 		String token=tweetListParam.getToken(); //获取登录凭证

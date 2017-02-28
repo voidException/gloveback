@@ -2,6 +2,7 @@ package org.geilove.response;
 import org.geilove.pojo.Tweet;
 import java.util.List;
 import org.geilove.vo.WeiBo;
+@Deprecated
 public class TweetsListRsp {
 	private List<WeiBo>  data;
 	private Integer retcode ;

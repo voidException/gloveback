@@ -31,7 +31,7 @@ public interface TweetMapper {
     List<Tweet> selectByMainKeyLoadMoreSHe(Map<String, Object> map);
     /*用户查看自己主页的推文，自己收听的*/
     List<Tweet> findByUserIds(Map<String,Object>maps); //根据获得的用户的一组userids 取出一组微博,开始与刷新  
-    List<Tweet> findByUserIdsLoadMore(Map<String,Object>maps); //根据获得的用户的一组userids 取出一组微博,供加载更多用
+    List<Tweet> findByUserIdsLoadMore(Map<String,Object>maps); //根据获得的用户的一组userids 取出一组微博,供加载更多用;
     
     
     

@@ -1,5 +1,6 @@
 package org.geilove.requestParam;
 
+@Deprecated
 public class WeiBoListParam {
 	private  String    token; //以后使用这个接口
 	private  Integer   flag; //1，代表刷新要使用lastUpdate 2,是加载更多，要使用lastItemstart
@@ -8,7 +9,7 @@ public class WeiBoListParam {
 //	private  Long 	   userID; 		//用户的ID
 	private  Integer   page;		//开始的页
 	private  Integer   pageSize;
-	private Integer symbol; //
+	private  Integer symbol; //
 	
 	public Integer getSymbol() {
 		return symbol;
