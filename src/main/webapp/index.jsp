@@ -6,13 +6,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<%--<script type="text/javascript" src="<%=contextPath%>/resources/jquery/jquery-1.11.1.js"></script>--%>
-	<%--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>--%>
-	<%--<script src="https://unpkg.com/react@15/dist/react.min.js"></script>--%>
-	<%--<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>--%>
-	<%--<script src="https://unpkg.com/vue/dist/vue.js"></script>--%>
-
-    <title>首页用来测试</title>
+	<script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
+	<script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
+	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+	<title>首页用来测试</title>
 </head>
 <body id="root">
 	<a href="http://localhost:8080/glove/pages/aboutus">关于我们</a><br/>
@@ -20,41 +17,24 @@
 	<a href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
 	<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>
 	<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>
-	<a href="http://localhost:8080/glove/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">
-		分享到朋友圈
-	</a><br/>
-
+	<a href="http://localhost:8080/glove/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">分享到朋友圈</a><br/>
 	<a href="http://localhost:8080/glove/backPages/checkProfileList">checkProfileList</a><br/>
-	<%--<script type="text/babel">--%>
 
-       <%--class Bottom extends React.Component{--%>
-            <%--constructor(props){--%>
-                <%--super(props);--%>
-            <%--}--%>
-
-            <%--render() {--%>
-                <%--return (--%>
-						<%--<footer>--%>
-							<%--<div>这里是底部</div>--%>
-						<%--</footer>--%>
-                <%--);--%>
-            <%--}--%>
-        <%--}--%>
-        <%--ReactDOM.render(--%>
-            <%--<div>--%>
-				<%--<a  href="http://localhost:8080/glove/pages/aboutus">关于我们</a><br/>--%>
-				<%--<a  href="http://localhost:8080/glove/pages/faq">常见问题</a><br/>--%>
-				<%--<a  href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>--%>
-				<%--<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>--%>
-				<%--<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>--%>
-				<%--<a href="http://localhost:8080/glove/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">--%>
-					<%--分享到朋友圈--%>
-				<%--</a><br/>--%>
-				<%--<h1>Hello, world!</h1>--%>
-			   <%--<Bottom/>--%>
-			<%--</div>,--%>
-            <%--document.getElementById('root')--%>
-        <%--);--%>
-	<%--</script>--%>
+	<div id="app">
+		<h1>Hello App!</h1>
+		<p>
+			<!-- 使用 router-link 组件来导航. -->
+			<!-- 通过传入 `to` 属性指定链接. -->
+			<!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+			<router-link to="/foo">Go to Foo</router-link>
+			<router-link to="/bar">Go to Bar</router-link>
+			<router-link to="/user/foo">/user/foo</router-link>
+			<router-link to="/user/bar">/user/bar</router-link>
+		</p>
+		<!-- 路由出口 -->
+		<!-- 路由匹配到的组件将渲染在这里 -->
+		<router-view></router-view>
+	</div>
+	<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/vueroute.js"></script>
 </body> 
 </html>

@@ -34,6 +34,7 @@ public class MainServiceImpl implements MainService {
          /* 先根据用户id，按照时间标签获取tweet，然后遍历tweet，如果是转发的，就请求数据库，
 	      * 获取原tweet，合成一块返回,这里还要加上@带来的超链接。
 	     */
+    @Deprecated
 	@Override
 	public List<Tweet> getTweetList(Map<String,Object> map){
 		//这里调用自定义的方法，取得推文列表，服务是最小的单元，复杂的数据获取在Controller调用服务完成，服务应该处理和数据库有关的错误等事件。
@@ -128,6 +129,7 @@ public class MainServiceImpl implements MainService {
 	}
 	
 	//这个是用户主页的查询所关注人的weibo接口。 参数应该为map类型
+	@Deprecated
 	public List<Tweet> getWeiBoList(Map<String,Object>maps){
 		List<Tweet> lsTweet=new ArrayList<Tweet>();
 		maps.remove("symbol"); //其实不用移除的

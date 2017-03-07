@@ -1,10 +1,17 @@
 
 package org.geilove.controller;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,21 +122,46 @@ public class RegisterLoginController {
 		userRegister.setUsernickname(userRegisterVo.getUserNickName());
 		userRegister.setUseremail(userRegisterVo.getUserEmail());
 		userRegister.setUserpassword(pwMD5);
-		
+		userRegister.setBackuptwo(userRegisterVo.getCityName()); //用户所处的城市
+		userRegister.setUserphoto("http://www.geilove.org/path/geilove.png");
 		userRegister.setPhotoupload((byte) 1);
 		userRegister.setNotsay((byte)1);
 		userRegister.setCertificatetype((byte)1);
 		userRegister.setUsertype((byte)1);
 		userRegister.setNotsay((byte)1);
-		//这里需要先查询是否有该邮箱和昵称
-		int tag=registerLoginService.userRegister(userRegister);		
-		if(tag==1){
-			commonRsp.setMsg("注册成功");
-			commonRsp.setRetcode(2000);
-		}else{
-			commonRsp.setMsg("注册失败");
+		//这里需要先查询是否有该邮箱和昵称的用户已经注册
+		Map<String,Object> map=new HashMap<>();
+		map.put("userEmail",userEmail);
+		map.put("userNickname",userNickName);
+
+		User checkUser;
+		try{
+			checkUser=registerLoginService.selectByNicknameOrEmail(map);
+			if (checkUser!=null){
+				commonRsp.setMsg("用户昵称或邮箱已存在");
+				commonRsp.setRetcode(2001);
+				return  commonRsp;
+			}
+		}catch (Exception e){
+			commonRsp.setMsg(e.getMessage());
 			commonRsp.setRetcode(2001);
-		}		
+			return  commonRsp;
+		}
+
+		try{
+			int tag=registerLoginService.userRegister(userRegister);
+			if(tag==1){
+				commonRsp.setMsg("注册成功");
+				commonRsp.setRetcode(2000);
+			}else{
+				commonRsp.setMsg("注册失败");
+				commonRsp.setRetcode(2001);
+			}
+		}catch (Exception e){
+			commonRsp.setMsg("注册出现异常");
+			commonRsp.setRetcode(2001);
+
+		}
 		return commonRsp; //这么返回是为了，注册成功立马跳转到主页，和登录时一样。		
 	}
    //这个是找回密码。
@@ -214,7 +246,7 @@ public class RegisterLoginController {
 		Long userid=Long.valueOf(useridStr).longValue();
 		//Long userid=Long.parseLong(useridstr);
 		String passwdTrue=registerLoginService.selectMD5Password(Long.valueOf(userid));
-		System.out.println(passwdTrue);
+		//System.out.println(passwdTrue);
 		
 		if(!userPassword.equals(passwdTrue)){
 			commonRsp.setRetcode(2001);

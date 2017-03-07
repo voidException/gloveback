@@ -5,8 +5,15 @@ public class UserRegisterVo {
 	private String  userNickName;
 	private String  userEmail;
 	private String  userPassword;
-	//private String  userPassRepeat;
-	
+	private String  cityName;
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
 	public String getUserNickName() {
 		return userNickName;
 	}

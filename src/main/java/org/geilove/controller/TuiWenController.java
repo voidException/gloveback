@@ -134,7 +134,7 @@ public class TuiWenController {
         Map<String,Object> map=new HashMap<String,Object>();//存放查询的参数，传给Mybatis
         map.put("userID", userID);
         map.put("page", page);
-        map.put("pageSize", 18);
+        map.put("pageSize", 6);
         map.put("lastItemstart", lastUpdate); //上次刷新的获取数据的最后一条的发布时间
 
         List<Tweet> tweets;
@@ -176,6 +176,7 @@ public class TuiWenController {
     @RequestMapping(value="/getMyselfPublishedTweetByMyiD")
     public  @ResponseBody Object getMyselfPublishedTweetByMyiD(@RequestBody TuiWenListParam param, HttpServletRequest request){
         /*@ 该接口用于查看我自己发布的推文@*/
+        //System.out.println("getMyselfPublishedTweetByMyiD");
         TuiWenListRsp  tuiWenListRsp=new TuiWenListRsp();
         List<WeiBo> lsWeiBo=new ArrayList<>();
 
@@ -192,15 +193,15 @@ public class TuiWenController {
         Map<String,Object> map=new HashMap<String,Object>();//存放查询的参数，传给Mybatis
         map.put("userID", userID);
         map.put("page", page);
-        map.put("pageSize", 18);
+        map.put("pageSize", 5);
         map.put("lastItemstart", lastUpdate); //上次刷新的获取数据的最后一条的发布时间
 
         List<Tweet> tweets;
         try {
             tweets=tweetService.getTweetByOtherUserID(map);//首先取得推文，不带转发
-            if (tweets==null){
+            if (tweets==null||tweets.size()==0){
                 tuiWenListRsp.setMsg("推文为空");
-                tuiWenListRsp.setRetcode(2000);
+                tuiWenListRsp.setRetcode(2001);
                 return  tuiWenListRsp;
             }
 

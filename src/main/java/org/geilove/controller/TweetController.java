@@ -14,12 +14,8 @@ import org.geilove.sqlpojo.OtherPartHelpPojo;
 import org.geilove.requestParam.TweetListParam;
 import org.geilove.requestParam.WeiBoListParam;
 import org.geilove.requestParam.ZhuangfaListParam;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
+
+import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -417,6 +413,7 @@ public class TweetController {
 		}
 		 return rsp;		 
 	}
+	/*这个接口给转发推文用*/
 	@RequestMapping("/zhuanfaTweet")
 	public @ResponseBody CommonRsp addComment(HttpServletRequest request){
 		CommonRsp commonRsp=new CommonRsp();
@@ -433,23 +430,49 @@ public class TweetController {
 		String tweetContent=request.getParameter("content");//转发时输入的内容
 		String sourceMsgID=request.getParameter("sourceMsgID");
 		Tweet tweet=new Tweet();
+
 		tweet.setUseridtweet(userid); //转发推文人的id
 		tweet.setSourcemsgid(Long.valueOf(sourceMsgID).longValue());
 		tweet.setTagid((byte)2); //2代表是转发的
 		tweet.setMsgcontent(tweetContent); //转发时输入的内容
 		tweet.setPublishtime(new Date());		
 		tweet.setTopic(new Long(1)); //话题，默认是1
-		
+
+		tweet.setBoxtimes(0);
+		tweet.setCommenttimes(0);
+		tweet.setOk(0);
+		Date date=new Date();
+		tweet.setPublishtime(date);
+		tweet.setReportedtimes(0);
+		tweet.setPublicsee((byte)1); //1代表可见
+		tweet.setDeletetag((byte)1); //1代表未删除
+		tweet.setVideoaddress(null); //推文只限制3张图
+		tweet.setTweetbackupsix(0); //默认承诺0，代表无承诺
+		String tweetuuid = UUID.randomUUID().toString();
+		tweet.setBackupneight(tweetuuid); //tweet的UUID
+		tweet.setBackupnine(request.getParameter("userNickname")); //用户的昵称
+		tweet.setBackupten(request.getParameter("selfintroduce")); //用户的自我介绍
+		tweet.setBackupeleven(request.getParameter("userphoto")); //用户的头像地址
+		tweet.setCityname(request.getParameter("cityName")); //用户所在的城市
+		//还有个发表用户的uuid由于表中无，暂时没加入
+		//tweet.setuserUUIDTweet(request.getParameter("userUUIDTweet"));
+		tweet.setPromise(null); //如果是救助一个人，则必须有文字
+		tweet.setTweetbackupseven(null);
+		tweet.setTweetbackupfour(1); //备用4等于1代表是一个普通的推文2代表的是救助
+		tweet.setTweetbackupfive(new Long(1)); //2代表党推文是救助时cash表
+
+
 		//这里插入一条推文，待实现
 		try{
 			int insertCode=mainService.addTweet(tweet);
 			if(insertCode!=1){
 				commonRsp.setMsg("发布推文出错了");
-				commonRsp.setRetcode(20001);
+				commonRsp.setRetcode(2001);
+				return commonRsp;
 			}
 		}catch(Exception e){	
-				commonRsp.setMsg("发布推文出错了");
-				commonRsp.setRetcode(20001);
+				commonRsp.setMsg("发布推文抛出异常");
+				commonRsp.setRetcode(2001);
 				return commonRsp;
 		}
 			

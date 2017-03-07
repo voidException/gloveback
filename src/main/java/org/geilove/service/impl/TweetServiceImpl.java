@@ -36,13 +36,13 @@ public class TweetServiceImpl implements TweetService {
 
     public List<Tweet> getTweetByOtherUserID(Map<String,Object> map){
         List<Tweet> lsTweet=new ArrayList<Tweet>();
-        lsTweet=tweetMapper.selectByMainKey(map);
+        lsTweet=tweetMapper.selectByMainKeyLoadMoreSHe(map);
         return lsTweet;
     }
 
     public List<Tweet> getMyselfPublishedTweetByMyiD(Map<String,Object> map){ //查看我自己发布的推文
         List<Tweet> lsTweet=new ArrayList<Tweet>();
-        lsTweet=tweetMapper.selectByMainKey(map);
+        lsTweet=tweetMapper.selectByMainKeyLoadMore(map);
         return lsTweet;
     }
 

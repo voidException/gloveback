@@ -42,7 +42,6 @@
     <result column="amountAccept" property="amountaccept" jdbcType="INTEGER" />
     <result column="acceptMoney" property="acceptmoney" jdbcType="INTEGER" />
     <result column="beHelpTime" property="behelptime" jdbcType="TIMESTAMP" />
-    
     <result column="beHelpedType" property="behelpedtype" jdbcType="INTEGER" />
     <result column="backupseven" jdbcType="VARCHAR" property="backupseven" />
     <result column="backupeight" jdbcType="VARCHAR" property="backupeight" />
@@ -52,6 +51,7 @@
     <result column="tobeusetwo" jdbcType="INTEGER" property="tobeusetwo" />
     <result column="tobeusethree" jdbcType="INTEGER" property="tobeusethree" />
   </resultMap>
+
   <!--  自定义，爱心社列表，志愿者列表 监督用户列表，初始加载以及刷新-->
   <select id="selectMenList" resultMap="BaseResultMap" >
     select      
@@ -201,6 +201,14 @@
     <include refid="Base_Column_List" />
     from user
     where userID = #{userid,jdbcType=BIGINT}
+  </select>
+
+  <!-- 以下是自定义的,根据用户昵称或者邮箱选择出记录，-->
+  <select id="selectByNicknameOrEmail" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userEmail=#{userEmail,jdbcType=VARCHAR} OR userNickName=#{userNickname,jdbcType=VARCHAR}
   </select>
   <!-- 以下是自定义的,根据用户的邮箱选出用户的信息-->
   <select id="selectByUserEmail" resultMap="BaseResultMap" parameterType="java.lang.String">

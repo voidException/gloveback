@@ -35,6 +35,7 @@ import org.geilove.service.RegisterLoginService;
 import org.geilove.util.CreateFileUtil;
 import org.geilove.util.TimeUtil;
 import org.geilove.util.TokenData;
+import java.util.UUID;
 @Controller
 @RequestMapping("/demo/upload")
 public class FileUploadController {	 //发布推文,带图片的
@@ -46,21 +47,29 @@ public class FileUploadController {	 //发布推文,带图片的
 	
 	@RequestMapping(value="/multiUpload",method=RequestMethod.POST)
 	@ResponseBody
-	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{	
+	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{
+        //System.out.println("aaaaa");
 		CommonRsp commonRsp=new CommonRsp();
 		String token=request.getParameter("token");			
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32);		
 		Long userid=Long.valueOf(useridStr).longValue();
-		//Long userid=Long.parseLong(useridstr);
-		String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
-		//System.out.println(passwdTrue);
+        String passwdTrue=null;
+        try{
+            passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+        }catch (Exception e){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("发布推文出错");
+            return commonRsp;
+        }
+
+
 		if(!userPassword.equals(passwdTrue)){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("用户密码不对，非法");
 			return commonRsp;
 		}
-		List<String> imgPathArray=new ArrayList<String>(); 
+		List<String> imgPathArray=new ArrayList<String>();  //这个是图片的URL地址。http://wwww.geilove.org/path/weiboPhoto/.../88.png
 
 		//创建一个通用的多部分解析器  
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
@@ -72,7 +81,7 @@ public class FileUploadController {	 //发布推文,带图片的
             //System.out.println(multiRequest.getParameterNames().nextElement()); 
             Iterator<String> iter = multiRequest.getFileNames();
             //在本次上传中，这个部分路径是常量
-            String constDirectory="/Users/mfhj-dz-001-424/doctorImg/weiboPhoto"; //tomcat配置的常量路径+weiboPhoto
+            String constDirectory="/huzhuguanjia/weiboPhoto"; //tomcat配置的常量路径+weiboPhoto
             String timeDirectory=new TimeUtil().getNyDay(); //每天创建一个文件夹,时间路径
             String directory=constDirectory+timeDirectory+'/'+useridStr+'/';                       
             
@@ -95,10 +104,9 @@ public class FileUploadController {	 //发布推文,带图片的
                         //这里面方法更安全，待测试
                         if(CreateFileUtil.createDirectory(directory)==1){//目录已经存在或创建成功                
                         	  File localFile = new File(path);  
-                              file.transferTo(localFile); 
-                              System.out.println(directory);
-                              //这里的path指的是配置里的名字,注意path前面没有/，客户端拼接url地址时应该加上
-                              String needPath="path/weiboPhoto"+timeDirectory+fileName+".png"; 
+                              file.transferTo(localFile);
+                              //String needPath="localhost:8080/path/weiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png"; //测试使用的
+                              String needPath="http://www.geilove.org/path/weiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png";
                               imgPathArray.add(needPath);                             
                         }else{
                         	commonRsp.setMsg("创建磁盘目录失败");
@@ -127,6 +135,16 @@ public class FileUploadController {	 //发布推文,带图片的
         tweet.setPublicsee((byte)1); //1代表可见
         tweet.setDeletetag((byte)1); //1代表未删除
         tweet.setVideoaddress(null); //推文只限制3张图
+        tweet.setTweetbackupsix(0); //默认承诺0，代表无承诺
+        String tweetuuid = UUID.randomUUID().toString();
+        tweet.setBackupneight(tweetuuid); //tweet的UUID
+
+        tweet.setBackupnine(request.getParameter("userNickname")); //用户的昵称
+        tweet.setBackupten(request.getParameter("selfintroduce")); //用户的自我介绍
+        tweet.setBackupeleven(request.getParameter("userphoto")); //用户的头像地址
+        tweet.setCityname(request.getParameter("cityName")); //用户所在的城市
+        //还有个发表用户的uuid由于表中无，暂时没加入
+        //tweet.setuserUUIDTweet(request.getParameter("userUUIDTweet"));
         tweet.setPromise(null); //如果是救助一个人，则必须有文字
         tweet.setTweetbackupseven(null);
         tweet.setTweetbackupfour(1); //备用4等于1代表是一个普通的推文2代表的是救助     

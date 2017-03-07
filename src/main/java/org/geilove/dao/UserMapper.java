@@ -40,7 +40,10 @@ public interface UserMapper {
     List<User> selectMenListLoadMore(Map<String,Object> map); //爱心社等列表，刷新
     
     List<User>  gongyiMenList(Map<String,Object> map); //公益排行榜
+
     List<User>  gongyiMenListloadMore(Map<String,Object> map);//公益排行榜，loadMore
+
+    User selectByNicknameOrEmail(Map<String,Object> map); //根据用户的昵称或者邮箱选择出一个用户，用于注册时检查是否已有注册用户
 }
 
 

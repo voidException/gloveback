@@ -8,6 +8,8 @@ import org.geilove.dao.UserMapper;
 import org.geilove.pojo.User;
 import org.geilove.service.RegisterLoginService;
 
+import java.util.Map;
+
 @Service("registerloginservice")
 public class RegisterLoginServiceImpl implements RegisterLoginService {
 	
@@ -48,6 +50,13 @@ public class RegisterLoginServiceImpl implements RegisterLoginService {
 	public int updateUserSelective(User record){
 		int tag =userMapper.updateByPrimaryKeySelective(record);
 		return tag;
+	}
+
+	@Override
+	public User selectByNicknameOrEmail(Map<String,Object> map){ //根据昵称或者邮箱检查用户是否注册
+        User user;
+        user=userMapper.selectByNicknameOrEmail(map);
+        return  user;
 	}
 }
 
