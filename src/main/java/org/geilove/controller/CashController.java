@@ -109,7 +109,7 @@ public class CashController {
                         if(CreateFileUtil.createDirectory(directory)==1){//目录已经存在或创建成功                
                         	  File localFile = new File(path);  
                               file.transferTo(localFile); 
-                              System.out.println(directory);
+                              //System.out.println(directory);
                               //这里的path指的是配置里的名字,注意path前面没有/，客户端拼接url地址时应该加上
                               String needPath="path/weiboPhoto"+timeDirectory+fileName+".png"; 
                               imgPathArray.add(needPath);                             

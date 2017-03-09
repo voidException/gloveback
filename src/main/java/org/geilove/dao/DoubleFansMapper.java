@@ -25,12 +25,11 @@ public interface DoubleFansMapper {
     List<PartWatchPojo> getPartWatchProfile(Map<String,Object> map); //获取DoubleFans表中的一组数据，还没实现
     
     List<Long> getWatchids(Map<String,Object> map); //获取用户所关注人的一组id。
-    
-    List<PeopleListVo> getWatchidsListMen(Map<String,Object> map); //获取用户所关注人的一组ids供爱心社列表等使用刷新
-    List<PeopleListVo> getWatchidsListMenLoadMore(Map<String,Object> map); //获取用户所关注人的一组ids供爱心社列表等使用 loadMore
-    
-    List<IwatchPeopleVo> getMyFansids(Map<String,Object> map);  //根据用户的id获得用户粉丝的ids,初始加载以及刷新
+
+
+    List<PeopleListVo> getWatchidsListMenLoadMore(Map<String,Object> map); //获取我关注的人的id以及关注时间，查看我关注的人用
     List<IwatchPeopleVo>   getMyFansidsLoadMore(Map<String,Object> map);  //根据用户的id获得用户粉丝的ids,loadMore
+
 
     //这个实现有问题，暂时不知道什么地方用到了，以后要改
     List<PartHelpPojo> selectHelpMen(Map<String,Object> map); //自定义，获得帮助人-被帮助人关系表

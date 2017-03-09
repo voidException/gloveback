@@ -17,11 +17,11 @@ public class DiscussReply {
 
     private String discussreplytext;
 
-    private String backupone;
+    private String backupone; //昵称
 
-    private String backuptwo;
+    private String backuptwo; // 头像的url地址
 
-    private String backupthree;
+    private String backupthree; //评论的uuid
 
     private String backupfour;
 

@@ -30,6 +30,8 @@ public class WatchServiceImpl implements WatchService{
 		List<PartWatchPojo> lp=dbMapper.getPartWatchProfile(map);
 		return lp;
 	}
+
+
 	//该方法实现是错误的，应该没有类使用
 	@Override
 	public List<PartHelpPojo> getWatchList(Map<String,Object> map){

@@ -26,7 +26,7 @@ public class HelpListController {
 		HelpListRsp rsp=new HelpListRsp();
 		Map<String,Object> map=new HashMap<String,Object>();
 		
-		List<PartHelpPojo> php=helpService.getPartHelpList(map);
+		//List<PartHelpPojo> php=helpService.getPartHelpList(map);
 		//提取出php的userID，组成列表lst,然后查询其余Profile
 		//List<OtherPartPojo> profile=helpService.getOtherPartHelpList(lst);
 		//将php和profile的值合并在一起，存放在rsp中，然后返回

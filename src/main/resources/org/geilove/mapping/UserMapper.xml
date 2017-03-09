@@ -52,20 +52,7 @@
     <result column="tobeusethree" jdbcType="INTEGER" property="tobeusethree" />
   </resultMap>
 
-  <!--  自定义，爱心社列表，志愿者列表 监督用户列表，初始加载以及刷新-->
-  <select id="selectMenList" resultMap="BaseResultMap" >
-    select      
-	   <include refid="Base_Column_List" />
-    from 
-    	user
-    where 
-     	userType= #{tag,jdbcType=INTEGER} 
-    order by 
-     	registerDate  desc
-    limit 
-     	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}    
-  </select>
-  <!--自定义结束 -->
+
   <!--  自定义，爱心社列表，志愿者列表 监督用户列表 ，loadMore-->
   <select id="selectMenListLoadMore" resultMap="BaseResultMap" >
     select      
@@ -80,29 +67,15 @@
      	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}    
   </select>
   <!--自定义结束 -->
-  
- <!-- 公益排行榜，初始加载 -->
-  <select id="gongyiMenList" resultMap="BaseResultMap" >
-    select      
-	   <include refid="Base_Column_List" />
-    from 
-    	user
-    where 
-     	tobeuseone= #{tag,jdbcType=INTEGER}
-    order by 
-     	userDonate  desc
-    limit 
-     	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}    
-  </select>
-  <!-- 公益排行榜结束 -->
-   <!-- 公益排行榜，初始加载 -->
+
+   <!-- 公益排行榜，-->
   <select id="gongyiMenListloadMore" resultMap="BaseResultMap" >
     select      
 	   <include refid="Base_Column_List" />
     from 
     	user
     where 
-     	tobeuseone= #{tag,jdbcType=INTEGER} AND userDonate &lt; #{money}
+     	tobeuseone= 2 AND userDonate &lt; #{money}
     order by 
      	userDonate  desc
     limit 

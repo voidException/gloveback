@@ -24,8 +24,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
-    List<User> selectMenList(Map<String,Object> map); //查询监督处爱心社等列表
+
     
     List<User>  getPayOrWatchPeople(List<Long> ll); //查询关注我 我关注的人列表,查询我帮助或者帮助我的人列表
     
@@ -37,9 +36,7 @@ public interface UserMapper {
     
     String findPasswd(String userEmail);
     
-    List<User> selectMenListLoadMore(Map<String,Object> map); //爱心社等列表，刷新
-    
-    List<User>  gongyiMenList(Map<String,Object> map); //公益排行榜
+    List<User> selectMenListLoadMore(Map<String,Object> map); ////1普通，2社团，3监督，4志愿者等列表
 
     List<User>  gongyiMenListloadMore(Map<String,Object> map);//公益排行榜，loadMore
 

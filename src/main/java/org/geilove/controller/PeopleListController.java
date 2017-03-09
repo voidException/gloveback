@@ -1,4 +1,5 @@
 package org.geilove.controller;
+import org.geilove.requestParam.WatchListParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,19 +45,18 @@ public class PeopleListController {
 	//1普通，2社团，3监督，4志愿者，5社会公益机构 
 	@RequestMapping(value="/lsmen")
 	public @ResponseBody PeopleListRsp getMenList(@RequestBody CommonPeopleListParam commonPeopleListParam ){
-		
-		Integer loadMoreTag=commonPeopleListParam.getLoadMoreTag();//1代表刷新，2代表loadMore
+
 		Integer tag=commonPeopleListParam.getTag(); //1普通，2社团，3监督，4志愿者， 
 		Integer page=commonPeopleListParam.getPage();
 		Integer pageSize=commonPeopleListParam.getPageSize();
-		String lastTime=commonPeopleListParam.getLastTime(); //		
+		String  lastTime=commonPeopleListParam.getLastTime(); //
 		PeopleListRsp rsp=new PeopleListRsp();		
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("loadMoreTag", loadMoreTag);
 		map.put("tag", tag);
 		map.put("page", page);
 		map.put("pageSize", pageSize);
 		map.put("lastTime", lastTime); //这里的lastTime指的就是用户的注册时间
+
 		List<User> lp=new ArrayList<User>(); 
 		try{
 			lp=peopleListService.getMenList(map);
@@ -64,6 +64,7 @@ public class PeopleListController {
 				rsp.setData(lp);
 				rsp.setMsg("没有更多数据了");
 				rsp.setRetcode(2001);
+				return rsp;
 			}
 		}catch(Exception e){
 			rsp.setData(null);
@@ -73,32 +74,26 @@ public class PeopleListController {
 		}
 		//循环lp，将用户密码统一设置为null
 		rsp.setData(lp);
-		if(lp==null || lp.isEmpty()){
-			rsp.setMsg("没有更多数据了");
-			rsp.setRetcode(2001);
-		}else{
-			rsp.setMsg("获取Men列表成功");
-			rsp.setRetcode(2000);
-		}
+		rsp.setMsg("获取Men列表成功");
+		rsp.setRetcode(2000);
+
 		
 		return rsp;  //这个需要更改返回值
 	}
 	/*
-	 * 公益排行版列表，直接根据user表查找就可以
+	 * 公益排行榜列表，直接根据user表查找就可以
 	 * */
 	@RequestMapping(value="/donater")
 	public @ResponseBody PeopleListRsp getDonaterMen(@RequestBody DonaterListParam commonPeopleListParam ){
 		PeopleListRsp rsp=new PeopleListRsp();
-		Integer tag=commonPeopleListParam.getTag(); //1 捐钱了 2没捐钱。与user表的tobeuseone对应
+
 		Integer page=commonPeopleListParam.getPage();
 		Integer pageSize=commonPeopleListParam.getPageSize();				
 		Integer money=commonPeopleListParam.getMoney(); //对应User表的userDonate，要按照这个降序排序
-		Integer loadMoreTag=commonPeopleListParam.getLoadMoreTag(); //1刷新 2加载更多
+
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("tag", tag); //1代表未捐钱  2代表捐钱了
-		map.put("loadMoreTag", loadMoreTag);
-		map.put("page", page);
-		map.put("pageSize", pageSize);
+		map.put("page", 0);
+		map.put("pageSize", 6);
 		map.put("money", money);  //对应userDonate
 		
 		List<User> lp=new ArrayList<User>();
@@ -123,26 +118,26 @@ public class PeopleListController {
 	}
 	//我关注的人列表 
 	@RequestMapping(value="/watchs")
-	public @ResponseBody PeopleListRsp getWatchMen(@RequestBody CommonPeopleListParam commonPeopleListParam ){
+	public @ResponseBody PeopleListRsp getWatchMen(@RequestBody WatchListParam commonPeopleListParam ){
 		PeopleListRsp rsp=new PeopleListRsp();
+
 		Long userid=commonPeopleListParam.getUserID();	
 		Integer page=commonPeopleListParam.getPage();
-		Integer pageSize=commonPeopleListParam.getPageSize();		
-		Integer loadMoreTag=commonPeopleListParam.getLoadMoreTag(); //1刷新 2loadMore
+		Integer pageSize=commonPeopleListParam.getPageSize();
 		String lastTime=commonPeopleListParam.getLastTime();
-		Date watchsDate=new Date();
+
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("loadMoreTag", loadMoreTag);
+
 		map.put("userID", userid); //xml中是userid必须对应
 		map.put("page", page);
 		map.put("pageSize", pageSize);
 		map.put("lastTime", lastTime); // 这里的lastTime指的就是关注的时间
 		List<User> lp=new ArrayList<User>();
 		//先到关注表查询关注关心，获取到一组id，用这组id获取关注人列表已有现成代码	
-		List<PeopleListVo> listPVo=new ArrayList<PeopleListVo>(); //包含userid和时间戳的数据
+		List<PeopleListVo> listPVo; //包含userid和时间戳的数据
 		List<Long> ll=new ArrayList<Long>();
 		try{
-			//我所关注人的ids,根据关注的时间，是在这里进行了refresh和loadMore的控制,筛选出一组合适的ids
+			//我所关注人的ids,
 			listPVo=mainService.getWatcherIdsListMen(map); 
 			
 			if(listPVo==null ||listPVo.size()==0 ||listPVo.isEmpty()){
@@ -151,11 +146,10 @@ public class PeopleListController {
 				rsp.setRetcode(2001);
 				return rsp;
 			}
-			int i=0;
-			for( ;i<listPVo.size();i++){
+
+			for(int i=0 ;i<listPVo.size();i++){
 				ll.add(listPVo.get(i).getUseridbefocus());
 			}
-			watchsDate=listPVo.get(i-1).getPaydate(); //这个paydate要跟pojo对应，这意味着查看我捐钱列表需要个新的vo
 		}catch(Exception e){
 			rsp.setData(null);
 			rsp.setMsg("没有更多数据了");
@@ -164,9 +158,8 @@ public class PeopleListController {
 		}	
 		
 		try{
-			lp=peopleListService.getPayOrWatchMen(ll);
-			
-			if(lp.isEmpty() ||lp==null ||ll.size()==0 ){
+			lp=peopleListService.getPayOrWatchMen(ll);  //这个ll中的数字肯定是不同的
+			if(lp==null ||ll.size()==0 ){
 				rsp.setData(lp);
 				rsp.setMsg("还没有关注别人");
 				rsp.setRetcode(2001);
@@ -175,23 +168,24 @@ public class PeopleListController {
 		}catch(Exception e){
 			//System.out.println(e);			
 			rsp.setData(lp);
-			rsp.setMsg("没有更多数据了");
+			rsp.setMsg("获取我关注的人抛出异常");
 			rsp.setRetcode(2001);
 			return rsp; 
 		}
-		//循环lp，将用户密码统一设置为null
-		rsp.setData(lp);
-		//这里报错，看看什么原因
+		//循环lp，将用户密码统一设置为null，待实现
+
+
 		try {
-			lp.get(listPVo.size() - 2).setRegisterdate(watchsDate); //最后一项数据的注册时间更改为关注时间，妥协的做法
-		}
-		catch(Exception e){
-		    System.out.print(e);
+			Date watchsDate=listPVo.get(listPVo.size()-1).getPaydate(); //这个paydate要跟pojo对应，这意味着查看我捐钱列表需要个新的vo
+			lp.get(lp.size()-1).setRegisterdate(watchsDate); //最后一项数据的注册时间更改为关注时间，妥协的做法
+		}catch(Exception e){
 			rsp.setMsg("获取关注人列表失败");
 			rsp.setRetcode(2001);
 			rsp.setData(null);
 			return  rsp;
 		}
+
+		rsp.setData(lp);
 		rsp.setMsg("获取关注人列表成功");
 		rsp.setRetcode(2000);
 		return rsp;  //这个需要更改返回值
@@ -199,17 +193,14 @@ public class PeopleListController {
 
 	//我的粉丝列表
 	@RequestMapping(value="/fans")
-	public @ResponseBody PeopleListRsp getFansMen(@RequestBody CommonPeopleListParam commonPeopleListParam ){
+	public @ResponseBody PeopleListRsp getFansMen(@RequestBody WatchListParam commonPeopleListParam ){
 		PeopleListRsp rsp=new PeopleListRsp();	
 		Long userid=commonPeopleListParam.getUserID();			
 		Integer page=commonPeopleListParam.getPage();
-		Integer pageSize=commonPeopleListParam.getPageSize();		
-		Integer loadMoreTag=commonPeopleListParam.getLoadMoreTag(); //1刷新 2loadMore
+		Integer pageSize=commonPeopleListParam.getPageSize();
 		String lastTime=commonPeopleListParam.getLastTime();
-		Date watchsDate=new Date();
-		
+
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("loadMoreTag", loadMoreTag);
 		map.put("userid", userid); //xml中是userid必须对应
 		map.put("page", page);
 		map.put("pageSize", pageSize);
@@ -228,11 +219,10 @@ public class PeopleListController {
 				return rsp;
 			}
 			//循环lpvo将数据放入ll中
-			int i=0;
-			for( ;i<lpvo.size();i++){
+
+			for(int i=0 ;i<lpvo.size();i++){
 				ll.add(lpvo.get(i).getUseridfollowe());
 			}
-			watchsDate=lpvo.get(i-1).getPaydate(); //这个paydate要跟pojo对应，这意味着查看我捐钱列表需要个新的vo
 		}catch(Exception e){
 			rsp.setData(null);
 			rsp.setMsg("没有更多数据了");
@@ -253,29 +243,29 @@ public class PeopleListController {
 			rsp.setRetcode(2001);
 			return rsp; 
         } 
-		//循环lp，将用户密码统一设置为null
-        int i=0;
-		for( ;i<lpvo.size();i++){
-			ll.add(lpvo.get(i).getUseridfollowe());
-		}
-		
-		rsp.setData(lp);
-		//是用了关注的时间来获取一组ids，但是前端更新lastTime是用了最后一个用户的注册时间，为省事，这里把lp中，最末的用户注册时间，更改为lastTime
+		//循环lp，将用户密码统一设置为null,待实现
+        //是用了关注的时间来获取一组ids，但是前端更新lastTime是用了最后一个用户的注册时间，为省事，这里把lp中，最末的用户注册时间，更改为lastTime
 		//将lpvo中的最后一项数据的时间取出来，放入到lp中
-		 lp.get(lpvo.size()-1).setRegisterdate(watchsDate); //最后一项数据的注册时间更改为关注时间，妥协的做法		
-		 rsp.setMsg("获取我的粉丝列表成功");
-		 rsp.setRetcode(2000);
-		 return rsp;  //这个需要更改返回值
+		try{
+			Date watchsDate=lpvo.get(lpvo.size()-1).getPaydate(); //这个paydate要跟pojo对应，这意味着查看我捐钱列表需要个新的vo
+			lp.get(lp.size()-1).setRegisterdate(watchsDate); //最后一项数据的注册时间更改为关注时间，妥协的做法
+		}catch (Exception e){
+
+		}
+
+		rsp.setData(lp);
+		rsp.setMsg("获取我的粉丝列表成功");
+		rsp.setRetcode(2000);
+		return rsp;  //这个需要更改返回值
 	}
 	//帮助我的人列表
 	@RequestMapping(value="/helpme")
-	public @ResponseBody PeopleListRsp getHelpMeMen(@RequestBody CommonPeopleListParam commonPeopleListParam ){
+	public @ResponseBody PeopleListRsp getHelpMeMen(@RequestBody WatchListParam watchListParam ){
 		PeopleListRsp rsp=new PeopleListRsp();	
-		Long userid=commonPeopleListParam.getUserID();			
-		Integer loadMoreTag =commonPeopleListParam.getLoadMoreTag();
-		Integer page=commonPeopleListParam.getPage();
-		Integer pageSize=commonPeopleListParam.getPageSize();
-		String lastTime=commonPeopleListParam.getLastTime();
+		Long userid=watchListParam.getUserID();
+		Integer page=watchListParam.getPage();
+		Integer pageSize=watchListParam.getPageSize();
+		String lastTime=watchListParam.getLastTime();
 			
 		Map<String,Object> map=new HashMap<String,Object>();
 		
@@ -283,7 +273,6 @@ public class PeopleListController {
 		map.put("page", page);
 		map.put("pageSize", pageSize);
 		map.put("lastTime", lastTime);
-		map.put("loadMoreTag", loadMoreTag); //1代表刷新  2代表加载更多
 		List<User> lp=new ArrayList<User>();
 				
 		//先到捐钱人列表进行查询，得到一组id列表，然后用这组列表到User表查询moneysource表
@@ -328,20 +317,21 @@ public class PeopleListController {
 			lp.get(i).setTobeusetwo(lpp.get(i).getMoneynum()); //具体的钱数
 			lp.get(i).setRegisterdate(lpp.get(i).getHelptime()); //帮助的时间
 		}
+
 		rsp.setData(lp);
 		rsp.setMsg("获取帮助我的人列表成功");
 		rsp.setRetcode(2000);
 		return rsp;  //这个需要更改返回值
 	}
+
 	//我帮助的人列表,这个可以用
 	@RequestMapping(value="/ihelp")
-	public @ResponseBody PeopleListRsp getIhelpMen(@RequestBody CommonPeopleListParam commonPeopleListParam ){
+	public @ResponseBody PeopleListRsp getIhelpMen(@RequestBody WatchListParam watchListParam ){
 		PeopleListRsp rsp=new PeopleListRsp();	
-		Long userid=commonPeopleListParam.getUserID();			
-		Integer loadMoreTag =commonPeopleListParam.getLoadMoreTag();
-		Integer page=commonPeopleListParam.getPage();
-		Integer pageSize=commonPeopleListParam.getPageSize();
-		String lastTime=commonPeopleListParam.getLastTime();
+		Long userid=watchListParam.getUserID();
+		Integer page=watchListParam.getPage();
+		Integer pageSize=watchListParam.getPageSize();
+		String lastTime=watchListParam.getLastTime();
 			
 		Map<String,Object> map=new HashMap<String,Object>();
 		
@@ -349,15 +339,14 @@ public class PeopleListController {
 		map.put("page", page);
 		map.put("pageSize", pageSize);
 		map.put("lastTime", lastTime);
-		map.put("loadMoreTag", loadMoreTag); //1代表刷新  2代表加载更多
 		List<User> lp=new ArrayList<User>();
 				
 		//先到捐钱人列表进行查询，得到一组id列表，然后用这组列表到User表查询moneysource表
 		List<PartHelpPojo> lpp=new ArrayList<PartHelpPojo>();
 		try{
-			lpp=helpService.getGuyIHelp(map); //loadMore在这里使用
+			lpp=helpService.getGuyIHelp(map);
 		}catch(Exception e){
-			System.out.println(e);
+			//System.out.println(e);
 			rsp.setData(null);
 			rsp.setMsg("没有数据哦");
 			rsp.setRetcode(2001);
@@ -394,6 +383,7 @@ public class PeopleListController {
 			lp.get(i).setTobeusetwo(lpp.get(i).getMoneynum()); //具体的钱数
 			lp.get(i).setRegisterdate(lpp.get(i).getHelptime()); //帮助的时间
 		}
+
 		//设置lp的密码域为null
 		rsp.setData(lp);
 		rsp.setMsg("获取我帮助的人列表成功");

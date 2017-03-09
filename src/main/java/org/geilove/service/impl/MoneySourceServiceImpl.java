@@ -22,16 +22,17 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 
 	@Resource
 	private MoneysrcPinglunMapper moneysrcPinglunMapper;
-	 //获取我帮助的人的
-	 public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map){
-		 List<PartHelpPojo> php=moneySourceMapper.selectIhelp(map);
-		 return php;
-	 }
-	 //获取帮助我的人
-     public   List<PartHelpPojo> getHelpMeMen( Map<String,Object> map){
-    	 List<PartHelpPojo> php=moneySourceMapper.selectMenHelpMe(map);
-		 return php;
-     }
+//	 //获取我帮助的人的
+//	 public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map){
+//		 List<PartHelpPojo> php=moneySourceMapper.selectIhelp(map);
+//		 return php;
+//	 }
+//	 //获取帮助我的人
+//     public   List<PartHelpPojo> getHelpMeMen( Map<String,Object> map){
+//    	 List<PartHelpPojo> php=moneySourceMapper.selectMenHelpMe(map);
+//		 return php;
+//     }
+
      //获取"支持了"列表
 	public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map){
      	List<MoneySource>  lms=moneySourceMapper.getMoneySourceList(map);

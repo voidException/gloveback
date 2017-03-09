@@ -11,6 +11,8 @@ public interface RenZhengMapper {
 
     RenZheng selectByPrimaryKey(Long renzhengid);
 
+    RenZheng selectByUseriD(Long userid); //自定义，根据表中的useriD查找出记录
+
     int updateByPrimaryKeySelective(RenZheng record);
 
     int updateByPrimaryKey(RenZheng record);

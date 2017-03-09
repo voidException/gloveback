@@ -12,7 +12,7 @@ import org.geilove.vo.WeiBo;
 import java.util.Map;
 
 public interface  MainService {
-	public List<Tweet> getTweetList(Map<String, Object> map); //根据用户的id，获取一组推文
+
 	
 	public List<Tweet> getZhuanfaTweetList(Map<String,Object> map);// 根据SourceMsgID=tweetID获取一条推文的转发推文。
 	

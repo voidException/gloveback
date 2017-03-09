@@ -5,7 +5,7 @@ import java.util.Date;
 public class PeopleListVo {
 
 	private Long  useridbefocus;
-	private Date paydate;
+	private Date  paydate;
 
 	public Long getUseridbefocus() {
 		return useridbefocus;

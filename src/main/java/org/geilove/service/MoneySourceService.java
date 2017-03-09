@@ -1,17 +1,19 @@
 package org.geilove.service;
+//所有涉及到moneysource 表的都放到这里面来
+
 import java.util.List;
 import java.util.Map;
-
 import  org.geilove.pojo.MoneySource;
 import org.geilove.pojo.MoneysrcPinglun;
 import org.geilove.requestParam.BackUpParam;
 import org.geilove.response.CommonRsp;
 import org.geilove.sqlpojo.PartHelpPojo;
 public interface MoneySourceService {
-        public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map); //获取我帮助的人
-        public   List<PartHelpPojo> getHelpMeMen( Map<String,Object> map);//获取帮助我的人
+//        public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map); //获取我帮助的人
+//        public   List<PartHelpPojo> getHelpMeMen( Map<String,Object> map);//获取帮助我的人
 
-        //获取完整的，MoneySource 列表
+
+        //获取完整的，"支持了" 列表
         public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map); //获取帮助我的人
 
         //根据MoneySourceID 获取其对应的评论

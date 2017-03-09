@@ -5,24 +5,19 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.geilove.requestParam.QueryWatchIfParam;
 import org.geilove.response.QueryIfWatchRsp;
-import org.geilove.sqlpojo.PartHelpPojo;
 import org.geilove.sqlpojo.PartWatchPojo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.geilove.vo.FollowVo;
 import org.geilove.pojo.DoubleFans;
 import org.geilove.requestParam.CancelWatchParam;
 import org.geilove.requestParam.FollowParam;
-import org.geilove.requestParam.WatchListParam;
+
 import org.geilove.response.CommonRsp;
-import org.geilove.response.WatchListRsp;
 import org.geilove.service.RegisterLoginService;
 import org.geilove.service.RelationService;
 import org.geilove.service.WatchService;
