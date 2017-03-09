@@ -88,17 +88,7 @@ public class MainServiceImpl implements MainService {
 	@Deprecated
 	public List<Tweet> getWeiBoList(Map<String,Object>maps){
 		List<Tweet> lsTweet=new ArrayList<Tweet>();
-		maps.remove("symbol"); //其实不用移除的
-		Object flag=maps.get("flag");
-		if(flag.equals(1)){
-			maps.remove("lastItemstart");
-			maps.remove("flag");
-			lsTweet=tweetMapper.findByUserIds(maps);
-		}else{
-			maps.remove("lastUpdate");
-			maps.remove("flag");
-			lsTweet=tweetMapper.findByUserIdsLoadMore(maps);
-		}		
+		lsTweet=tweetMapper.findByUserIdsLoadMore(maps);
 		return lsTweet;
 	}
 

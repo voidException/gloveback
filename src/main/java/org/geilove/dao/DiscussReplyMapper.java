@@ -15,8 +15,7 @@ public interface DiscussReplyMapper {
     int updateByPrimaryKeySelective(DiscussReply record);
 
     int updateByPrimaryKey(DiscussReply record);
-    
-    List<DiscussReply> getTweetCommentList(Map<String,Object> map);
+
     
     List<DiscussReply>  getTweetCommentListloadMore(Map<String,Object> map);
      

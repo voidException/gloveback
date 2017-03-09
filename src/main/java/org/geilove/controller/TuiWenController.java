@@ -92,7 +92,6 @@ public class TuiWenController {
         }
         /*1.接下来for循环，获取一个推文中被转发的推文*/
 
-
         for (int i=0;i<tweets.size();i++){
             org.geilove.vov.WeiBo weiBo=new org.geilove.vov.WeiBo();
             weiBo.setTuiwen(tweets.get(i));

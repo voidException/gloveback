@@ -1,18 +1,13 @@
 package org.geilove.requestParam;
 
 public class CommentListParam {
-	    private Integer tag;
+
 		private Integer  page;
 		private Integer  pageSize;
 		private Long     tweetid;
 		private String  lastCommentTime;
 		
-		public Integer getTag() {
-			return tag;
-		}
-		public void setTag(Integer tag) {
-			this.tag = tag;
-		}
+
 		public String getLastCommentTime() {
 			return lastCommentTime;
 		}

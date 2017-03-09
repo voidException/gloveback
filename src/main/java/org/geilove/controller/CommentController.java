@@ -47,14 +47,20 @@ public class CommentController {
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("用户密码不对，非法");
 			return commonRsp;
-		}	
-	
+		}
+
+		DiscussReply dr=new DiscussReply();
+
 		String content=request.getParameter("content");
 		String tuiwenid=request.getParameter("tuiwenid");
-		DiscussReply dr=new DiscussReply();
+		String userphoto=request.getParameter("userphoto");
+		String usernickname=request.getParameter("usernickname");
+
+
 		dr.setTweetiddiscussreply(Long.valueOf(tuiwenid).longValue());
-	    dr.setDiscussreplytext(content); 
-        dr.setTweetiddiscussreply(userid);	   
+	    dr.setDiscussreplytext(content);
+	    dr.setBackupone(usernickname);
+	    dr.setBackuptwo(userphoto);
 	    dr.setDiscussreplytime(new Date());
 	    dr.setDiscussreplyok(0); 
 	    try{
@@ -86,57 +92,35 @@ public class CommentController {
 	public @ResponseBody CommentsListRsp getCommentList(@RequestBody CommentListParam commentListParam){
 		 CommentsListRsp rsp=new CommentsListRsp();
 		 List<DiscussReply> ls=new ArrayList<DiscussReply>();
-		 Integer tag=commentListParam.getTag();
 		 Long tweetid=commentListParam.getTweetid();
 		 Integer page=commentListParam.getPage();
 		 Integer pageSize=commentListParam.getPageSize();
 		 String lastCommentTime=commentListParam.getLastCommentTime();
 		 Map<String,Object> map=new HashMap<String,Object>();
 		 map.put("tweetid", tweetid);
-		 map.put("page", page);
-		 map.put("pageSize", pageSize);
-		 map.put("tag",tag);
+		 map.put("page", 0);
+		 map.put("pageSize", 8);
 		 map.put("lastCommentTime", lastCommentTime);
 		 //System.out.println(commentListParam.getLastCommentTime());
-		 
-		 ls=commentService.getTweetComments(map);
-		 
+		 try{
+			 ls=commentService.getTweetComments(map);
+
+		 }catch (Exception e){
+		 	rsp.setMsg("获取推文评论列表出现异常");
+		 	rsp.setRetcode(2001);
+		 	rsp.setData(null);
+		 	return  rsp;
+		 }
 		 if(ls==null || ls.size()==0){
 			 rsp.setData(ls);
 			 rsp.setMsg("推文暂时没有评论哦");
 			 rsp.setRetcode(2001);
 			 return rsp;
 		 }
-		 //然后从ls里面获取评论者id，根据这组id取得用户的部分信息，组合返回
-		 List<Long> ll=new ArrayList<Long>(); 
-		 for(int i=0;i<ls.size();i++){
-			 ll.add(ls.get(i).getUseriddiscussreply()); //评论者的id
-		 }
-		 //System.out.println(ll.size());
-		 
-		 List<OtherPartHelpPojo> lp=new ArrayList<OtherPartHelpPojo>();
-		 lp=helpService.getOtherPartHelpList(ll); //根据id集合获取部分用户头像昵称等信息
-		 
-		 //System.out.println(lp.size());
-		 
-		 for(int k=0;k<ll.size();k++){
-				for(int p=0;p<lp.size();p++){
-					if(ll.get(k)==lp.get(p).getUserid()){
-						ls.get(k).setBackupone(lp.get(p).getUsernickname());
-						ls.get(k).setBackuptwo(lp.get(p).getUserphoto());						
-					}
-				}
-			}
-		 rsp.setData(ls);
-		 //判断ls，然后返回不同的提示信息
-		 if(ls==null || ls.size()==0){
-			 rsp.setMsg("推文暂时没有评论哦");
-			 rsp.setRetcode(2001);
-		 }else{
-			 rsp.setMsg("数据获取成功");
-			 rsp.setRetcode(2000);
-		 }
-		 return rsp;
+		rsp.setData(ls);
+		rsp.setMsg("获取推文评论成功");
+		rsp.setRetcode(2000);
+		return rsp;
 	}	
 }
 
