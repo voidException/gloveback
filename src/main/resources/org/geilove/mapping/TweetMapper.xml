@@ -62,18 +62,7 @@
   </select>
 
 
-  <!--  以下是自定义，根据用户的id获取一组推文,开始与刷新，适合查看自己发布的推文 -->
-  <select id="selectByMainKey" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-       select
-       <include refid="Base_Column_List" />
-       from 
-           tweet     
-       where  
-           userIDTweet= #{userID,jdbcType=INTEGER} AND publishTime > #{lastUpdate} 
-      order by publishTime  asc
-      limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
-  </select>
-  <!--  自定义select结束 -->
+
   <!--  以下是自定义，根据用户的id获取一组推文,加载更多 适合查看自己发布的推文-->
   <select id="selectByMainKeyLoadMore" resultMap="BaseResultMap" parameterType="java.util.HashMap">
        select
@@ -86,18 +75,7 @@
       limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!--  自定义select结束 -->
-  <!--  以下是自定义，根据用户的id获取一组推文,开始与刷新，适合查看别人发布的推文 -->
-  <select id="selectByMainKeyShe" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-       select
-       <include refid="Base_Column_List" />
-       from 
-           tweet     
-       where  
-           userIDTweet= #{userID,jdbcType=INTEGER} AND publishTime > #{lastUpdate} AND publicSee!=2 
-      order by publishTime  asc
-      limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
-  </select>
-  <!--  自定义select结束 -->
+
   <!--  以下是自定义，根据用户的id获取一组推文,加载更多 适合查看别人发布的推文-->
   <select id="selectByMainKeyLoadMoreSHe" resultMap="BaseResultMap" parameterType="java.util.HashMap">
        select
@@ -133,26 +111,7 @@
           </foreach>
   </select> 
   <!-- 自定义结束 -->
-  <!-- 自定义开始,适合用户查看自己关注人的推文，开始与刷新-->
-  <select id="findByUserIds" resultType="org.geilove.pojo.Tweet" parameterType="java.util.HashMap">
-       select
-       <include refid="Base_Column_List" />
-       from tweet
-       <where>
-          <if test="list!=null">
-              AND userIDTweet in
-		         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-		                 #{item}
-		         </foreach>
-		  </if>
-		  <if test="lastUpdate!=null">
-          	 AND  publishTime > #{lastUpdate} AND publicSee!=2 
-          </if>
-      </where> 
-      order by publishTime asc
-      limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
-  </select> 
-  <!-- 自定义结束 -->
+
   <!-- 自定义开始 适合查看用户关注的人的微博，加载更多-->
   <select id="findByUserIdsLoadMore" resultType="org.geilove.pojo.Tweet" parameterType="java.util.HashMap">
        Select

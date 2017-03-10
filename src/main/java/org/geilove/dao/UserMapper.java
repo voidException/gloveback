@@ -27,8 +27,8 @@ public interface UserMapper {
 
     
     List<User>  getPayOrWatchPeople(List<Long> ll); //查询关注我 我关注的人列表,查询我帮助或者帮助我的人列表
-    
-    List<User> selectDonaterPeople(Map<String,Object> map); // 查询我帮助或者帮助我的人列表,没使用
+
+
    
     List<OtherPartHelpPojo> selectUserPartProfile(List<Long> lst); //给定一组id，获取用户的头像昵称简介
     

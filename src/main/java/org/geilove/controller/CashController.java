@@ -10,10 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -68,13 +65,19 @@ public class CashController {
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32);		
 		Long userid=Long.valueOf(useridStr).longValue();
-		String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
-		//System.out.println(passwdTrue);
-		if(!userPassword.equals(passwdTrue)){
-			commonRsp.setRetcode(2001);
-			commonRsp.setMsg("用户密码不对，非法");
-			return commonRsp;
-		}
+		try{
+            String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+            if(!userPassword.equals(passwdTrue)){
+                commonRsp.setRetcode(2001);
+                commonRsp.setMsg("用户密码不对，非法");
+                return commonRsp;
+            }
+        }catch (Exception e){
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("用户身份验证出现异常");
+            return commonRsp;
+        }
+
 		List<String> imgPathArray=new ArrayList<String>(); 
 
 		//创建一个通用的多部分解析器  
@@ -87,7 +90,7 @@ public class CashController {
             //System.out.println(multiRequest.getParameterNames().nextElement()); 
             Iterator<String> iter = multiRequest.getFileNames();
             //在本次上传中，这个部分路径是常量
-            String constDirectory="/Users/mfhj-dz-001-424/doctorImg/weiboPhoto"; //tomcat配置的常量路径+weiboPhoto
+            String constDirectory="/huzhuguanjia/weiboPhoto"; //tomcat配置的常量路径+weiboPhoto
             String timeDirectory=new TimeUtil().getNyDay(); //每天创建一个文件夹,时间路径
             String directory=constDirectory+timeDirectory+'/'+useridStr+'/';                       
             
@@ -125,35 +128,73 @@ public class CashController {
             }//while             
         }// if因为是表单，所以一定会执行if里面，while循环发现无图片会跳出if外
 		Tweet tweet=new Tweet();
-		tweet.setUseridtweet(userid); //发布推文的userid
-		tweet.setSourcemsgid(new Long(1));//1代表非转发
-        String content=request.getParameter("content"); //推文内容，有关困难的详细描述
-        tweet.setMsgcontent(content); //放入推文内容到tweet中
+        String tweetUUID = UUID.randomUUID().toString();
+        String cashUUID=UUID.randomUUID().toString();
+        tweet.setBackupneight(tweetUUID);                   //推文的uuid
+        tweet.setCashuuid(cashUUID);                         //cashUUID
+
+		tweet.setUseridtweet(userid);                       //发布推文的userid
+		tweet.setSourcemsgid(new Long(0));            //0 是默认值
+
+        String moneyTitle=request.getParameter("moneyTitle");//求助的标题
+        tweet.setBackuptwelve(moneyTitle);
+
+        String content=request.getParameter("description");//推文内容，有关困难的详细描述
+        tweet.setMsgcontent(content);
+
+        String chengnuoType=request.getParameter("chengnuoType");
+        tweet.setTweetbackupsix(new Integer(chengnuoType)); //承诺的类型
         String chengnuoContent=request.getParameter("chengnuoContent"); //承诺的语句，这个要放到推文表
-        tweet.setPromise(chengnuoContent); //受助人的承诺
-        tweet.setTagid((byte)1 );
-        tweet.setTopic(new Long(1));
-        tweet.setBoxtimes(0);
-        tweet.setCommenttimes(0);
-        tweet.setOk(0);
+        tweet.setPromise(chengnuoContent);
+
+        String usernickname=request.getParameter("usernickname"); //用户的昵称
+        tweet.setBackupnine(usernickname);
+
+        String selfintroduce=request.getParameter("selfintroduce"); //用户的自我介绍
+        tweet.setBackupten(selfintroduce);
+
+        String userPhoto=request.getParameter("userPhoto"); //用户的头像地址
+        tweet.setBackupeleven(userPhoto);
+
+        tweet.setCashid(new Long(0)); //默认为零，这个字段没有使用
+
+        String cityName=request.getParameter("cityName"); //受助用户所在的城市
+        tweet.setCityname(cityName);
+
+        tweet.setTagid((byte)1 );               //1代表这个是原创
+        tweet.setTopic(new Long(1));     //从属于的话题 默认是1，没有使用
+        tweet.setBoxtimes(0);                   // 收藏的数量
+        tweet.setCommenttimes(0);               //被评论的次数，默认是 0
+        tweet.setOk(0);                         //赞的次数，默认是0
         Date date=new Date();
-        tweet.setPublishtime(date);
-        tweet.setReportedtimes(0);
-        tweet.setPublicsee((byte)1); //1代表可见
-        tweet.setDeletetag((byte)1); //1代表未删除
-        tweet.setVideoaddress(null); //推文只限制3张图
-        tweet.setPromise(null); //如果是救助一个人，则必须有文字
-        tweet.setTweetbackupseven(null);
-        tweet.setTweetbackupfour(1); //备用4等于1代表是一个普通的推文2代表的是救助     
-        tweet.setTweetbackupfive(new Long(1)); //2代表党推文是救助时cash表
+        tweet.setPublishtime(date);             //推文发布的时间
+        tweet.setReportedtimes(0);              //被举报的次数，默认是0
+
+        tweet.setPublicsee((byte)1);            //1代表可见
+        tweet.setDeletetag((byte)1);           //1代表未删除
+
         for(int i=0;i<imgPathArray.size();i++){
-        	if(tweet.getTweetbackupone()==null){
-        		tweet.setTweetbackupone(imgPathArray.get(i));
-        	}else if(tweet.getTweetbackuptwo()==null){
-        		tweet.setTweetbackuptwo(imgPathArray.get(i));
-        	}else{
-        		tweet.setTweetbackupthree(imgPathArray.get(i));
+        	if(i==0){
+        		tweet.setVideoaddress(imgPathArray.get(0));
         	}
+        	if(i==1){
+                tweet.setTweetbackupone(imgPathArray.get(1));
+
+        	}
+            if(i==2){
+                tweet.setTweetbackuptwo(imgPathArray.get(2));
+
+            }
+        	if(i==3){
+        		tweet.setTweetbackupthree(imgPathArray.get(3));
+        	}
+            if(i==4){
+                tweet.setTweetbackupseven(imgPathArray.get(4));
+            }
+            if(i==5){
+                tweet.setBackupeight(imgPathArray.get(5));
+            }
+
         }  
         try{
         	Integer tag=mainService.addTweet(tweet);
@@ -163,37 +204,67 @@ public class CashController {
         		return commonRsp;
         	}
         }catch( Exception e){
-        	System.out.println(e);
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("救助信息入库出现异常");
+            return commonRsp;
+
         }
+
         //把其它的数据插入到cash表中
         Cash cash=new Cash();
-        String circleUserName=request.getParameter("AXSnickName"); //爱心社昵称
-        cash.setCircleusername(circleUserName);
-        String superUserName=request.getParameter("JDnickName"); //监督处昵称
-        cash.setSuperusername(superUserName);
-        String  dutyUserName=request.getParameter("JTFZnickName"); //具体负责人昵称
-        cash.setDutyusername(dutyUserName);
-        String  beHelpUserName=request.getParameter("SZRnickName"); //受助人昵称
-        cash.setBehelpusername(beHelpUserName);
-        String  backupone=request.getParameter("FQRnickName"); //发起人昵称
-        cash.setBackupone(backupone);
+
+        String shouZhurenName=request.getParameter("shouZhurenName");
+        String idZhengming=request.getParameter("idZhengming"); //是否有身份证明
+        String jwZhengming=request.getParameter("jwZhengming"); //是否用居委会证明
+        String yyZhengming=request.getParameter("yyZhengming"); //是否有医院证明
+        String pinkunZhengming=request.getParameter("pinkunZhengming"); //贫困证明
+        String relationZhengming=request.getParameter("relationZhengming");   //收款人关系证明
+
+        String targetCash=request.getParameter("targetMoney"); //目标金额
+
+        String closetime=request.getParameter("endDate"); //账户关闭的时间
+        String  duration=request.getParameter("duration"); //持续的时长
+
+        cash.setCashuuid(cashUUID);              //cash的UUID  /*cash的uuid和tweetuuid相互存入对方*/
+        cash.setCashtweetuuid(cashUUID);         //tweetUUID;
+        cash.setBehelpusername(usernickname);   //受助人的互助管家昵称，同推文的昵称
+        cash.setBehelpuserid(userid);           // 受助人的iD
+        cash.setBehelpusername(shouZhurenName); //受助人真实姓名
+        cash.setPromisetype(new Integer(chengnuoType)); // 承诺类型
+        cash.setPromisemiaoshu(chengnuoContent);       //承诺的内容
+        /*各种证明*/
+        cash.setProveone( new Integer(idZhengming));
+        cash.setProvetwo(new Integer(jwZhengming));
+        cash.setProvethree(new Integer(yyZhengming));
+        cash.setProvefour(new Integer(pinkunZhengming));
+        cash.setProvefive(new Integer(relationZhengming));
+
+
         cash.setCountstate((byte)2); // 账户开启
         cash.setRealcash(0); //开始的时候实际金额是0
         cash.setGetmoneytag((byte)1); //1 代表还不可以提取钱
         cash.setCashok((byte)1); //1代表不可以提取钱
         cash.setSpendmoney(0); //已经支出的钱
+
+        cash.setCountstate((byte)1);   //账户是关闭状体
+        cash.setTargetcash(new Integer(targetCash));  //目标金额。
+        cash.setGetmoneytag((byte)1);   //不可以提取
+        cash.setCashok((byte)1);   //未达到募捐金额
+        cash.setSpendmoney(0);   //支出金额是0
+        cash.setSumaffirm(0);    //证人数量是0
+        cash.setSumattention(0);  //关注的次数是0
+        cash.setSumbackup(0);     //支持的次数为0
+        cash.setSummanbackup(0);  //支持的人数为0
+
+        cash.setCreatedate(new Date());  //创立的时间
+        cash.setSumdays(new Integer(duration)); //持续的时长
+        cash.setClosetime(new Date(closetime));  //字符串转时间类型，需要测试
+        cash.setProgressstate(0);   //进度状态，0未审核
+        cash.setCashcityname(cityName); //用户所在的城市
+        cash.setBackupfive(0);   //进度更新的次数
+
+
         
-        String idZhangming=request.getParameter("idZhangming"); //是否有身份证明
-        String jwZhengming=request.getParameter("jwZhengming"); //是否用居委会证明
-        String yyZhengming=request.getParameter("yyZhengming"); //是否有医院证明
-        String qtZhengming=request.getParameter("qtZhengming"); //是否有其它权威证明
-        String promiseType=request.getParameter("chengnuoType"); //承诺的类型
-        //String chengnuoContent=request.getParameter("chengnuoContent"); //承诺的语句，这个要放到推文表
-        String targetCash=request.getParameter("targetMoney"); //目标金额
-        String  opentime=request.getParameter("startDate"); //账户开启时间
-        String closetime=request.getParameter("endDate"); //账户关闭的时间
-        String backupsix=request.getParameter("duration"); //持续时长，backupsix存放
-        String  backupfour=request.getParameter("moneyTitle"); //筹款的标题 
         try{
         	Integer tag=cashService.cashInsert(cash);
         	if(tag!=1){ 
@@ -202,7 +273,9 @@ public class CashController {
         		return commonRsp;
         	}
         }catch( Exception e){
-        	System.out.println(e);
+            commonRsp.setRetcode(2001);
+            commonRsp.setMsg("cash表入库抛出异常");
+            return commonRsp;
         }
         
     	commonRsp.setMsg("发布成功");

@@ -122,22 +122,7 @@
         </foreach>       
   </select>
   <!--自定义结束 -->
-  
-   <!--  已废弃-->
-  <select id="selectDonaterPeople" resultType="org.geilove.sqlpojo.DonaterPojo" >
-    select      
-	    userID, userNickName,  userType, certificateType, 
-	    selfIntroduce, userTag,registerDate, userPhoto, photoUpload,userHelpsMan,userDonate
-    from 
-    	user
-    where 
-     	userType= #{tag,jdbcType=INTEGER} 
-    order by 
-     	userDonate  desc
-    limit 
-     	#{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}       
-  </select>
-  <!--自定义结束 -->
+
   <!--这个是自定义的返回部分字段的，不知道行不行啊 -->
   <resultMap id="UserPhotoResultMap" type="org.geilove.vo.UserPhotoUrl" >
      <id column="userID" property="userid" jdbcType="BIGINT" />
