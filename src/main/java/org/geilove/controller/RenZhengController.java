@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.geilove.pojo.RenZheng;
 import org.geilove.service.RenZhengService;
+import org.geilove.util.ServerIP;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,9 @@ public class RenZhengController {
 	@ResponseBody
 	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{	
 		CommonRsp commonRsp=new CommonRsp();
+
+		String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
+
 		String token=request.getParameter("token");		
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32); //取得userid部分		
@@ -86,8 +90,8 @@ public class RenZhengController {
                         	  File localFile = new File(path);  
                               file.transferTo(localFile); 
                               //System.out.println(directory);
-							 //String needPath="127.0.0.1:8080/path/weiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png"; //测试使用的
-							  String needPath="http://www.geilove.org/path/renZhengPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png";
+							 String needPath= ipAndport+"path/weiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png"; //测试使用的
+							 // String needPath="http://www.geilove.org/path/renZhengPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png";
                               imgPathArray.add(needPath);                             
                         }else{
                         	commonRsp.setMsg("创建磁盘目录失败");

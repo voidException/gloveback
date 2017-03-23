@@ -46,6 +46,23 @@ new Vue({
                         console.log(err);
                     });
 
+        },
+        alertComment: function (){
+            //这里先检查用户是否登录了
+            //如果用户登录了，存储userToken等等数据，localStorage存储
+            if(localStorage.getItem('userToken')==null){
+                //弹出登录模态框
+
+                return; //return了，后续代码不执行
+
+            }
+            //弹出进度更新模态框
+            let  modal=document.getElementById("modal");
+            let  tips=document.getElementById("tips");
+            if (modal.style.display=="none" ||modal.style.display==""){
+                modal.style.display="block";
+                tips.style.display="block";
+            }
         }
     },
 

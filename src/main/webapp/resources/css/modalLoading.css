@@ -1,0 +1,20 @@
+.dialog{
+    display: none;
+    background-color: #FFFFFF;
+    opacity: 0.6;
+    filter:Alpha(Opacity=50);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:1744px;
+    width: 981px;
+    z-index: 50;
+
+}
+.dialogTips{
+
+    margin-top: 300px;
+    height: 40px;
+    width: 200px;
+    background-color: #43AC43;
+}

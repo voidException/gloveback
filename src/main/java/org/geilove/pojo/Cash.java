@@ -97,9 +97,9 @@ public class Cash {
 
     private String checkusernickname;
 
-    private String backupone;
+    private String backupone; //受助人身份证号
 
-    private String backuptwo;
+    private String backuptwo; //资金接收人联系电话
 
     private String backupthree;
 

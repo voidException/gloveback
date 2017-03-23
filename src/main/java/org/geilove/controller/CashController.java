@@ -1,4 +1,5 @@
 package org.geilove.controller;
+import org.geilove.util.ServerIP;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,14 +8,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.geilove.pojo.Cash;
 import org.geilove.pojo.Tweet;
 import org.geilove.requestParam.CashParam;
@@ -60,7 +60,9 @@ public class CashController {
 	@ResponseBody
 	public CommonRsp addHelpMan(HttpServletRequest request)throws IllegalStateException, IOException{	
 		CommonRsp commonRsp=new CommonRsp();
-		//System.out.println("接收到请求");
+
+        String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
+
 		String token=request.getParameter("token");			
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32);		
@@ -90,7 +92,7 @@ public class CashController {
             //System.out.println(multiRequest.getParameterNames().nextElement()); 
             Iterator<String> iter = multiRequest.getFileNames();
             //在本次上传中，这个部分路径是常量
-            String constDirectory="/huzhuguanjia/weiboPhoto"; //tomcat配置的常量路径+weiboPhoto
+            String constDirectory="/huzhuguanjia/helpWeiboPhoto"; //tomcat配置的常量路径+weiboPhoto
             String timeDirectory=new TimeUtil().getNyDay(); //每天创建一个文件夹,时间路径
             String directory=constDirectory+timeDirectory+'/'+useridStr+'/';                       
             
@@ -114,7 +116,8 @@ public class CashController {
                               file.transferTo(localFile); 
                               //System.out.println(directory);
                               //这里的path指的是配置里的名字,注意path前面没有/，客户端拼接url地址时应该加上
-                              String needPath="path/weiboPhoto"+timeDirectory+fileName+".png"; 
+                              String needPath=ipAndport+"path/helpWeiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png"; //测试使用的
+                              //String needPath="http://www.geilove.org/path/helpWeiboPhoto"+timeDirectory+'/'+useridStr+'/'+fileName+".png";
                               imgPathArray.add(needPath);                             
                         }else{
                         	commonRsp.setMsg("创建磁盘目录失败");
@@ -127,6 +130,7 @@ public class CashController {
                 
             }//while             
         }// if因为是表单，所以一定会执行if里面，while循环发现无图片会跳出if外
+
 		Tweet tweet=new Tweet();
         String tweetUUID = UUID.randomUUID().toString();
         String cashUUID=UUID.randomUUID().toString();
@@ -213,31 +217,62 @@ public class CashController {
         //把其它的数据插入到cash表中
         Cash cash=new Cash();
 
-        String shouZhurenName=request.getParameter("shouZhurenName");
+        String shouZhurenName=request.getParameter("shouZhurenName");  //受助人姓名
+        String shouZhureniDentityNo=request.getParameter("shouZhureniDentityNo");
         String idZhengming=request.getParameter("idZhengming"); //是否有身份证明
         String jwZhengming=request.getParameter("jwZhengming"); //是否用居委会证明
         String yyZhengming=request.getParameter("yyZhengming"); //是否有医院证明
         String pinkunZhengming=request.getParameter("pinkunZhengming"); //贫困证明
+        String acceptMoneyPhone=request.getParameter("acceptMoneyPhone"); //收款人联系电话
+        String acceptMoneyName=request.getParameter("acceptMoneyName"); // 收款人姓名
         String relationZhengming=request.getParameter("relationZhengming");   //收款人关系证明
-
         String targetCash=request.getParameter("targetMoney"); //目标金额
-
         String closetime=request.getParameter("endDate"); //账户关闭的时间
         String  duration=request.getParameter("duration"); //持续的时长
 
         cash.setCashuuid(cashUUID);              //cash的UUID  /*cash的uuid和tweetuuid相互存入对方*/
         cash.setCashtweetuuid(cashUUID);         //tweetUUID;
         cash.setBehelpusername(usernickname);   //受助人的互助管家昵称，同推文的昵称
+        cash.setAcceptmoneyman(acceptMoneyName); //收款人姓名
+        cash.setBackuptwo(acceptMoneyPhone);     //资金接收人手机后，方便联系
         cash.setBehelpuserid(userid);           // 受助人的iD
         cash.setBehelpusername(shouZhurenName); //受助人真实姓名
+        cash.setBackupone(shouZhureniDentityNo); //受助人的身份证
         cash.setPromisetype(new Integer(chengnuoType)); // 承诺类型
         cash.setPromisemiaoshu(chengnuoContent);       //承诺的内容
-        /*各种证明*/
-        cash.setProveone( new Integer(idZhengming));
-        cash.setProvetwo(new Integer(jwZhengming));
-        cash.setProvethree(new Integer(yyZhengming));
-        cash.setProvefour(new Integer(pinkunZhengming));
-        cash.setProvefive(new Integer(relationZhengming));
+        /*各种证明,以下有异常*/
+        try{
+            if ("false".equals(idZhengming)){
+                cash.setProveone(0);
+            }else {
+                cash.setProveone(1);
+            }
+            if ("false".equals(jwZhengming)){
+                cash.setProvetwo(0);
+            }else {
+                cash.setProvetwo(1);
+            }
+            if ("false".equals(yyZhengming)){
+                cash.setProvethree(0);
+            }else {
+                cash.setProvethree(1);
+            }
+            if ("false".equals(pinkunZhengming)){
+               cash.setProvefour(0);
+            }else {
+               cash.setProvefour(1);
+            }
+            if ("false".equals(relationZhengming)){
+                cash.setProvefive(0);
+            }else {
+                cash.setProvefive(1);
+            }
+
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
 
 
         cash.setCountstate((byte)2); // 账户开启
@@ -258,13 +293,22 @@ public class CashController {
 
         cash.setCreatedate(new Date());  //创立的时间
         cash.setSumdays(new Integer(duration)); //持续的时长
-        cash.setClosetime(new Date(closetime));  //字符串转时间类型，需要测试
+
+        try {
+            DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            Date closeDate=null;
+            closeDate=format1.parse(closetime);
+            cash.setClosetime(closeDate);  //字符串转时间类型，此处抛出异常
+
+        }catch ( Exception e){
+            System.out.println(e);
+        }
+
         cash.setProgressstate(0);   //进度状态，0未审核
         cash.setCashcityname(cityName); //用户所在的城市
         cash.setBackupfive(0);   //进度更新的次数
 
 
-        
         try{
         	Integer tag=cashService.cashInsert(cash);
         	if(tag!=1){ 

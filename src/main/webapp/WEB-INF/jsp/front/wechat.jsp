@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/index.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/nickname.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/zhengming.css">
-    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalCommonInput.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalLoading.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalLogin.css">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
 </head>
@@ -209,11 +211,11 @@
 <!--进度更新-->
 <div id="progressUpdate">
     <div style="display: flex;align-items: center;color: #43AC43;border-bottom: rgba(0,0,0,.15) solid 1px">
-        <div style="display: flex;height: 40px;margin-left:10px;width: 50%;justify-content: flex-start;align-items:center;">
+        <div style="display: flex;height: 40px;padding-left:10px;width: 50%;justify-content: flex-start;align-items:center;">
             进度更新(33)
         </div>
-        <div style="display: flex;height: 40px;width: 50%;justify-content: center;align-items:center;">
-            <span></span>
+        <div   v-on:click="alertComment" style="display: flex;height: 40px;padding-right:10px;width: 50%;justify-content: flex-end;align-items:center;">
+            我要更新
         </div>
     </div>
     <template v-for="item in lp">
@@ -293,8 +295,65 @@
         </div>
     </template>
 </div>
+<%--这里是各种弹出框--%>
+<div class="contain">
+    <div  class="clickWo" onclick="clickMe()">点击不到我</div>
+    <div onclick="alertComment()">显示评论框</div>
+    <div onclick="showDialog()">显示dialog</div>
+    <div onclick="loginByEmail()">邮箱登录</div>
+    <!--这个"modal 初始时是要隐藏的"-->
+    <div id="modal" class="modal">
+        <div id="tips" class="tips">
+            <div class="doComment">发表评论</div>
+            <div style="margin-right: 15px;margin-left: 15px">
+                <textarea class="commentText"  rows="6" cols="3"  placeholder="填写评论内容"></textarea>
+            </div>
+            <div class="cancelReplay">
+                <div class="cancel"  onclick="cancel()">取消</div>
+                <div class="cancel"  onclick="reply()">回复</div>
+            </div>
+        </div>
+    </div>
+    <!--以下这个是发送请求结束后的提示-->
+    <div id="dialog" class="dialog">
+        <div id="dialogTips" class="dialogTips">回复成功</div>
+    </div>
+    <!--这个是邮箱登录界面-->
+    <div id="loginEmail" class="loginEmail">
+        <div class="loginMain">
+            <div class="closeWrapper">
+                <img class="clickImg" src="image/close2.png">
+            </div>
+
+            <div class="logoWrapper">
+                <img src="image/512.png" style="width: 50px;height: 50px;border-radius: 25px" />
+            </div>
+            <!--邮箱,密码输入域-->
+            <div class="emailWrapper">
+                <div class="emailpassTxt">邮箱</div>
+                <input class="input" placeholder="输入你的邮箱"/>
+            </div>
+
+            <div class="passwdWrapper">
+                <div class="emailpassTxt">密码</div>
+                <input class="input" placeholder="输入你的密码"/>
+            </div>
+            <div class="loginInWrapper">
+                <div class="loginIn">登录</div>
+            </div>
+            <!--微信登录-->
+            <div class="wechatQQweibo">
+                <div><img  class="wechatImg" src="image/wechat.png"></div>
+                <div><img  class="wechatImg"src="image/weibo.png"></div>
+                <div><img  class="wechatImg"src="image/QQ.png"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<%--弹出框结束--%>
 
 
+<%--底部--%>
 <div id="foo" style="height: 50px"></div>
 <div class="footer">
     <div class="zhuafa" style="width: 46%;display: flex;align-items: center;justify-content: center">
@@ -305,9 +364,14 @@
         <span style="color: #ffffff">捐助Ta</span>
     </div>
 </div>
+
+
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/indexDynamic.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/indexUpPart.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/indexProgressUpdate.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalLogin.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalLoading.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalCommonInput.js"></script>
 </body>
 </html>
 

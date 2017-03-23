@@ -46,6 +46,11 @@ public class JspPageController {
 		String index="front/wechat";
 		return index;
 	}
+	@RequestMapping(value="/login",method = RequestMethod.GET)
+	public String login(){
+		String index="front/login";
+		return index;
+	}
 
 
 }

@@ -6,9 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import org.geilove.pojo.Picture;
 import org.geilove.pojo.User;
+import org.geilove.util.ServerIP;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.geilove.response.CommonRsp;
 import org.geilove.service.MainService;
 import org.geilove.service.RegisterLoginService;
+//这个后期可以改为用用户的uuid和userid命名头像
 @Controller
 @RequestMapping("/photo")
 public class PhotoUploadController {//上传用户头像
@@ -32,6 +32,9 @@ public class PhotoUploadController {//上传用户头像
 	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{
 		//System.out.print("aaa");
 		CommonRsp commonRsp=new CommonRsp();
+
+		String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
+
 		String token=request.getParameter("token");			
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
 		String useridStr=token.substring(32);		
@@ -48,7 +51,7 @@ public class PhotoUploadController {//上传用户头像
          //System.out.println(filename);
 		 InputStream is = null;// 附件输入流
          try {
-			  DataOutputStream out = new DataOutputStream(new FileOutputStream("/Users/mfhj-dz-001-424/Documents/aaa" + filename+".jpg"));
+			  DataOutputStream out = new DataOutputStream(new FileOutputStream("/huzhuguanjia/userPhoto" + filename+".jpg"));
 	          is = orginalFile.getInputStream();
 	          byte[] b=new byte[is.available()];
 	          is.read(b);
@@ -68,7 +71,10 @@ public class PhotoUploadController {//上传用户头像
         //插入数据库并判断是否成功,注意设置User表的photoUpload为2
 		User user=new User();
         user.setUserid(userid);
-        user.setUserphoto("/Users/mfhj-dz-001-424/Documents/aaa");
+        //Tips:下面最好换成注释掉的方法，方便以后迁移
+        String realiP=ipAndport+"path/userPhoto"+ filename+".jpg";
+        user.setUserphoto(realiP);
+        //user.setUserphoto("http://www.geilove.org/path/userPhoto" + filename+".jpg");
         user.setPhotoupload((byte)2); //更新标志设置为2
         //调用user表的更新方法
 		try {
@@ -78,7 +84,6 @@ public class PhotoUploadController {//上传用户头像
 			commonRsp.setRetcode(2001);
 			return commonRsp;
 		}
-
     	commonRsp.setMsg("发布成功");
     	commonRsp.setRetcode(2000);
     	return commonRsp;

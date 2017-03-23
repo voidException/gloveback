@@ -18,7 +18,10 @@
 	<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>
 	<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>
 	<a href="http://localhost:8080/glove/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">分享到朋友圈</a><br/>
-	<a href="http://localhost:8080/glove/backPages/checkProfileList">checkProfileList</a><br/>
+
+	<a href="http://localhost:8080/glove/pages/login">登录</a><br/>
+
+	<a href="http://localhost:8080/glove/backPages/checkProfileList">后台管理系统</a><br/>
 
 	<div id="app">
 		<h1>Hello App!</h1>
