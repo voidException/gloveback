@@ -85,6 +85,16 @@
     #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!--自定义结束 -->
+
+ <!--根据uuid获取众筹商品-->
+  <select id="selectByProductUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from productInfo
+    where productUUID = #{productUUID,jdbcType=VARCHAR}
+  </select>
+  <!--自定义结束-->
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

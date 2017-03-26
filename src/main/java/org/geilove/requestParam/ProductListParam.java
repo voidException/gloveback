@@ -5,6 +5,7 @@ package org.geilove.requestParam;
  * 用于PC电脑web端展示商品列表
  */
 public class ProductListParam {
+
     private  Integer  page;
     private  Integer  pageSize;
 
