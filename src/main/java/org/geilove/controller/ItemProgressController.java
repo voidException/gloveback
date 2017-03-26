@@ -38,7 +38,7 @@ public class ItemProgressController {
     @ResponseBody
     public Object getProgressUpdateList(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
         ProgressUpdateRsp progressUpdateRsp=new ProgressUpdateRsp();
-        List<ProgressUpdate> listProgress=new ArrayList<>(); //进度更新及其评论列表
+        List<ProgressUpdate> listProgress=new ArrayList<ProgressUpdate>(); //进度更新及其评论列表
         Map<String,Object>  map=new HashMap<String,Object>();
         if (updateListParam==null){
             progressUpdateRsp.setRetcode(2001);

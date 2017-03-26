@@ -70,6 +70,21 @@
     imgFour, mainTitleFive, viceTitleFive, imgFive, mainTitleSix, viceTitleSix, imgSix, 
     mainTitleSeven, viceTitleSeven, imgSeven, mainTitleEight, viceTitleEight, imgEight
   </sql>
+
+  <!--  自定义，获取"众筹商品" 列表-->
+  <select id="getProductInfoList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    productInfo
+    where
+    1=1
+    order by
+    startTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
