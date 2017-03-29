@@ -46,11 +46,27 @@ public class JspPageController {
 		String index="front/wechat";
 		return index;
 	}
+
+	@RequestMapping(value="/productDetail/{productuuid}",method=RequestMethod.GET)
+	public  String goProductDetail(@PathVariable("productuuid") String productuuid, HttpServletRequest request){
+		String index="front/productDetail";
+		return index;
+	}
+
 	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String login(){
 		String index="front/login";
 		return index;
 	}
-
+	@RequestMapping(value="/loginRegister",method = RequestMethod.GET)
+	public String loginPC(){
+		String index="front/loginRegister";
+		return index;
+	}
+	@RequestMapping(value="/publishItem",method = RequestMethod.GET)
+	public String publishItem(){
+		String index="front/publishItemPC";
+		return index;
+	}
 
 }

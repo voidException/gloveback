@@ -1,0 +1,86 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+    String contextPath = request.getContextPath();
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no" />
+
+    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/navigation.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/loginRegister.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/footer.css">
+    <title>登录注册</title>
+
+</head>
+<body>
+<div style="display: flex;align-items: center;justify-content: center;margin-bottom: 20px">
+    <img src="<%=contextPath%>/resources/image/logo.png" style="width: 80px;height: 80px;border-radius: 40px">
+</div>
+<%--登录注册--%>
+<div  id="loginRegister"    style="display: flex;flex-direction: row;justify-content: center;margin-bottom: 60px">
+    <!--这里是登录-->
+    <div class="loginWrapper">
+        <div class="loginRegister">
+            <div>邮箱:</div>
+            <input id="loginEmailInput" type="email" value="" placeholder="邮箱"/>
+        </div>
+        <div class="loginRegister">
+            <div>密码:</div>
+            <input  id="loginPasswdInput" type="password"   value=""  placeholder="密码"/>
+        </div>
+        <div class="doLogin"  v-on:click="dologin">登录</div>
+    </div>
+    <!--这里是注册-->
+    <div class="registerWrapper">
+        <div class="loginRegister">
+            <div class="email">邮箱:</div>
+            <input id="registerEmailInput"  type="email"  value=""  placeholder="邮箱"/>
+        </div>
+        <div class="loginRegister">
+            <div class="email">密码:</div>
+            <input  id="registerPasswdInput"  value=""  placeholder="密码"/>
+        </div>
+        <div class="loginRegister">
+            <div class="email">昵称:</div>
+            <input id="registerNickNameInput" placeholder="输入昵称"/>
+        </div>
+        <div class="loginRegister">
+            <div class="email">所在城市:</div>
+            <input  id="registerCityInput" placeholder="输入所在的城市，如临沂市"/>
+        </div>
+
+        <div class="doLogin"  v-on:click="doregister">注册</div>
+    </div>
+</div>
+<%--登录注册--%>
+<footer class="footer">
+    <div>
+        <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
+    </div>
+    <div class="footerItem">
+        <div>关于我们</div>
+        <div>帮助中心</div>
+        <div>加入我们</div>
+    </div>
+    <div class="footerItem">
+        <div>联系方式</div>
+        <div>Phone:010-888888</div>
+        <div>Mail:noexception@126.com</div>
+    </div>
+    <div>
+        <img src="<%=contextPath%>/resources/image/erweima.png" style="height: 100px;width: 100px">
+    </div>
+</footer>
+<div class="bottom">
+    © 2017 给爱众筹 - 北京给爱科技有限公司  京公网安备 11010102002425号  京ICP证160503号   京ICP备14052685号-1
+</div>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScriptPCfront/loginRegister.js"></script>
+</body>
+</html>

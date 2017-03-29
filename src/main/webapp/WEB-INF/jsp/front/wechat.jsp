@@ -219,7 +219,7 @@
         </div>
     </div>
     <template v-for="item in lp">
-        <div  :key="item.itemProgress.itemprogressid"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
+        <div  :key="item.itemProgress.itemprogressi"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
             <div style="display: flex;justify-content: space-between;align-items: flex-end;padding: 10px;">
                 <div style="display: flex">
                     <img :src="item.itemProgress.userphoto" style="height: 36px;width: 36px;border-radius: 18px">

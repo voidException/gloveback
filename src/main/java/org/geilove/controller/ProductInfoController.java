@@ -39,7 +39,7 @@ public class ProductInfoController {
         }
         int page=productListParam.getPage();
         map.put("page",page);
-        map.put("pageSize",10);
+        map.put("pageSize",6);
         List<ProductInfo> productInfos;
         try{
             productInfos=productInfoService.getProductInfoList(map);
@@ -85,7 +85,7 @@ public class ProductInfoController {
         commonRsp.setMsg("获取商品详情成功");
         commonRsp.setRetcode(2000);
         commonRsp.setProductInfo(productInfo);
-        return  productInfo;
+        return  commonRsp;
     }
 }
 
