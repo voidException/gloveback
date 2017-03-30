@@ -16,22 +16,23 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/navigation.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/productDetail.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/footer.css">
+    <link rel="shortcut icon" href="http://onejf30n8.bkt.clouddn.com/logo16.png">
     <title>给爱众筹</title>
 </head>
 <body>
 <!--这里是头部部分-->
 <div class="header">
     <div class="headerLeft">
-        <div class="logo" >
+        <a class="logo"  href="http://localhost:8080/glove/" style="text-decoration: none">
             <img src="<%=contextPath%>/resources/image/logo.png" style="width: 40px;height: 40px;border-radius: 20px">
-            <div style="color:#00BB3B;">首页</div>
-        </div>
-        <div class="logo  appHelp" >
+            <div style="color:#00BB3B;cursor: pointer">首页</div>
+        </a>
+        <a class="logo  appHelp" href="http://localhost:8080/glove/pages/appDownload" style="text-decoration: none" >
             <span>App下载</span>
-        </div>
-        <div class="logo appHelp">
+        </a>
+        <a href="http://localhost:8080/glove/pages/helpCenter" class="logo appHelp" style="text-decoration: none">
             <span>帮助中心</span>
-        </div>
+        </a>
     </div>
 </div>
 <div id="productDetail">
@@ -44,8 +45,8 @@
             <!--项目详情-->
             <div class="detailShare">
                 <div class="detail">项目详情</div>
-                <div class="share">分享到</div>
-                <img src="<%=contextPath%>/resources/image/logo.png" style="width: 40px;height: 40px;border-radius: 20px">
+                <div class="share" style="margin-left: 10px">分享到</div>
+                <img src="<%=contextPath%>/resources/image/weichatlogo.png" style="width: 40px;height: 40px;border-radius: 20px;margin-left: 3px ">
             </div>
             <!--项目详细介绍-->
             <div style=" margin-bottom: 30px">
@@ -138,23 +139,26 @@
                 </div>
             </div>
             <!--项目支持者-->
+            <div style="text-align: center;font-size: 20px;font-family: 'Heiti SC'">Ta的支持者</div>
+            <template v-for="item in backupList">
             <div style="padding-left: 20px">
-                <div style="text-align: center">Ta的支持者</div>
                 <!--具体的支持人-->
                 <div class="backUp">
-                    <img src="<%=contextPath%>/resources/image/1.jpg" style="width: 50px;height: 50px;border-radius: 25px">
-                    <div style="margin-left: 10px">
+                    <img :src="item.photoUrl" style="width: 50px;height: 50px;border-radius: 25px">
+                    <div style="margin-left: 10px;padding-top: 3px">
                         <div class="backupProfile">
-                            <div>摆渡人</div>
-                            <div>支持了</div>
-                            <div>50.00</div>
+                            <div>{{item.nickname}}</div>
+                            <div style="margin-left: 3px;margin-right: 3px;color: #00BB3B">支持了</div>
+                            <div style="color: #F25B4B">{{item.money}}<span style="color: #6f7a7e">元</span></div>
+
                         </div>
-                        <div style="height: 30px">2017-06-03 00:09:19</div>
+                        <div style="height: 30px;color: #999">{{item.timeStamp}}</div>
                     </div>
                 </div>
             </div>
+            </template>
         </div>
-
+        <%--左侧布局结束--%>
         <!--右侧布局-->
         <div class="bodyRight">
             <div class="money">
@@ -173,7 +177,8 @@
                     <div class="target">支持人数</div>
                 </div>
                 <div class="moneyNeed">
-                    <div>{{productDetail.endtime}}</div>
+                    <%--<div>{{productDetail.endtime}}</div>--%>
+                    <div>{{new Date(productDetail.endtime).toLocaleString().substring(0,10)}}</div>
                     <div class="target">截止日期</div>
                 </div>
             </div>
@@ -185,10 +190,10 @@
             <div class="itemStarter">
                 <div style="font-weight: 400;font-size: 18px;font-family: STHeiti; color: #6f7a7e;margin-bottom: 10px">项目发起人</div>
                 <div class="userProfile">
-                    <img src="<%=contextPath%>/resources/image/logo.png" style="width: 60px;height: 60px;border-radius: 30px">
+                    <img :src="productDetail.photourl" style="width: 60px;height: 60px;border-radius: 30px">
                     <div style="margin-left: 10px">
                         <div style="margin-bottom: 5px;font-weight: 400;font-size: 16px;font-family: STHeiti;color: #6f7a7e;">{{productDetail.nickname}}</div>
-                        <div style="margin-top: 5px;font-size: 14px;color: #6f7a7e;">{{productDetail.starttime}}</div>
+                        <div style="margin-top: 5px;font-size: 14px;color: #6f7a7e;">{{new Date(productDetail.starttime).toLocaleString().substring(0,10)}}</div>
                     </div>
                 </div>
             </div>
@@ -256,22 +261,23 @@
         <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
     </div>
     <div class="footerItem">
-        <div>关于我们</div>
-        <div>帮助中心</div>
-        <div>加入我们</div>
+        <a href="http://localhost:8080/glove/pages/aboutus" style="text-decoration: none">关于我们</a>
+        <a href="http://localhost:8080/glove/pages/helpCenter" style="text-decoration: none">帮助中心</a>
+        <a href="http://localhost:8080/glove/pages/userProtocol" style="text-decoration: none">用户协议</a>
     </div>
     <div class="footerItem">
         <div>联系方式</div>
-        <div>Phone:010-888888</div>
-        <div>Mail:noexception@126.com</div>
+        <div>电话:010-80441882</div>
+        <div>邮箱:geilovetech@126.com</div>
     </div>
     <div>
         <img src="<%=contextPath%>/resources/image/erweima.png" style="height: 100px;width: 100px">
     </div>
 </footer>
 <div class="bottom">
-    © 2017 给爱众筹 - 北京给爱科技有限公司  京公网安备 11010102002425号  京ICP证160503号   京ICP备14052685号-1
+    © 2017 给爱众筹 - 北京给爱科技有限公司   京ICP备17013747号
 </div>
+
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScriptPCfront/productDetail.js"></script>
 </body>
 </html>

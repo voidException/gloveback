@@ -1,23 +1,25 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
     String contextPath = request.getContextPath();
 %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no" />
+    <style>
 
+    </style>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/navigation.css">
-    <link rel="stylesheet" href="<%=contextPath%>/resources/css/loginRegister.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/indexPC.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/footer.css">
-    <title>登录注册</title>
-
+    <link rel="shortcut icon" href="http://onejf30n8.bkt.clouddn.com/logo16.png">
+    <title>用户帮助中心</title>
 </head>
 <body>
 <!--这里是头部部分-->
@@ -35,46 +37,17 @@
         </a>
     </div>
 </div>
-<div style="display: flex;align-items: center;justify-content: center;margin-bottom: 20px">
-    <img src="<%=contextPath%>/resources/image/logo.png" style="width: 80px;height: 80px;border-radius: 40px">
-</div>
-<%--登录注册--%>
-<div  id="loginRegister"    style="display: flex;flex-direction: row;justify-content: center;margin-bottom: 60px">
-    <!--这里是登录-->
-    <div class="loginWrapper">
-        <div class="loginRegister">
-            <div>邮箱:</div>
-            <input id="loginEmailInput" type="email" value="" placeholder="邮箱"/>
-        </div>
-        <div class="loginRegister">
-            <div>密码:</div>
-            <input  id="loginPasswdInput" type="password"   value=""  placeholder="密码"/>
-        </div>
-        <div class="doLogin"  v-on:click="dologin">登录</div>
-    </div>
-    <!--这里是注册-->
-    <div class="registerWrapper">
-        <div class="loginRegister">
-            <div class="email">邮箱:</div>
-            <input id="registerEmailInput"  type="email"  value=""  placeholder="邮箱"/>
-        </div>
-        <div class="loginRegister">
-            <div class="email">密码:</div>
-            <input  id="registerPasswdInput"  value=""  placeholder="密码"/>
-        </div>
-        <div class="loginRegister">
-            <div class="email">昵称:</div>
-            <input id="registerNickNameInput" placeholder="输入昵称"/>
-        </div>
-        <div class="loginRegister">
-            <div class="email">所在城市:</div>
-            <input  id="registerCityInput" placeholder="输入所在的城市，如临沂市"/>
-        </div>
 
-        <div class="doLogin"  v-on:click="doregister">注册</div>
+<div style="display: flex;flex-direction: column;align-items:center;justify-content: center;height: 100%;width: 100%">
+    <div style="width: 1000px;height: 400px;border: #8aff45 1px solid;">
+        <div style="width: 100%;height: 40px;text-align: center;line-height: 40px;border-bottom:  #8aff45 1px solid">如有疑问，您可以通过以下方式联系到我们的人员:</div>
+        <div style="margin-left: 50px;height: 40px;line-height: 40px">电话：15652649121</div>
+        <div style="margin-left: 50px;height: 40px;line-height: 40px">Q Q： 625873066</div>
+        <div style="margin-left: 50px;height: 40px;line-height: 40px">QQ群：769864231</div>
+        <div style="margin-left: 50px;height: 40px;line-height: 40px">邮箱： geilovetech@126.com</div>
     </div>
 </div>
-<%--登录注册--%>
+
 <footer class="footer">
     <div>
         <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
@@ -96,6 +69,5 @@
 <div class="bottom">
     © 2017 给爱众筹 - 北京给爱科技有限公司   京ICP备17013747号
 </div>
-<script type="text/javascript" src="<%=contextPath%>/resources/javaScriptPCfront/loginRegister.js"></script>
 </body>
 </html>

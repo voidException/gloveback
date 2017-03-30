@@ -16,22 +16,23 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/navigation.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/publishItemPC.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/footer.css">
+    <link rel="shortcut icon" href="http://onejf30n8.bkt.clouddn.com/logo16.png">
     <title>发起项目</title>
 </head>
 <body style="color: #6f7a7e">
 <!--这里是头部部分-->
 <div class="header">
     <div class="headerLeft">
-        <div class="logo" >
+        <a class="logo"  href="http://localhost:8080/glove/" style="text-decoration: none">
             <img src="<%=contextPath%>/resources/image/logo.png" style="width: 40px;height: 40px;border-radius: 20px">
-            <div style="color:#00BB3B;">首页</div>
-        </div>
-        <div class="logo  appHelp" >
+            <div style="color:#00BB3B;cursor: pointer">首页</div>
+        </a>
+        <a class="logo  appHelp" href="http://localhost:8080/glove/pages/appDownload" style="text-decoration: none" >
             <span>App下载</span>
-        </div>
-        <div class="logo appHelp">
+        </a>
+        <a href="http://localhost:8080/glove/pages/helpCenter" class="logo appHelp" style="text-decoration: none">
             <span>帮助中心</span>
-        </div>
+        </a>
     </div>
 </div>
 <!--发布项目-->
@@ -180,21 +181,21 @@
         <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
     </div>
     <div class="footerItem">
-        <div>关于我们</div>
-        <div>帮助中心</div>
-        <div>加入我们</div>
+        <a href="http://localhost:8080/glove/pages/aboutus" style="text-decoration: none">关于我们</a>
+        <a href="http://localhost:8080/glove/pages/helpCenter" style="text-decoration: none">帮助中心</a>
+        <a href="http://localhost:8080/glove/pages/userProtocol" style="text-decoration: none">用户协议</a>
     </div>
     <div class="footerItem">
         <div>联系方式</div>
-        <div>Phone:010-888888</div>
-        <div>Mail:noexception@126.com</div>
+        <div>电话:010-80441882</div>
+        <div>邮箱:geilovetech@126.com</div>
     </div>
     <div>
         <img src="<%=contextPath%>/resources/image/erweima.png" style="height: 100px;width: 100px">
     </div>
 </footer>
 <div class="bottom">
-    © 2017 给爱众筹 - 北京给爱科技有限公司  京公网安备 11010102002425号  京ICP证160503号   京ICP备14052685号-1
+    © 2017 给爱众筹 - 北京给爱科技有限公司   京ICP备17013747号
 </div>
 </body>
 </html>

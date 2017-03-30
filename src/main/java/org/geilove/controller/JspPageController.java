@@ -68,5 +68,21 @@ public class JspPageController {
 		String index="front/publishItemPC";
 		return index;
 	}
+	@RequestMapping(value="/helpCenter",method = RequestMethod.GET)
+	public String goHelpCenter(){
+		String index="front/helpCenterPC";
+		return index;
+	}
+
+	@RequestMapping(value="/appDownload",method = RequestMethod.GET)
+	public String appDownload(){
+		String index="front/appDownload";
+		return index;
+	}
+	@RequestMapping(value="/userProtocol",method = RequestMethod.GET)
+	public String userProtocol(){
+		String index="front/userProtocolPC";
+		return index;
+	}
 
 }

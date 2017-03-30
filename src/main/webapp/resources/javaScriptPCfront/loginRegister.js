@@ -11,16 +11,27 @@ new Vue({
         dologin:function (event) {
             var loginEmailInputValue=document.getElementById("loginEmailInput").value; //登录的email值
             var loginPasswdInputValue=document.getElementById("loginPasswdInput").value; //登录的密码值
-
             //接下来发送登录请求
             let param={
                 userEmail:loginEmailInputValue,
                 userPassword:loginPasswdInputValue,
             };
             this.$http.post('http://localhost:8080/glove/user/login',param).then(response => {
-                console.log(response.body);
+                console.log(response.body.data);
                 this.userProfile=response.body.data; //存入数据库
-                window.location.href="http://localhost:8080/glove/";
+
+                if(response.body.retcode==2000){
+
+                    //设置其他用户信息
+                    window.localStorage.setItem("userEmail",response.body.data.useremail);
+                    window.localStorage.setItem("usernickname",response.body.data.usernickname);
+                    window.localStorage.setItem("userphoto",response.body.data.userphoto);
+                    window.localStorage.setItem("backupfour",response.body.data.backupfour);
+                    window.location.href="http://localhost:8080/glove/";
+                }else {
+                    alert("登录失败");
+                }
+
             }, err => {
                 console.log(err);
             });
@@ -42,7 +53,11 @@ new Vue({
             this.$http.post('http://localhost:8080/glove/user/register',param).then(response => {
                 console.log(response.body);
                 this.userProfile=response.body.data;
-                alert("注册成功，请登录")
+                if(response.body.retcode==2000){
+                    alert("注册成功，请登录");
+                }else {
+                    alert("注册失败");
+                }
 
             }, err => {
                 console.log(err);

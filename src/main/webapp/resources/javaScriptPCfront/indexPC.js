@@ -4,6 +4,9 @@
 /**
  * Created by mfhj-dz-001-424 on 17/1/18.
  */
+
+
+
 var mainBody = new Vue({
     el: '#mainBody',
     data:{
@@ -362,17 +365,57 @@ var mainBody = new Vue({
                 "maintitleeight": null,
                 "vicetitleeight": "好橙不怕晚！",
                 "imgeight": "http://onejf30n8.bkt.clouddn.com/2c02eb99-dc14-4ab8-8bad-27474e2bf4798.jpg"
-            }
-         ]
+            },
+         ],
+        loginTag:false ,
+        initPage:0,
     },
     methods: {
-        test: function (event) {
-            //console.log(event.target.attributes[0])
-            console.log(event.target.getAttribute("data-reciver"))
+        nextPage: function (event) {
+            this.initPage+=6;
+            if (this.initPage>6){ //因为数据只有两页、
+                this.initPage-=6;
+                return
+            }
+            let param={
+                "page":this.initPage,
+                "pageSize":5,
+            };
+            let options={'Content-Type':'application/json'};
+            this.$http.post('http://localhost:8080/glove/productInfo/listProduct',param,options).then(response => {
+                console.log(response.body);
+                this.productInfos=response.body.productInfos;
+
+                this.$nextTick(function() {
+                    //   console.log(this.bodyMsg);
+                });
+            }, err => {
+                console.log(err);
+            });
+
         },
-        handleClick: function() {
-            this.updateORprogress=true;
-            this.updateORprogress2=false;
+        backPage: function (event) {
+            this.initPage-=6;
+            if (this.initPage<0){ //因为数据只有两页,<0的时候是-6
+                this.initPage+=6;
+                return
+            }
+            let param={
+                "page":this.initPage,
+                "pageSize":5,
+            };
+            let options={'Content-Type':'application/json'};
+            this.$http.post('http://localhost:8080/glove/productInfo/listProduct',param,options).then(response => {
+                console.log(response.body);
+                this.productInfos=response.body.productInfos;
+
+                this.$nextTick(function() {
+                    //   console.log(this.bodyMsg);
+                });
+            }, err => {
+                console.log(err);
+            });
+
         },
         handleClick2: function() {
             this.updateORprogress=false;
@@ -384,8 +427,9 @@ var mainBody = new Vue({
         },
     },
     mounted: function () {
-        var param={
-            "page":0,
+
+        let param={
+            "page":this.initPage,
             "pageSize":5,
         };
         let options={'Content-Type':'application/json'};
@@ -399,6 +443,16 @@ var mainBody = new Vue({
         }, err => {
             console.log(err);
         });
+
+       // 检车是否登录
+        if (window.localStorage.getItem("usernickname")!==null){
+            this.loginTag=true;
+        }
+        setTimeout(()=>{
+            window.localStorage.setItem("usernickname",null);
+            this.loginTag=false;
+        },30*60*1000)
+
     },
 
 })
