@@ -16,7 +16,7 @@ new Vue({
                 userEmail:loginEmailInputValue,
                 userPassword:loginPasswdInputValue,
             };
-            this.$http.post('http://localhost:8080/glove/user/login',param).then(response => {
+            this.$http.post('http://www.geilove.org/user/login',param).then(response => {
                 console.log(response.body.data);
                 this.userProfile=response.body.data; //存入数据库
 
@@ -27,7 +27,7 @@ new Vue({
                     window.localStorage.setItem("usernickname",response.body.data.usernickname);
                     window.localStorage.setItem("userphoto",response.body.data.userphoto);
                     window.localStorage.setItem("backupfour",response.body.data.backupfour);
-                    window.location.href="http://localhost:8080/glove/";
+                    window.location.href="http://www.geilove.org/";
                 }else {
                     alert("登录失败");
                 }
@@ -50,7 +50,7 @@ new Vue({
                 userPassword:registerPasswdInput,
                 cityName:registerCityInput,
             };
-            this.$http.post('http://localhost:8080/glove/user/register',param).then(response => {
+            this.$http.post('http://www.geilove.org/user/register',param).then(response => {
                 console.log(response.body);
                 this.userProfile=response.body.data;
                 if(response.body.retcode==2000){

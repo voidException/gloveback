@@ -36,6 +36,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/user")
@@ -47,8 +48,8 @@ public class RegisterLoginController {
 	
 	//登录
 	@RequestMapping(value="/login",method=RequestMethod.POST)	
-	public @ResponseBody UserProfileRsp loginUser(@RequestBody UserLoginVo userLoginVo,HttpSession httpSession){
-		//httpSession.setAttribute("session", "hellosession");  
+	public @ResponseBody UserProfileRsp loginUser(@RequestBody UserLoginVo userLoginVo,HttpServletResponse httpServletResponse){
+		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 		//这里应该先验证用户邮箱和密码是不是符合要求，避免浪费资源查询数据库
 		UserProfileRsp  userProfileRsp=new UserProfileRsp();		
 		User user=registerLoginService.userLogin(userLoginVo.getUserEmail());
@@ -84,7 +85,8 @@ public class RegisterLoginController {
 	
 	//注册
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public @ResponseBody CommonRsp registerUser(@RequestBody  UserRegisterVo userRegisterVo){
+	public @ResponseBody CommonRsp registerUser(@RequestBody  UserRegisterVo userRegisterVo,HttpServletResponse httpServletResponse){
+		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 		//这里假设昵称唯一可用，邮箱可用，两次输入的密码一样
 		//如果可以注册，应对密码md5加密
 		CommonRsp commonRsp=new CommonRsp();

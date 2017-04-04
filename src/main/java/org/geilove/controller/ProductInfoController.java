@@ -1,7 +1,7 @@
 package org.geilove.controller;
 
 /**
- * 提供众筹商品列表获取，但商品获取，增加等功能
+ * 提供网商品列表获取，但商品获取，增加等功能
  */
 import org.geilove.pojo.ProductInfo;
 import org.geilove.requestParam.ProductListParam;
@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,8 @@ public class ProductInfoController {
 
     /*1.用于获取商品列表*/
     @RequestMapping(value="/listProduct",method=RequestMethod.POST)
-    public @ResponseBody Object getMoneySourceList(@RequestBody ProductListParam productListParam){
+    public @ResponseBody Object getMoneySourceList(@RequestBody ProductListParam productListParam,HttpServletResponse httpServletResponse){
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
         Map<String,Object> map=new HashMap<>();
 
         ProductListRsp commonRsp=new ProductListRsp();
@@ -61,7 +63,8 @@ public class ProductInfoController {
 
     /*2.根据productInfo的UUID获取该商品相信信息*/
     @RequestMapping(value = "/info/{productInfoUUID}",method = RequestMethod.GET)
-    public @ResponseBody  Object getProductInfoByUUID(@PathVariable("productInfoUUID") String productInfoUUID){
+    public @ResponseBody  Object getProductInfoByUUID(@PathVariable("productInfoUUID") String productInfoUUID, HttpServletResponse httpServletResponse){
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
         OneProductInfoRsp commonRsp=new OneProductInfoRsp();
         ProductInfo productInfo;
 

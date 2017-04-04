@@ -18,8 +18,8 @@ public interface ProductInfoMapper {
 
     int updateByPrimaryKey(ProductInfo record);
 
-    List<ProductInfo>  getProductInfoList(Map<String,Object> map); //自定义根据一组参数获取商品众筹信息列表
+    List<ProductInfo>  getProductInfoList(Map<String,Object> map); //自定义根据一组参数获取商品网信息列表
 
-    ProductInfo selectByProductUUID(String productUUID); //根据众筹商品的UUID获得它
+    ProductInfo selectByProductUUID(String productUUID); //根据网商品的UUID获得它
 
 }

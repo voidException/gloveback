@@ -32,9 +32,9 @@ new Vue({
                 "timeStamp":"2017-01-06"
             },
             {
-                "photoUrl": "http://7xihgc.com1.z0.glb.clouddn.com/13.jpg",
-                "nickname": "胡玉",
-                "money": 52,
+                "photoUrl": "http://7xihgc.com1.z0.glb.clouddn.com/14.jpg",
+                "nickname": "黄健",
+                "money": 59,
                 "timeStamp":"2017-01-08"
             },
             {
@@ -69,7 +69,7 @@ new Vue({
 
         let  paramID=this.getUrlParam("id"); //url地址栏的参数，就是productInfo的UUID
         //这个是获取众筹产品的信息
-        let  url='http://localhost:8080/glove/productInfo/info/'+paramID;
+        let  url='http://www.geilove.org/productInfo/info/'+paramID;
         this.$http.get(url).then(response => {
             //console.log(response.body);
             this.productDetail=response.body.productInfo;

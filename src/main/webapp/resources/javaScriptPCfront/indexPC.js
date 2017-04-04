@@ -382,7 +382,7 @@ var mainBody = new Vue({
                 "pageSize":5,
             };
             let options={'Content-Type':'application/json'};
-            this.$http.post('http://localhost:8080/glove/productInfo/listProduct',param,options).then(response => {
+            this.$http.post('http://www.geilove.org/glove/productInfo/listProduct',param,options).then(response => {
                 console.log(response.body);
                 this.productInfos=response.body.productInfos;
 
@@ -405,7 +405,7 @@ var mainBody = new Vue({
                 "pageSize":5,
             };
             let options={'Content-Type':'application/json'};
-            this.$http.post('http://localhost:8080/glove/productInfo/listProduct',param,options).then(response => {
+            this.$http.post('http://wwww.geilove.org/productInfo/listProduct',param,options).then(response => {
                 console.log(response.body);
                 this.productInfos=response.body.productInfos;
 
@@ -433,7 +433,7 @@ var mainBody = new Vue({
             "pageSize":5,
         };
         let options={'Content-Type':'application/json'};
-        this.$http.post('http://localhost:8080/glove/productInfo/listProduct',param,options).then(response => {
+        this.$http.post('http://www.geilove.org/productInfo/listProduct',param,options).then(response => {
              console.log(response.body);
             this.productInfos=response.body.productInfos;
 

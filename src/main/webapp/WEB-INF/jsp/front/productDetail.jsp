@@ -17,20 +17,20 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/productDetail.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/footer.css">
     <link rel="shortcut icon" href="http://onejf30n8.bkt.clouddn.com/logo16.png">
-    <title>给爱众筹</title>
+    <title>给爱网</title>
 </head>
 <body>
 <!--这里是头部部分-->
 <div class="header">
     <div class="headerLeft">
-        <a class="logo"  href="http://localhost:8080/glove/" style="text-decoration: none">
+        <a class="logo"  href="http://www.geilove.org" style="text-decoration: none">
             <img src="<%=contextPath%>/resources/image/logo.png" style="width: 40px;height: 40px;border-radius: 20px">
             <div style="color:#00BB3B;cursor: pointer">首页</div>
         </a>
-        <a class="logo  appHelp" href="http://localhost:8080/glove/pages/appDownload" style="text-decoration: none" >
+        <a class="logo  appHelp" href="http://www.geilove.org/pages/appDownload" style="text-decoration: none" >
             <span>App下载</span>
         </a>
-        <a href="http://localhost:8080/glove/pages/helpCenter" class="logo appHelp" style="text-decoration: none">
+        <a href="http://www.geilove.org/pages/helpCenter" class="logo appHelp" style="text-decoration: none">
             <span>帮助中心</span>
         </a>
     </div>
@@ -168,13 +168,13 @@
                 </div>
                 <div class="moneyNeed">
                     <div>{{productDetail.handymoney}}<span class="yuan">元</span></div>
-                    <div class="target">已筹金额</div>
+                    <div class="target">已付款</div>
                 </div>
             </div>
             <div class="money">
                 <div class="moneyNeed">
                     <div>{{productDetail.backuptimes}}<span class="yuan">人</span></div>
-                    <div class="target">支持人数</div>
+                    <div class="target">购买人数</div>
                 </div>
                 <div class="moneyNeed">
                     <%--<div>{{productDetail.endtime}}</div>--%>
@@ -261,9 +261,9 @@
         <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
     </div>
     <div class="footerItem">
-        <a href="http://localhost:8080/glove/pages/aboutus" style="text-decoration: none">关于我们</a>
-        <a href="http://localhost:8080/glove/pages/helpCenter" style="text-decoration: none">帮助中心</a>
-        <a href="http://localhost:8080/glove/pages/userProtocol" style="text-decoration: none">用户协议</a>
+        <a href="http://www.geilove.org/pages/aboutus" style="text-decoration: none">关于我们</a>
+        <a href="http://www.geilove.org/pages/helpCenter" style="text-decoration: none">帮助中心</a>
+        <a href="http://www.geilove.org/pages/userProtocol" style="text-decoration: none">用户协议</a>
     </div>
     <div class="footerItem">
         <div>联系方式</div>
@@ -275,7 +275,7 @@
     </div>
 </footer>
 <div class="bottom">
-    © 2017 给爱众筹 - 北京给爱科技有限公司   京ICP备17013747号
+    © 2017 给爱网 - 北京给爱科技有限公司   京ICP备17013747号
 </div>
 
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScriptPCfront/productDetail.js"></script>
