@@ -12,7 +12,7 @@
 // console.log(getQueryString("tweetiD"));
 // console.log(getQueryString("useriD"));
 // console.log(getQueryString("cashiD"));
-
+//动态更新
 new Vue({
     el: '#dynamic',
     data: {
@@ -42,6 +42,7 @@ new Vue({
         //console.log('mounted 钩子执行...');
         //1.这里监听滚动条事件
         // var d = document.getElementById("part1").offsetHeight;
+        return ;  //暂时return，方便开发2017-04-10
         var that=this;
         window.addEventListener("scroll", function(event) {
             var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;

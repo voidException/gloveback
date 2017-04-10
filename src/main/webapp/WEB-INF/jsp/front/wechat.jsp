@@ -295,6 +295,7 @@
         </div>
     </template>
 </div>
+
 <%--这里是各种弹出框--%>
 <div class="contain">
     <div  class="clickWo" onclick="clickMe()">点击不到我</div>
@@ -314,7 +315,7 @@
             </div>
         </div>
     </div>
-    <!--以下这个是发送请求结束后的提示-->
+    <!--  以下这个是发送请求结束后的提示-->
     <div id="dialog" class="dialog">
         <div id="dialogTips" class="dialogTips">回复成功</div>
     </div>
@@ -322,30 +323,31 @@
     <div id="loginEmail" class="loginEmail">
         <div class="loginMain">
             <div class="closeWrapper">
-                <img class="clickImg" src="image/close2.png">
+                <img class="clickImg"    v-on:click="closeLoginModal"    src="<%=contextPath%>/resources/image//close2.png">
             </div>
 
             <div class="logoWrapper">
-                <img src="image/512.png" style="width: 50px;height: 50px;border-radius: 25px" />
+                <img src="<%=contextPath%>/resources/image/512.png" style="width: 50px;height: 50px;border-radius: 25px" />
             </div>
+            <div  id="errorTips" class="errorTips">错误提示</div>
             <!--邮箱,密码输入域-->
             <div class="emailWrapper">
                 <div class="emailpassTxt">邮箱</div>
-                <input class="input" placeholder="输入你的邮箱"/>
+                <input  id="emailInput"  class="input" placeholder="输入你的邮箱"/>
             </div>
 
             <div class="passwdWrapper">
                 <div class="emailpassTxt">密码</div>
-                <input class="input" placeholder="输入你的密码"/>
+                <input  id="passwordInput" class="input" placeholder="输入你的密码"/>
             </div>
             <div class="loginInWrapper">
-                <div class="loginIn">登录</div>
+                <div  class="loginIn"   v-on:click="loginIn"   style="color: #ffffff;font-size: 18px">登录</div>
             </div>
             <!--微信登录-->
             <div class="wechatQQweibo">
-                <div><img  class="wechatImg" src="image/wechat.png"></div>
-                <div><img  class="wechatImg"src="image/weibo.png"></div>
-                <div><img  class="wechatImg"src="image/QQ.png"></div>
+                <div><img  class="wechatImg"   src="<%=contextPath%>/resources/image/wechat.png"></div>
+                <div><img  class="wechatImg"   src="<%=contextPath%>/resources/image/weibo.png"></div>
+                <div><img  class="wechatImg"    src="<%=contextPath%>/resources/image/QQ.png"></div>
             </div>
         </div>
     </div>

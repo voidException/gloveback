@@ -29,6 +29,13 @@ function alertComment(){
     }
 }
 
+function loginByEmail() {
+    let  loginEmailDiv=document.getElementById("loginEmail");
+    if (loginEmailDiv.style.display=="none" || loginEmailDiv.style.display==""){
+        loginEmailDiv.style.display="block";
+    }
+}
+
 function cancel(){
 
     let  modal=document.getElementById("modal");

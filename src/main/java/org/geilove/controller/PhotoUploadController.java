@@ -33,7 +33,7 @@ public class PhotoUploadController {//上传用户头像
 		//System.out.print("aaa");
 		CommonRsp commonRsp=new CommonRsp();
 
-		String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
+		String ipAndport= ServerIP.getiPPort(); //特别注意正式部署服务器端口是80，而不是8080
 
 		String token=request.getParameter("token");			
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
@@ -51,7 +51,7 @@ public class PhotoUploadController {//上传用户头像
          //System.out.println(filename);
 		 InputStream is = null;// 附件输入流
          try {
-			  DataOutputStream out = new DataOutputStream(new FileOutputStream("/huzhuguanjia/userPhoto" + filename+".jpg"));
+			  DataOutputStream out = new DataOutputStream(new FileOutputStream("/huzhuguanjia/userPhoto/" + filename+".jpg"));
 	          is = orginalFile.getInputStream();
 	          byte[] b=new byte[is.available()];
 	          is.read(b);
@@ -72,7 +72,7 @@ public class PhotoUploadController {//上传用户头像
 		User user=new User();
         user.setUserid(userid);
         //Tips:下面最好换成注释掉的方法，方便以后迁移
-        String realiP=ipAndport+"path/userPhoto"+ filename+".jpg";
+        String realiP=ipAndport+"path/userPhoto/"+ filename+".jpg";
         user.setUserphoto(realiP);
         //user.setUserphoto("http://www.geilove.org/path/userPhoto" + filename+".jpg");
         user.setPhotoupload((byte)2); //更新标志设置为2

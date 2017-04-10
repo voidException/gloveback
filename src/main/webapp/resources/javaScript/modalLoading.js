@@ -19,7 +19,7 @@ function showDialog(){
     let  dialogTips=document.getElementById("dialogTips");
 
     if (dialog.style.display=="" || dialog.style.display=="none"){
-        dialog.style.display="block";
+        dialog.style.display="flex";
         dialogTips.style.display="block";
     }
     setTimeout(function(){

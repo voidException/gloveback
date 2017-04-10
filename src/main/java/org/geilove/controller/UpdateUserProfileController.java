@@ -57,7 +57,7 @@ public class UpdateUserProfileController {
 		user.setSelfintroduce(selfIntroduce);
 		try{
 			int returnTag=rlService.updateUserSelective(user);
-			System.out.println(returnTag);
+			//System.out.println(returnTag);
 			if(returnTag!=1){
 				commonRsp.setMsg("完善资料失败");
 				commonRsp.setRetcode(2000);
