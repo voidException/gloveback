@@ -1,7 +1,7 @@
 /**
- * Created by mfhj-dz-001-424 on 17/3/14.
- *
- * 回复，评论，更新等等
+ * 在这里设置模态弹出框出现，并设置一些属性。
+ * 也可以是在vue管辖的地方设置模态弹出框出现
+ * 所有的模态弹出框需要发送请求的地方，都是在vue管辖的范围内的
  */
 
 
@@ -11,6 +11,21 @@ var h = window.innerHeight || document.documentElement.clientHeight || document.
 function clickMe(){
     console.log("点击不到我的")
 }
+
+//导航栏右侧的举报按钮，设置弹出框出现和标志report
+function ReportMe() {
+    //先让modalReport弹出来
+    let modalReportDiv=document.getElementById ("modalReport");
+    modalReportDiv.style.display="block";
+
+    //这里设置modalReport的举报标志"report" ,证实标志就是confirm
+    let  applyDiv = document.getElementById ("applyReport");
+    let  dataRCTag = applyDiv.getAttribute ("data-RCTag");
+    //console.log(dataRCTag);
+    applyDiv.setAttribute("data-RCTag","2"); //1代表证实，2代表举报
+}
+
+
 
 /*在弹出的时候,获取是回复还是更新等,对应更改弹出框相应样式和设置不同标记,为后续显示"回复""提交",等判断该调用的网络接口.
  *

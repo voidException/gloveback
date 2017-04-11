@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/nickname.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/zhengming.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalCommonInput.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalReport.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalLoading.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/modalLogin.css">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
@@ -46,7 +47,7 @@
             </div>
         </div>
         <div class="headerChild" style="display:table;float:left;background:#2FAC4C;height:46px;width: 34%;">
-            <div style="display:table-cell;float:right;vertical-align: middle">
+            <div  onclick="ReportMe()" style="display:table-cell;float:right;vertical-align: middle">
                 <a class="headerChildReport" href="#">举报</a>
             </div>
         </div>
@@ -81,6 +82,12 @@
         </div>
     </div>
     <div style="clear: both;height: 10px"></div>
+    <%--以下以后要删除--%>
+    <div  class="clickWo" onclick="clickMe()">点击不到我</div>
+    <div onclick="alertComment()">显示评论框</div>
+    <div onclick="showDialog()">显示dialog</div>
+    <div onclick="loginByEmail()">邮箱登录</div>
+
     <!--目标金额,已筹金额,次数-->
     <div  class="target" >
         <div class="targetMoneyWrapper">
@@ -183,7 +190,7 @@
         <!--实名证实-->
         <div style="display: flex;justify-content: space-between;align-items: center;height: 46px;border-bottom:1px solid rgba(0,0,0,.15);">
             <div>有<span>{{affirmPeopleCount}}</span>人实名为Ta证实</div>
-            <a href="#">我也来证实</a>
+            <div v-on:click="confirmIt">我要证实</div>
         </div>
         <div style="display: flex;align-items:center;justify-content: space-between;height: 60px">
             <div style="display: flex;justify-content: flex-start">
@@ -298,16 +305,30 @@
 
 <%--这里是各种弹出框--%>
 <div class="contain">
-    <div  class="clickWo" onclick="clickMe()">点击不到我</div>
-    <div onclick="alertComment()">显示评论框</div>
-    <div onclick="showDialog()">显示dialog</div>
-    <div onclick="loginByEmail()">邮箱登录</div>
+    <!--这个"modal modalReport.js 管辖"-->
+    <div id="modalReport" class="modalReport">
+        <div id="tipsReport" class="tipsReport">
+            <div class="doCommentReport">与被举报或证实人的关系</div>
+            <div style="margin-right: 15px;margin-left: 15px">
+                <input  id="reportInput"  style="width: 100%;height: 20px;margin-bottom: 6px" placeholder="15字以内" />
+            </div>
+            <div class="doCommentReport">举报或证实内容</div>
+            <div style="margin-right: 15px;margin-left: 15px">
+                <textarea  id="reportTextarea" class="commentTextReport"  rows="6" cols="3"  placeholder="140字以内"></textarea>
+            </div>
+            <div class="cancelReplayReport">
+                <div class="cancelReport"  v-on:click="cancelReport"> 取消</div>
+                <div  id="applyReport" class="cancelReport"  v-on:click="applyReport" data-RCTag="">提交</div>
+            </div>
+        </div>
+    </div>
+
     <!--这个"modal 初始时是要隐藏的"-->
     <div id="modal" class="modal">
         <div id="tips" class="tips">
             <div class="doComment">发表评论</div>
             <div style="margin-right: 15px;margin-left: 15px">
-                <textarea class="commentText"  rows="6" cols="3"  placeholder="填写评论内容"></textarea>
+                <textarea class="commentText"  rows="6" cols="3"  placeholder="140字以内"></textarea>
             </div>
             <div class="cancelReplay">
                 <div class="cancel"  onclick="cancel()">取消</div>
@@ -374,6 +395,7 @@
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalLogin.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalLoading.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalCommonInput.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalReport.js"></script>
 </body>
 </html>
 

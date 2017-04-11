@@ -16,7 +16,7 @@ new Vue({
                 loginEmailDiv.style.display="none";
             }
         },
-        showDialog:function showDialog(){
+        showDialog:function showDialog(msg){
             /*1.先隐藏模态框*/
             let  modal=document.getElementById("modal");
             let  tips=document.getElementById("tips");
@@ -34,6 +34,7 @@ new Vue({
             if (dialog.style.display=="" || dialog.style.display=="none"){
                 dialog.style.display="flex";
                 dialogTips.style.display="block";
+                document.getElementById("dialogTips").innerText=msg; //提示登录返回的结果
             }
             setTimeout(function(){
                 dialog.style.display="none";
@@ -76,17 +77,21 @@ new Vue({
             //发送请求前先，隐藏弹出框，避免多次点击
             this.closeLoginModal();
             //发送网络请求
-            this.$http.post('http://localhost:8080/glove//user/login',userAccount).then(response => {
-                console.log(response.body);
+            this.$http.post('http://localhost:8080/glove/user/login',userAccount).then(response => {
+               // console.log(response.body);
                 //这里呢，要显示dialog，
-                this.showDialog();
+                this.showDialog(response.body.msg); //显示登录结果
                 //存储或者改变相应的值
-
+                if (response.body.retcode==2000){
+                    sessionStorage.setItem("userToken",response.body.data.backupfour);
+                    sessionStorage.setItem("usernickname",response.body.data.usernickname);
+                    sessionStorage.setItem("userphoto",response.body.data.userphoto);
+                    sessionStorage.setItem("loginTag","logined");  //登录标志
+                    //console.log(sessionStorage.getItem("usernickname"));
+                }
 
             }, err => {
-                console.log(err);
-                //设置抛出异常的dialog
-
+                this.showDialog("登录出现异常");
             });
 
 

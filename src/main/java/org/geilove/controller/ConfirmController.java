@@ -4,6 +4,7 @@ package org.geilove.controller;
  * */
 import org.geilove.pojo.Confirm;
 import org.geilove.requestParam.ConfirmListParam;
+import org.geilove.requestParam.ReportParam;
 import org.geilove.response.CommonRsp;
 import org.geilove.response.ConfirmListRsp;
 import org.geilove.service.ConfirmService;
@@ -37,7 +38,6 @@ public class ConfirmController {
 	
 	@RequestMapping(value="/getconfirmls",method=RequestMethod.POST)
 	public @ResponseBody ConfirmListRsp  getConfirmLs(@RequestBody ConfirmListParam confirmParam ){
-		
 		ConfirmListRsp confirmLSRsp =new ConfirmListRsp();
 		Map<String,Object> map=new HashMap<String,Object>();
 		Long id =confirmParam.getId();
@@ -106,6 +106,7 @@ public class ConfirmController {
 	// 我要证实和举报都是这个接口
 	@RequestMapping(value="/report",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp addReport(HttpServletRequest request) throws IllegalStateException, IOException{
+
 		CommonRsp commonRsp=new CommonRsp();
 		Confirm confirm=new Confirm();
 		String token=request.getParameter("token");			
@@ -141,6 +142,48 @@ public class ConfirmController {
 		}catch(Exception e){
 			
 		}		
+		commonRsp.setMsg("成功了");
+		commonRsp.setRetcode(2000);
+		return commonRsp;
+	}
+	// 我要证实和举报都是这个接口
+	@RequestMapping(value="/report2",method=RequestMethod.POST)
+	public @ResponseBody CommonRsp addReport2( @RequestBody ReportParam request) throws IllegalStateException, IOException{
+		CommonRsp commonRsp=new CommonRsp();
+		Confirm confirm=new Confirm();
+
+		String token=request.getToken();
+		System.out.println(token);
+
+		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
+		String useridStr=token.substring(32);
+		Long userid=Long.valueOf(useridStr).longValue();
+		String passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+		if(!userPassword.equals(passwdTrue)){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("用户密码不对，非法");
+			return commonRsp;
+		}
+		String  content=request.getContent() ;//证实或者举报的内容
+		String ralation=request.getRelation(); //用户与受助人关系，仅仅在证实中使用
+		String tag=request.getTag(); //1代表证实，2代表举报
+		Long tuiwenid=request.getTuiwenid();
+		confirm.setTuiwenid(tuiwenid); //转换成Long类型
+		confirm.setUserid(userid); //userid加入
+		confirm.setPublishtime(new Date()); //本地生成用户发布的时间
+		confirm.setContent(content);
+		confirm.setTag(Integer.valueOf(tag).intValue()); //转换成Integer类型
+		confirm.setRelation(ralation);
+		try{
+			Integer inserTag=confirmService.addRecordSelective(confirm);
+			if(inserTag!=1){
+				commonRsp.setRetcode(2001);
+				commonRsp.setMsg("增加一个举报出错了");
+				return commonRsp;
+			}
+		}catch(Exception e){
+
+		}
 		commonRsp.setMsg("成功了");
 		commonRsp.setRetcode(2000);
 		return commonRsp;

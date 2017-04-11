@@ -42,9 +42,15 @@ var uppart = new Vue({
     },
 
     methods: {
-        test1: function (event) {
-            //console.log(event.target.attributes[0])
-            console.log(event.target.getAttribute("data-reciver"))
+        confirmIt: function (event) { //仅仅是设置弹出框出现，和设置confirm标志
+            //console.log(event.target.getAttribute("data-reciver"))
+            let modalReportDiv=document.getElementById ("modalReport");
+            modalReportDiv.style.display="block";
+            //这里设置modalReport的举报标志"report" ,证实标志就是confirm
+            let  applyDiv = document.getElementById ("applyReport");
+            // let  dataRCTag = applyDiv.getAttribute ("data-RCTag");
+            applyDiv.setAttribute("data-RCTag","1"); //1代表证实，2代表举报
+
         },
         handleClick: function() {
         },
