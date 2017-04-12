@@ -20,7 +20,7 @@ function ReportMe() {
 
     //这里设置modalReport的举报标志"report" ,证实标志就是confirm
     let  applyDiv = document.getElementById ("applyReport");
-    let  dataRCTag = applyDiv.getAttribute ("data-RCTag");
+    //let  dataRCTag = applyDiv.getAttribute ("data-RCTag");
     //console.log(dataRCTag);
     applyDiv.setAttribute("data-RCTag","2"); //1代表证实，2代表举报
 }

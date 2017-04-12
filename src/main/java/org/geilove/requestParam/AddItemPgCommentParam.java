@@ -7,14 +7,6 @@ import java.util.Date;
  */
 public class AddItemPgCommentParam {
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     private  String  token;
 
     private Long itemprogressid;
@@ -36,6 +28,15 @@ public class AddItemPgCommentParam {
     private String content;
 
     private Integer refer;
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Long getItemprogressid() {
         return itemprogressid;

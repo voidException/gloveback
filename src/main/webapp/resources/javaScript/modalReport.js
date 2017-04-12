@@ -49,7 +49,7 @@ new Vue({
         },
         applyReport: function (event) {
             //console.log(event.target.attributes[0])
-            console.log(event.target.getAttribute("data-RCTag"))  //
+             //console.log(event.target.getAttribute("data-RCTag"))  //
             let dataRCTag=event.target.getAttribute("data-RCTag"); //获取tag
 
 

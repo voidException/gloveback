@@ -226,8 +226,8 @@
         </div>
     </div>
     <template v-for="item in lp">
-        <div  :key="item.itemProgress.itemprogressi"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
-            <div style="display: flex;justify-content: space-between;align-items: flex-end;padding: 10px;">
+        <div  :key="item.itemProgress.itemprogressid"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
+            <div style="display: flex;justify-content: space-between;align-items: flex-start;padding: 10px;">
                 <div style="display: flex">
                     <img :src="item.itemProgress.userphoto" style="height: 36px;width: 36px;border-radius: 18px">
                     <div style="margin-left: 10px">
@@ -238,15 +238,37 @@
                         <div style="margin-top: 5px">{{item.itemProgress.updatetime}}</div>
                     </div>
                 </div>
-                <img src="<%=contextPath%>/resources/image/pinglun2.png" style="height: 18px;width: 18px;cursor: pointer;">
+                <img
+                    v-on:click="commentToUpdate"
+                    id="commentToUpdate" src="<%=contextPath%>/resources/image/pinglun2.png"
+                    v-bind:data-itemprogressid="item.itemProgress.itemprogressid"
+                    v-bind:data-useridreciver="item.itemProgress.userid"
+                    v-bind:data-useruuidreciver="item.itemProgress.uuid"
+                    v-bind:data-recivernickname="item.itemProgress.usernickname"
+                    v-bind:data-reciverphoto="item.itemProgress.userphoto" />
             </div>
             <div style="padding-left: 30px">
                 <template v-for="comment in item.lmp">
                     <div style="display: flex;background: #F5F5F5;padding-top: 5px;padding-bottom: 5px;margin-right: 10px;margin-left: 20px">
                         <div  style="color: #4284B6;">
-                            <span  v-bind:data-reciver="comment.useridsender"  v-on:click="test" style="cursor: pointer;">{{comment.sendernickname}}</span><span>:</span>
+                            <span  v-on:click="commentReplyToUpdate" style="cursor: pointer;"
+                                   v-bind:data-itemprogressid="comment.itemprogressid"
+                                   v-bind:data-useridreciver="comment.useridsender"
+                                   v-bind:data-useruuidreciver="comment.useruuidsender"
+                                   v-bind:data-recivernickname="comment.sendernickname"
+                                   v-bind:data-reciverphoto="comment.senderphoto">
+                                {{comment.sendernickname}}
+                            </span><span>:</span>
                             <span v-if="comment.refer==1 " >
-                                <span style="color: #0f0f0f">回复</span><span  v-bind:data-reciver="comment.itempgcommentid" v-on:click="test"  style="color: #4284B6;cursor: pointer;">{{comment.recivernickname}}</span><span>:</span>
+                                <span style="color: #0f0f0f">回复</span>
+                                <span  v-on:click="commentReplyToUpdate"  style="color: #4284B6;cursor: pointer;"
+                                       v-bind:data-itemprogressid="comment.itemprogressid"
+                                       v-bind:data-useridreciver="comment.useridreciver"
+                                       v-bind:data-useruuidreciver="comment.useruuidreciver"
+                                       v-bind:data-recivernickname="comment.recivernickname"
+                                       v-bind:data-reciverphoto="comment.reciverphoto">
+                                    {{comment.recivernickname}}
+                                </span><span>:</span>
                             </span>
                             <span style="color: #666">{{comment.content}}</span>
                         </div>
@@ -283,15 +305,37 @@
                         <div style="margin-top: 5px">{{item.moneySource.helptime}}</div>
                     </div>
                 </div>
-                <img src="<%=contextPath%>/resources/image/pinglun2.png" style="height: 18px;width: 18px;cursor: pointer;">
+                <img src="<%=contextPath%>/resources/image/pinglun2.png" style="height: 18px;width: 18px;cursor: pointer;"
+                     id="commentToDynamic"
+                     v-on:click="commentToDynamic"
+                     v-bind:data-moneysourceid="item.moneySource.moneysourceid"
+                     v-bind:data-useridreciver="item.moneySource.useridgoodguy"
+                     v-bind:data-useruuidreciver="item.moneySource.backupthree"
+                     v-bind:data-recivernickname="item.moneySource.backupone"
+                     v-bind:data-reciverphoto="item.moneySource.backuptwo"/>
             </div>
             <div style="padding-left: 30px">
                 <template v-for="comment in item.lmp">
                     <div style="display: flex;background: #F5F5F5;padding-top: 5px;padding-bottom: 5px;margin-right: 10px;margin-left: 20px">
                         <div  style="color: #4284B6;">
-                            <span  v-bind:data-reciver="comment.useruuidsender"  v-on:click="test" style="cursor: pointer;">{{comment.sendernickname}}</span><span>:</span>
+                            <span  v-on:click="commentReplyToDynamic" style="cursor: pointer;"
+                                   v-bind:data-moneysourceid="comment.moneysourceid"
+                                   v-bind:data-useridreciver="comment.useridsender"
+                                   v-bind:data-useruuidreciver="comment.useruuidsender"
+                                   v-bind:data-recivernickname="comment.sendernickname"
+                                   v-bind:data-reciverphoto="comment.senderphoto">
+                                   {{comment.sendernickname}}
+                            </span><span>:</span>
                             <span v-if="comment.refer==1 " >
-                                <span style="color: #0f0f0f">回复</span><span  v-bind:data-reciver="comment.moneysrcpinglunid" v-on:click="test"  style="color: #4284B6;cursor: pointer;">{{comment.recivernickname}}</span><span>:</span>
+                                <span style="color: #0f0f0f">回复</span>
+                                <span  v-on:click="commentReplyToDynamic"  style="color: #4284B6;cursor: pointer;"
+                                       v-bind:data-moneysourceid="comment.moneysourceid"
+                                       v-bind:data-useridreciver="comment.useridreciver"
+                                       v-bind:data-useruuidreciver="comment.useruuidreciver"
+                                       v-bind:data-recivernickname="comment.recivernickname"
+                                       v-bind:data-reciverphoto="comment.reciverphoto">
+                                    {{comment.recivernickname}}
+                                </span><span>:</span>
                             </span>
                             <span style="color: #666">{{comment.pingluntext}}</span>
                         </div>
@@ -328,11 +372,17 @@
         <div id="tips" class="tips">
             <div class="doComment">发表评论</div>
             <div style="margin-right: 15px;margin-left: 15px">
-                <textarea class="commentText"  rows="6" cols="3"  placeholder="140字以内"></textarea>
+                <textarea   id="commentText" class="commentText"  rows="6" cols="3"  placeholder="140字以内"></textarea>
             </div>
             <div class="cancelReplay">
-                <div class="cancel"  onclick="cancel()">取消</div>
-                <div class="cancel"  onclick="reply()">回复</div>
+                <div class="cancel"  v-on:click="cancelPinglun">取消</div>
+                <!--data-updateORdynamic 区分是对进度更新还是支持动态的，data-refer区分参见refer-->
+                <div  id="reply"  class="cancel"
+                      v-on:click="replyPinglun"
+                      data-updateORdynamic=""
+                      data-refer="">
+                    回复
+                </div>
             </div>
         </div>
     </div>
@@ -396,6 +446,7 @@
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalLoading.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalCommonInput.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalReport.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalPingLun.js"></script>
 </body>
 </html>
 
