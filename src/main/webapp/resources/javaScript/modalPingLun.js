@@ -74,9 +74,9 @@ new Vue({
                 let  param={
                     token:userToken,
                     itemprogressid:itemprogressid,
-                    useridsender:useridsender, //待登录时存入，实现
-                    useruuidsender:useruuidsender , // 待登录时存入，实现
-                    sendernickname:sendernickname, // 待登录时存入，实现
+                    useridsender:useridsender,
+                    useruuidsender:useruuidsender ,
+                    sendernickname:sendernickname,
                     senderphoto:senderPhoto,
                     useridreciver:useridreciver,
                     useruuidreciver:useruuidreciver,
@@ -88,7 +88,7 @@ new Vue({
                     //console.log(response.body);
                     this.cancelPinglun();
                     //这里呢，要显示dialog，
-                    this.showDialog(response.body.msg); //显示登录结果
+                    this.showDialog("评论成功"); //显示登录结果
 
                 }, err => {
                     this.cancelPinglun();
@@ -100,12 +100,12 @@ new Vue({
                 let  param={
                     token:userToken,
                     moneysourceid:moneysourceid,
-                    useridsender:useridsender, //待登录时存入，实现
-                    useruuidsender:useruuidsender , // 待登录时存入，实现
-                    sendernickname:sendernickname, // 待登录时存入，实现
-                    senderphoto:senderPhoto,
+                    useridsender:useridsender,
+                    //useruuidsender:useruuidsender ,
+                    sendernickname:sendernickname,
+                    //senderphoto:senderPhoto,
                     useridreciver:useridreciver,
-                    useruuidreciver:useruuidreciver,
+                    //useruuidreciver:useruuidreciver,
                     recivernickname:recivernickname,
                     refer:dataReferInteger,
                     pingluntext:content
