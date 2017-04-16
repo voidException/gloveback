@@ -77,64 +77,16 @@ public class WeChatPayController {
 	 */
 	@RequestMapping(value="/toPay/{orderId}")
 	public String toPay(@PathVariable Long orderId, HttpServletRequest request, HttpServletResponse response){
-		String orginUrl = "http://www.fuckBaidu.com/home/xxx"+orderId;
+
+		//这个应该是授权回调页面域名geilove.org/path 下面的
+		String orginUrl = "http://geilove.org/path/authorizeCallBack/"+orderId;
 		String encodeUrl = URLEncoder.encode(orginUrl);
 		String resultUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx13eeb70a6cad4d76&redirect_uri="+encodeUrl+"&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
 		logger.info(resultUrl);
+		System.out.println("toPay页面");
 		return "redirect:"+resultUrl;
 	}
-	
-	@RequestMapping(value="/{orderId}")
-	public String payByOrderId(@PathVariable Long orderId, Model model , HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String openId = "";
-		if (request.getParameter("code")!=null) {
-			String code = request.getParameter("code").toString();
-			logger.info("code====="+code);
-			openId = WeChatUtils.getOpenId(code);
-			logger.info("openId======================"+openId);
-		}
 
-		//orderId 为paymainId 
-		logger.info(orderId+"<<<<<<<<<<<<<<<<<<<orderId");
-		String attach = "测试订单attach";
-		String body = "测试数据";
-		
-		
-		model.addAttribute("payMainId", "20160830110001");//FIXME 测试订单id
-	
-		model.addAttribute("openId", "asdfasdfasdfa8888");//FIXME 商户id 替换为自己的订单id
-		
-		
-		//调用微信支付统一下单接口
-        Map<String, String> orderParam = new HashMap<String, String>();  
-        orderParam.put("attach", attach);
-        orderParam.put("body", body);
-        orderParam.put("openid", openId);
-        logger.info(orderId.toString());
-        orderParam.put("out_trade_no", orderId.toString());
-        orderParam.put("ip", request.getRemoteAddr());
-        
-        orderParam.put("total_fee", "1");//FIXME 测试数据 一分 
-
-		String prePayId = WxHttpClientUtils.getPrePayIdH5(orderParam);
-		
-		logger.info("prePayId======"+prePayId);
-	       //封装h5页面调用参数
-		Map<String, String> paySign = WxUrlUtils.generatePaySign(prePayId);
-
-        model.addAttribute("paytimestamp", paySign.get("timeStamp"));
-        model.addAttribute("paypackage", "prepay_id="+prePayId);
-        model.addAttribute("prePayId", prePayId);
-        model.addAttribute("paynonceStr", paySign.get("nonceStr"));
-        model.addAttribute("paysignType", "MD5");
-        model.addAttribute("paySign",paySign.get("sign") );
-		
-        
-		
-		return "/wechat/payView";
-	}
-	
-	
 	@RequestMapping(value="/createWeChatOrder/{money}", method= RequestMethod.GET)
 	public void createWeChatOrder(Model model, @PathVariable Float money, HttpServletResponse reponse){
 		try {

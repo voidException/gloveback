@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by mfhj-dz-001-424 on 17/2/18.
  */
 @Controller
-@RequestMapping(value="/path/backPages")
+@RequestMapping(value="/backPages")
 public class JspAdminController {
     @RequestMapping(value="/checkProfileList",method = RequestMethod.GET)
     public String checkProfiles(){

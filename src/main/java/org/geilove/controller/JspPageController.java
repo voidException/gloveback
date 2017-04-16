@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 //这个主要是为关于我们，常见问题，意见反馈等提供路由
 @Controller
-@RequestMapping(value="/path/pages")
+@RequestMapping(value="/pages")
 public class JspPageController {
 
 	@RequestMapping(value="/helpApp",method = RequestMethod.GET)
