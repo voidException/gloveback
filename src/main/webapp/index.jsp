@@ -12,16 +12,19 @@
 	<title>首页用来测试</title>
 </head>
 <body id="root">
-	<a href="http://localhost:8080/glove/pages/aboutus">关于我们</a><br/>
-	<a href="http://localhost:8080/glove/pages/faq">常见问题</a><br/>
-	<a href="http://localhost:8080/glove/pages/feedback">意见反馈</a><br/>
+	<a href="http://geilove.org/path/pages/aboutus.do">关于我们</a><br/>
+	<a href="http://geilove.org/glove/path/pages/faq.do">常见问题</a><br/>
+
+	<a href="http://localhost:8080/glove/pages/feedback.do">意见反馈</a><br/>
+
 	<a href="http://localhost:8080/glove/pages/helpApp">资助我们</a><br/>
 	<a href="http://localhost:8080/glove/pages/helpAixinshe">赞助爱心社</a><br/>
 	<a href="http://localhost:8080/glove/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">分享到朋友圈</a><br/>
 	<a href="http://localhost:8080/glove/pages/login">登录</a><br/>
 	<a href="http://localhost:8080/glove/backPages/checkProfileList">后台管理系统</a><br/>
 
-	<a href="http://localhost:8080/glove/wechatpay/toPay/20170415">点我去支付</a><br/>
+	<a href="http://geilove.org/glove/wechatpay/toPay/20170415/code.do">点我去支付</a><br/>
+	<a href="http://localhost:8080/glove/wechatpay/toPay/20170415/code.do">点我去支付localhost</a><br/>
 	<div id="app">
 		<h1>Hello App!</h1>
 		<%--<p>--%>

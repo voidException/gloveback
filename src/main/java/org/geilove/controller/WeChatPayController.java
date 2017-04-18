@@ -34,6 +34,21 @@ import java.util.Map;
 public class WeChatPayController {
 	Logger logger= Logger.getLogger(this.getClass());
 
+	/**
+	 * 跳转到微信支付
+	 * 这里的orderId 可以看做是受助人的UUID
+	 */
+	@RequestMapping(value="/toPay/{orderId}/code.do")
+	public String toPay(@PathVariable Long orderId, HttpServletRequest request, HttpServletResponse response){
+
+		//这个应该是授权回调页面域名geilove.org/glove/ 下面的
+		String orginUrl = "http://geilove.org/glove/authorize/userOpeniD/"+orderId+"/preOrder.do";
+		String encodeUrl = URLEncoder.encode(orginUrl);
+		String resultUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx13eeb70a6cad4d76&redirect_uri="+encodeUrl+"&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+		logger.info(resultUrl);
+		System.out.println("toPay页面");
+		return "redirect:"+resultUrl;
+	}
 
 	@RequestMapping(value="/wxNotifyUrl")
 	public ModelAndView wxNotify(@RequestBody String wxData, HttpServletRequest request, HttpServletResponse response){
@@ -69,22 +84,6 @@ public class WeChatPayController {
 			e.printStackTrace();
 		}
 		return null;
-	}
-  	
-	/**
-	 * 跳转到微信支付
-	 * 这里的orderId 可以看做是受助人的UUID
-	 */
-	@RequestMapping(value="/toPay/{orderId}")
-	public String toPay(@PathVariable Long orderId, HttpServletRequest request, HttpServletResponse response){
-
-		//这个应该是授权回调页面域名geilove.org/path 下面的
-		String orginUrl = "http://geilove.org/path/authorizeCallBack/"+orderId;
-		String encodeUrl = URLEncoder.encode(orginUrl);
-		String resultUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx13eeb70a6cad4d76&redirect_uri="+encodeUrl+"&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
-		logger.info(resultUrl);
-		System.out.println("toPay页面");
-		return "redirect:"+resultUrl;
 	}
 
 	@RequestMapping(value="/createWeChatOrder/{money}", method= RequestMethod.GET)

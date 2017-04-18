@@ -27,21 +27,26 @@ import java.util.Map;
 
 /**
  * 微信授权回调页面url
- * 这里用path，是技术上限制啊，回来好好研究tomcat8 配置
+ *
  * 在WeChatayController 里面，发起授权，微信会跳转到此页面
  */
 @Controller
-@RequestMapping(value="/path")
+@RequestMapping(value="/authorize")
 public class WxAuthorize {
-    @RequestMapping(value="/authorizeCallBack/{orderId}")
+
+
+
+
+    @RequestMapping(value="/userOpeniD/{orderId}/preOrder.do")
     public String payByOrderId(@PathVariable Long orderId, Model model , HttpServletRequest request, HttpServletResponse response) throws Exception{
+
         String openId = "";
-        if (request.getParameter("code")!=null) {
+        if (request.getParameter("code")!=null) {  //拿到code
             String code = request.getParameter("code").toString();
+            //使用code获取openId
             openId = WeChatUtils.getOpenId(code);
 
         }
-
         //orderId 为paymainId
         String attach = "测试订单attach";
         String body = "测试数据";
@@ -56,12 +61,18 @@ public class WxAuthorize {
         orderParam.put("openid", openId);
         orderParam.put("out_trade_no", orderId.toString());
         orderParam.put("ip", request.getRemoteAddr());
-        orderParam.put("total_fee", "1");//FIXME 测试数据 一分
+        orderParam.put("total_fee", "1");//FIXME 测的钱数:一分
 
+
+        /*
+         *调用统一下单接口URL地址：https://api.mch.weixin.qq.com/pay/unifiedorder
+         *是为了获得prePayId
+         */
         String prePayId = WxHttpClientUtils.getPrePayIdH5(orderParam);
-        //封装h5页面调用参数
-        Map<String, String> paySign = WxUrlUtils.generatePaySign(prePayId);
 
+
+        //封装h5页面调用参数,传给前端
+        Map<String, String> paySign = WxUrlUtils.generatePaySign(prePayId);
         model.addAttribute("paytimestamp", paySign.get("timeStamp"));
         model.addAttribute("paypackage", "prepay_id="+prePayId);
         model.addAttribute("prePayId", prePayId);

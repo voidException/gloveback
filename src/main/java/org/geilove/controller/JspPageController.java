@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 //这个主要是为关于我们，常见问题，意见反馈等提供路由
 @Controller
-@RequestMapping(value="/pages")
+@RequestMapping(value="/path/pages")
 public class JspPageController {
 
 	@RequestMapping(value="/helpApp",method = RequestMethod.GET)
@@ -21,17 +21,17 @@ public class JspPageController {
 		String index="front/helpAixinshe";
 		return index;
 	}
-	@RequestMapping(value="/aboutus",method = RequestMethod.GET)
+	@RequestMapping(value="/aboutus.do",method = RequestMethod.GET)
 	public String aboutus(){
 		String index="front/aboutus";
 		return index;
 	}
-	@RequestMapping(value="/faq",method = RequestMethod.GET)
+	@RequestMapping(value="/faq.do",method = RequestMethod.GET)
 	public String faq(){
 		String index="front/faq";
 		return index;
 	}
-	@RequestMapping(value="/feedback",method = RequestMethod.GET)
+	@RequestMapping(value="/feedback.do",method = RequestMethod.GET)
 	public String feedback(){
 		String index="front/feedback";
 		return index;

@@ -30,8 +30,7 @@
 			</value>
 		</property>
 	</bean>
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
 				<bean

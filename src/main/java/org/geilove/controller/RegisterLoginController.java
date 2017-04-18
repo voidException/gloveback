@@ -47,7 +47,7 @@ public class RegisterLoginController {
 	
 	
 	//登录
-	@RequestMapping(value="/login",method=RequestMethod.POST)	
+	@RequestMapping(value="/login.do",method=RequestMethod.POST,produces = "application/json")
 	public @ResponseBody UserProfileRsp loginUser(@RequestBody UserLoginVo userLoginVo,HttpServletResponse httpServletResponse){
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 		//这里应该先验证用户邮箱和密码是不是符合要求，避免浪费资源查询数据库
@@ -325,6 +325,14 @@ public class RegisterLoginController {
 		userProfileRsp.setMsg("根据@获取用户信息成功了");
 		userProfileRsp.setRetcode(2000);
 		return userProfileRsp;
+	}
+
+	@RequestMapping(value="/loginn.do",method=RequestMethod.POST)
+	public @ResponseBody UserProfileRsp loginUser(HttpServletRequest  request,HttpServletResponse httpServletResponse){
+		UserProfileRsp  userProfileRsp=new UserProfileRsp();
+		userProfileRsp.setRetcode(2000);
+		userProfileRsp.setMsg("好的");
+        return  userProfileRsp;
 	}
 }
 

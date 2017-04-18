@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 @Controller
 @RequestMapping(value="/url")
 public class WxController {
-    @RequestMapping(value="/token",method = RequestMethod.GET)
+    @RequestMapping(value="/token.do",method = RequestMethod.GET)
     public void checkProfiles(HttpServletRequest  request,HttpServletResponse response)throws ServletException, IOException {
         System.out.println("wxToken");
         String signature = request.getParameter("signature");

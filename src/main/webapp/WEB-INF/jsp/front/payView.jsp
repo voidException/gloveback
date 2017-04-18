@@ -15,5 +15,8 @@
 
    <a href="http://geilove.org/wechatpay/release/">确认支付wechatpay_release</a><br/>
    <a href="http://geilove.org/path/authorizeCallBack/">确认支付authorizeCallBack</a><br/>
+   <div>********************</div>
+   <a href="http://localhost:8080/glove/wechatpay/release/">本地确认支付wechatpay_release</a><br/>
+   <a href="http://localhost:8080/glove/path/authorizeCallBack/">本地确认支付authorizeCallBack</a><br/>
 </body>
 </html>
