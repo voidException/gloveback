@@ -9,31 +9,31 @@ package org.geilove.utils;
 public class Configure {
 
 	//公众账号ID
-	private static String appid = "wcnmdwxndapishityy";
+	private static String appid = "wx13eeb70a6cad4d76"; //互助管家的
 	
 	//Android支付AppID
 	private static String androidAppID = "wcnmdwxndapishityy";
 	
-	//公众账号AppSecret(应用密钥
-	private static String appSecret = "1326123jhkjsdkfalsdjflkk32jbbmsa";
+	//公众账号AppSecret
+	private static String appSecret = "a751a981b4584205e609650f9a5a7058";  //互助管家的
 	
 	//Android应用 AppSecret(应用密钥
 	private static String androidAppSecret = "1326123jhkjsdkfalsdjflkk32jbbmsa";
 
 	//商户号
-	private static String mch_id = "8888888888";
+	private static String mch_id = "1444279102";   //互助管家的
 	
 	//Android商户号
 	private static String android_mch_id = "8888888888";
 	
-	//key
-	private static String key = "SDFKLSDKFL123LKJ4LJ32412K3L1K23J";
+	//API密钥
+	private static String key = "qazwsxedcrfvtgbyhnujmikolp123456"; //互助管家
 	
 	//androidkey
 	private static String androidkey = "skfK3JL2K4323KLJjlkFLKLSKFL23K4L";
 	
 	//SuccessBackUrl
-	private static String successBackUrl = "http://www.fuckbaidu.com/xxxx/xxxx";//这个在公众号设置
+	private static String successBackUrl = "http://www.geilove.org/glove/wechatpay/wxNotifyUrl";//这个在统一下单处设置
 	
 	
 	//AppSuccessBackUrl
@@ -88,5 +88,5 @@ public class Configure {
 
 
 
-	
+
 }

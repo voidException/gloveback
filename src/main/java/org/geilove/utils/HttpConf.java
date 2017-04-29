@@ -18,8 +18,8 @@ public class HttpConf {
 	public static final String MALL_CONTEXT_URL_BASE="mall_context_url_base";
 	/** 商品信息接口*/
 	public static final String MATERIAL_INFO_API_URI="material_info_api_uri";
-	/**微信获取授权token接口*/
-	public static final String WECHAT_AUTH_TOKEN_URL="wechat_auth_token_url";
+	/**微信网页获取授权access_token接口*/
+	public static final String WECHAT_AUTH_TOKEN_URL="https://api.weixin.qq.com/sns/oauth2/access_token";
 	/**静态应用基准地址*/
 	public static final String STATIC_HOME_CONTEXT_URL_BASE="static_home_context_url_base";
 	/**工人小熊头像地址*/

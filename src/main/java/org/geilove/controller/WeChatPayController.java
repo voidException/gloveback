@@ -36,20 +36,23 @@ public class WeChatPayController {
 
 	/**
 	 * 跳转到微信支付
-	 * 这里的orderId 可以看做是受助人的UUID
+	 * 这里的orderId 可以看做是MoneySource的一个记录的UUID
 	 */
 	@RequestMapping(value="/toPay/{orderId}/code.do")
-	public String toPay(@PathVariable Long orderId, HttpServletRequest request, HttpServletResponse response){
+	public String toPay(@PathVariable String orderId, HttpServletRequest request, HttpServletResponse response){
 
 		//这个应该是授权回调页面域名geilove.org/glove/ 下面的
 		String orginUrl = "http://geilove.org/glove/authorize/userOpeniD/"+orderId+"/preOrder.do";
 		String encodeUrl = URLEncoder.encode(orginUrl);
 		String resultUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx13eeb70a6cad4d76&redirect_uri="+encodeUrl+"&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
+
 		logger.info(resultUrl);
 		System.out.println("toPay页面");
+
 		return "redirect:"+resultUrl;
 	}
 
+	//只有这里显示支付成功了才是真的成功，才能入库
 	@RequestMapping(value="/wxNotifyUrl")
 	public ModelAndView wxNotify(@RequestBody String wxData, HttpServletRequest request, HttpServletResponse response){
 		logger.info("微信支付完成回调,返回的参数：");

@@ -40,14 +40,16 @@ public class WxHttpClientUtils {
 	//统一下单
 	private static final String preOrderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	//接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
-	private static final String notify_url = "http://dev.xxgj365.com/home/wxNotifyUrl";	
+	private static final String notify_url = "http://www.geilove.org/glove/wechatpay/wxNotifyUrl";
 	//APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP
 	private static final String spbill_create_ip = "203.100.85.40";
+
 	private static HttpClient client;
 	
 	@SuppressWarnings("rawtypes")
 	public static String getPrePayId(Map<String, String> data){
-		String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase(); //341D1784212440F49AC8479A4B81E49F
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("appid", data.get("appid"));
 		params.put("openid", data.get("openid"));
@@ -63,7 +65,7 @@ public class WxHttpClientUtils {
 		try {
 			String sign = WxUrlUtils.getSignByParams(params);
 			client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(preOrderUrl);
+			HttpPost post = new HttpPost(preOrderUrl); //统一下单地址
 			StringBuffer xml = new StringBuffer();
 			xml.append("<xml>");
 			xml.append("<appid>"+data.get("appid")+"</appid>");
@@ -82,7 +84,7 @@ public class WxHttpClientUtils {
 			log.info(xml.toString());
 			HttpEntity entity = new ByteArrayEntity(xml.toString().getBytes("UTF-8"));
 			post.setEntity(entity);
-			HttpResponse response = client.execute(post);
+			HttpResponse response = client.execute(post); //发送请求
 			String result = EntityUtils.toString(response.getEntity(),"UTF-8");
 			
 			//解析返回数据
@@ -140,28 +142,27 @@ public class WxHttpClientUtils {
 		}
 		return null;
 	}
-	
-	
+
+
 	@SuppressWarnings("rawtypes")
 	public static String getPrePayIdH5(Map<String, String> orderParam) throws Exception{
 
-		String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+		String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();//5E9AA5764E9A4A3FA7B34F9F57C66ECB
 
 		Map<String, String> paraMap = new HashMap<String, String>();  
-        paraMap.put("appid", Configure.getAppid());  
-        paraMap.put("attach", orderParam.get("attach"));  
-        paraMap.put("body", orderParam.get("body"));  
-        paraMap.put("mch_id", Configure.getMch_id());  
-        paraMap.put("nonce_str", uuid);  
-        paraMap.put("openid", orderParam.get("openid"));  
-        paraMap.put("out_trade_no", orderParam.get("out_trade_no"));  
-        paraMap.put("spbill_create_ip", orderParam.get("ip"));  
-        paraMap.put("total_fee", orderParam.get("total_fee"));  
-        paraMap.put("trade_type", "JSAPI");  
-        paraMap.put("notify_url", Configure.getSuccessBackUrl());// 此路径是微信服务器调用支付结果通知路径  
-        log.info(JSON.toJSONString(paraMap));
+        paraMap.put("appid", Configure.getAppid());  		//公众账号ID
+        paraMap.put("attach", orderParam.get("attach"));    //附加数据
+        paraMap.put("body", orderParam.get("body"));        //商品描述
+        paraMap.put("mch_id", Configure.getMch_id());       //商户号
+        paraMap.put("nonce_str", uuid);						//随机字符串
+        paraMap.put("openid", orderParam.get("openid"));    //用户标识
+        paraMap.put("out_trade_no", orderParam.get("out_trade_no"));   //商户订单号
+        paraMap.put("spbill_create_ip", orderParam.get("ip"));         //终端IP
+        paraMap.put("total_fee", orderParam.get("total_fee"));         //支付的金额
+        paraMap.put("trade_type", "JSAPI");                            //交易类型
+        paraMap.put("notify_url", Configure.getSuccessBackUrl());      //此路径是微信服务器调用支付结果通知路径
+
 		String sign = WxUrlUtils.getSignByParams(paraMap);
-		log.info("sign11111111===   "+sign);
 		paraMap.put("sign", sign); 
 		
 		try {
