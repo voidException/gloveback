@@ -47,7 +47,7 @@ public class WeChatPayController {
 		String resultUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx13eeb70a6cad4d76&redirect_uri="+encodeUrl+"&response_type=code&scope=snsapi_base&state="+orderId+"#wechat_redirect";
 
 		logger.info(resultUrl);
-		System.out.println("toPay页面");
+		System.out.println(orginUrl);
 
 		return "redirect:"+resultUrl;
 	}

@@ -22,23 +22,25 @@
 <%--<div><%=request.getAttribute("orderId")%></div>--%>
 <%--<div>${requestScope.openId}</div>--%>
 <%--<div><c:out value="${orderId}" /></div>--%>
-<div style="display: none">
-   <div id="orderId">${orderId}</div>
-   <div id="openId">${openId}</div>
-</div>
-<div>
-
-   <div class="backupMoney">
-      <div>支持金额</div>
-      <input  class="moneyInput" />
+<div id="payView">
+   <div style="display: block">
+      <div id="orderId">${orderId}</div>
+      <div id="openId">${openId}</div>
    </div>
-   <div class="clickPay">
-      <div>合计：0.00元</div>
-      <div class="doClick" v-on:click="getPrepayiD">点击支付</div>
+   <div>
+
+      <div class="backupMoney">
+         <div>支持金额</div>
+         <input  class="moneyInput" />
+      </div>
+      <div id="resdata" style="height: 100px">改变我</div>
+      <div class="clickPay">
+         <div>合计：0.00元</div>
+         <div class="doClick" v-on:click="getPrepayiD">点击支付</div>
+      </div>
    </div>
 </div>
-
-<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/payView.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/payView1.js"></script>
 </body>
 </html>
 

@@ -12,10 +12,14 @@ import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.geilove.pojo.WechatLog;
+import org.geilove.service.WechatLogService;
+import org.geilove.service.impl.WechatLogServiceImpl;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.annotation.Resource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -45,6 +49,9 @@ public class WxHttpClientUtils {
 	private static final String spbill_create_ip = "203.100.85.40";
 
 	private static HttpClient client;
+
+//	@Resource
+//	public   static WechatLogService wechatLogService;
 	
 	@SuppressWarnings("rawtypes")
 	public static String getPrePayId(Map<String, String> data){
@@ -169,12 +176,22 @@ public class WxHttpClientUtils {
 			client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(preOrderUrl);
 			String xml = mapToXml(paraMap);
-			log.info("xml==========");
-			log.info(xml);
+
 			HttpEntity entity = new ByteArrayEntity(xml.getBytes("UTF-8"));
+			//设置请求参数
 			post.setEntity(entity);
+			//发送请求
 			HttpResponse response = client.execute(post);
+			//转换成字符串
 			String result = EntityUtils.toString(response.getEntity(),"UTF-8");
+			System.out.println(result);
+
+			WechatLog wechatLog=new WechatLog();
+			wechatLog.setClassname("WxHttpClientUtils_result");
+			wechatLog.setLog(result.toString());
+			WechatLogService wechatLogService =new WechatLogServiceImpl();
+			wechatLogService.addlog(wechatLog);
+
 			//解析返回数据
 			Document document = DocumentHelper.parseText(result);
 			Element root = document.getRootElement();
@@ -184,7 +201,7 @@ public class WxHttpClientUtils {
 	            recData.put(element.getName(), element.getText());
 	        }
 	        log.info(JSON.toJSONString(recData, true));
-	        return recData.get("prepay_id");
+	        return recData.get("prepay_id"); //这个是需要的
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

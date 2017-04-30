@@ -12,7 +12,7 @@
 	<title>首页用来测试</title>
 </head>
 <body id="root">
-	<a href="http://geilove.org/path/pages/aboutus.do">关于我们</a><br/>
+	<a href="http://geilove.org/glove/path/pages/aboutus.do?code=021zmCGf2HGaCC0BpKFf26SKGf2zmCGo&state=20170415">关于我们</a><br/>
 	<a href="http://geilove.org/glove/path/pages/faq.do">常见问题</a><br/>
 
 	<a href="http://localhost:8080/glove/pages/feedback.do">意见反馈</a><br/>
@@ -24,6 +24,7 @@
 	<a href="http://localhost:8080/glove/backPages/checkProfileList">后台管理系统</a><br/>
 
 	<a href="http://geilove.org/glove/wechatpay/toPay/20170415/code.do">点我去支付</a><br/>
+
 	<a href="http://localhost:8080/glove/wechatpay/toPay/20170415/code.do">点我去支付localhost</a><br/>
 	<div id="app">
 		<h1>Hello App!</h1>

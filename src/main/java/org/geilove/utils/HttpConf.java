@@ -31,17 +31,18 @@ public class HttpConf {
 	/**获取学名信息URI*/
 	public static final String GET_MATERIA_NAME_INFO_BY_NAME="get_materia_name_info_by_name";
 	
-	private static ResourceBundle resourceBundle;
-	static {
-		resourceBundle = ResourceBundle.getBundle("http");		
-	}
-	
+//	private static ResourceBundle resourceBundle;
+//
+//	static {
+//		resourceBundle = ResourceBundle.getBundle("http");
+//	}
+//
 	public static String get(String constProperKey) {
-		return resourceBundle.getString(constProperKey);
+		return WECHAT_AUTH_TOKEN_URL;
 	}
-	
-	public static void main(String[] args) {
-		log.debug(HttpConf.get(HttpConf.STATIC_HOME_CONTEXT_URL_BASE)+HttpConf.get(HttpConf.BEAR_ICON_URI));
-	}
+//
+//	public static void main(String[] args) {
+//		log.debug(HttpConf.get(HttpConf.STATIC_HOME_CONTEXT_URL_BASE)+HttpConf.get(HttpConf.BEAR_ICON_URI));
+//	}
 
 }
