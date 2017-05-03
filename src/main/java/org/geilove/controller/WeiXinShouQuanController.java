@@ -6,6 +6,7 @@ import org.geilove.response.UnifiedorderRsp;
 import org.geilove.service.WechatLogService;
 import org.geilove.utils.WeChatUtils;
 import org.geilove.utils.WxHttpClientUtils;
+import org.geilove.utils.WxUrlUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,13 +31,13 @@ public class WeiXinShouQuanController {
 
         if (request.getParameter("code")!=null) {  //拿到code
             String code = request.getParameter("code").toString();
-            /* 1. 关键点,使用code获取openId */
             try{
+                /* 1. 关键点,使用code获取openId */
                 openId = WeChatUtils.getOpenId(code);
                 WechatLog wechatLog=new WechatLog();
                 wechatLog.setClassname("WeiXinShouQuanController_Exception");
                 wechatLog.setLog(openId);
-//                wechatLog.setOther(e.getMessage());
+                //wechatLog.setOther(e.getMessage());
                 wechatLogService.addlog(wechatLog);
             }catch (Exception e){
                 System.out.println(e);
@@ -59,7 +60,9 @@ public class WeiXinShouQuanController {
     public @ResponseBody  Object getCallH5Param(@RequestBody UnifiedPartParam unifiedPartParam, HttpServletRequest request, HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
         UnifiedorderRsp unifiedorderRsp=new UnifiedorderRsp();
+
         System.out.println("getCallH5Param");
+
         String openId=unifiedPartParam.getOpenId(); //前端传输过来
         String orderId=unifiedPartParam.getOrderId(); // 前端传输过来
         Integer money=unifiedPartParam.getMoney(); //这个单位应该是元，转化成分
@@ -77,12 +80,30 @@ public class WeiXinShouQuanController {
         orderParam.put("total_fee", "1");  //FIXME 测试数据 一分钱。这个文档上是Integer类型，但是不知道为何要转化成字符串
         String prePayId=null;
         try{
-             prePayId = WxHttpClientUtils.getPrePayIdH5(orderParam);
+             //重要
+             prePayId = WxHttpClientUtils.getPrePayIdH5(orderParam); //获得预支付号
         }catch (Exception e){
           System.out.println(e.getMessage());
         }
-        System.out.println("unifiedorderRsp");
-        unifiedorderRsp.setPrepay_id(prePayId);
+        //System.out.println("unifiedorderRsp");
+        Map<String, String> paySignParams =new HashMap<>();
+        try {
+            paySignParams = WxUrlUtils.generatePaySign(prePayId);
+        }catch (Exception e){
+
+        }
+        //以下3个字段在吊起微信支付时，用不到
+        unifiedorderRsp.setOrderId(orderId);       //订单号
+        unifiedorderRsp.setOpenId(openId);         //用户对公众号的唯一标识
+        unifiedorderRsp.setPrepay_id(prePayId);    //预支付号
+        // 必备字段
+        unifiedorderRsp.setPayAppId(paySignParams.get("appId"));
+        unifiedorderRsp.setPaytimestamp(paySignParams.get("timeStamp")); //时间戳
+        unifiedorderRsp.setPaypackage("prepay_id=" + prePayId); //订单详情扩展字符串
+        unifiedorderRsp.setPaynonceStr(paySignParams.get("nonceStr")); //20位随机字符串
+        unifiedorderRsp.setPaysignType("MD5");   //签名方式
+        unifiedorderRsp.setPaySign(paySignParams.get("sign"));    //签名
+
         unifiedorderRsp.setRetcode(2000);
         unifiedorderRsp.setMsg("成功");
         //加上其它参数一起返回给前端，然后就可以调用了

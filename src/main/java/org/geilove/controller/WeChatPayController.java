@@ -11,10 +11,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import net.glxn.qrgen.javase.QRCode;
 import javax.servlet.ServletOutputStream;
@@ -54,7 +51,8 @@ public class WeChatPayController {
 
 	//只有这里显示支付成功了才是真的成功，才能入库
 	@RequestMapping(value="/wxNotifyUrl")
-	public ModelAndView wxNotify(@RequestBody String wxData, HttpServletRequest request, HttpServletResponse response){
+	@ResponseBody
+	public String wxNotify(@RequestBody String wxData, HttpServletRequest request, HttpServletResponse response){
 		logger.info("微信支付完成回调,返回的参数：");
 		try {
 			String return_code = "FAIL";

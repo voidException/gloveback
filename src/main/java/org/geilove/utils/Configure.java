@@ -40,7 +40,7 @@ public class Configure {
 	private static String successBackUrlApp = "http://www.fuckbaidu.com/xxxx/xxxx";
 	
 	//payBackUrl
-//	private static String payBackUrl = "http://www.xxgj365.com/home/wechatpay/wxPayBack";
+    //private static String payBackUrl = "http://www.xxgj365.com/home/wechatpay/wxPayBack";
 
 	protected static String getAppid() {
 		return appid;
@@ -82,11 +82,8 @@ public class Configure {
 		return successBackUrlApp;
 	}
 
-//	public static String getPayBackUrl() {
-//		return payBackUrl;
-//	}
-
-
-
+   //	public static String getPayBackUrl() {
+   //		return payBackUrl;
+   //	}
 
 }

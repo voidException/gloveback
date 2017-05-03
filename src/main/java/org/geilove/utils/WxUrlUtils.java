@@ -48,15 +48,17 @@ public class WxUrlUtils {
 		return sb.toString();
 	}
 
+	//用于微信H5支付，获得prepay_id后，获得其它参数值返回给用户。
 	public static Map<String, String> generatePaySign(String prePayId) throws Exception {
-		
+
 		String curTime = String.valueOf(new Date().getTime());
 		Map<String, String> paraMap = new HashMap<String, String>();  
 		paraMap.put("appId", Configure.getAppid());  
 		paraMap.put("timeStamp", curTime);  
-		paraMap.put("nonceStr", Configure.getSuccessBackUrl());  
+		paraMap.put("nonceStr", RandomStr.getRandomString(20)); //随机字符串20位
 		paraMap.put("signType", "MD5");  
-		paraMap.put("package", "prepay_id=" + prePayId); 
+		paraMap.put("package", "prepay_id=" + prePayId);
+
 		String sign = getSignByParams(paraMap);
 		paraMap.put("sign", sign);  
         
