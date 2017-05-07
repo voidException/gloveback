@@ -20,7 +20,7 @@
 
 </head>
 <body>
-<!--这里是头部部分-->
+<!--PC版本的登录注册-->
 <div class="header">
     <div class="headerLeft">
         <a class="logo"  href="http://www.geilove.org" style="text-decoration: none">

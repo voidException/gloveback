@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value="/path/pages")
 public class JspPageController {
 
-	@RequestMapping(value="/helpApp",method = RequestMethod.GET)
+	@RequestMapping(value="/helpApp.do",method = RequestMethod.GET)
 	public String helpApp(){
 		String index="front/helpApp";
 		return index;
 	}
-	@RequestMapping(value="/helpAixinshe",method = RequestMethod.GET)
+	@RequestMapping(value="/helpAixinshe.do",method = RequestMethod.GET)
 	public String helpAixinshe(){
 		String index="front/helpAixinshe";
 		return index;
@@ -36,7 +36,7 @@ public class JspPageController {
 		String index="front/feedback";
 		return index;
 	}
-	@RequestMapping(value="/wechat",method = RequestMethod.GET)
+	@RequestMapping(value="/wechat.do",method = RequestMethod.GET)
 	public String wechat(){
 		String index="front/wechat";
 		return index;
@@ -53,35 +53,51 @@ public class JspPageController {
 		return index;
 	}
 
-	@RequestMapping(value="/login",method = RequestMethod.GET)
+	@RequestMapping(value="/login.do",method = RequestMethod.GET)
 	public String login(){
 		String index="front/login";
 		return index;
 	}
-	@RequestMapping(value="/loginRegister",method = RequestMethod.GET)
+	@RequestMapping(value="/register.do",method = RequestMethod.GET)
+	public String register(){
+		String index="front/RRegister";
+		return index;
+	}
+	@RequestMapping(value="/loginRegister.do",method = RequestMethod.GET)
 	public String loginPC(){
 		String index="front/loginRegister";
 		return index;
 	}
-	@RequestMapping(value="/publishItem",method = RequestMethod.GET)
+
+	@RequestMapping(value="/publishHelpInfo.do",method = RequestMethod.GET)
+	public String publishHelpInfo(){
+		String index="front/publishHelpInfo";
+		return index;
+	}
+	@RequestMapping(value="/publishItem.do",method = RequestMethod.GET)
 	public String publishItem(){
 		String index="front/publishItemPC";
 		return index;
 	}
-	@RequestMapping(value="/helpCenter",method = RequestMethod.GET)
+	@RequestMapping(value="/helpCenter.do",method = RequestMethod.GET)
 	public String goHelpCenter(){
 		String index="front/helpCenterPC";
 		return index;
 	}
 
-	@RequestMapping(value="/appDownload",method = RequestMethod.GET)
+	@RequestMapping(value="/appDownload.do",method = RequestMethod.GET)
 	public String appDownload(){
 		String index="front/appDownload";
 		return index;
 	}
-	@RequestMapping(value="/userProtocol",method = RequestMethod.GET)
+	@RequestMapping(value="/userProtocol.do",method = RequestMethod.GET)
 	public String userProtocol(){
 		String index="front/userProtocolPC";
+		return index;
+	}
+	@RequestMapping(value="/mobileMainPage.do",method = RequestMethod.GET)
+	public String mobileMainPage(){
+		String index="mobilewap/mobileMainPage";
 		return index;
 	}
 
