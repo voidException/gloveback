@@ -50,6 +50,9 @@ public class WeChatPayController {
 	}
 
 	//只有这里显示支付成功了才是真的成功，才能入库
+	//先到user表查看，是否关联了账号，如果否，就简单的记录下（新建表）
+	//如果是，则直接进行一系列的表更新
+	//当用户关联的时候就从这个新建表里查找，然后更新相应的表
 	@RequestMapping(value="/wxNotifyUrl")
 	@ResponseBody
 	public String wxNotify(@RequestBody String wxData, HttpServletRequest request, HttpServletResponse response){

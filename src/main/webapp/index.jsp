@@ -24,7 +24,7 @@
 	<a href="http://localhost:8080/glove/path/pages/login.do">公众号登录</a><br/>
 	<a href="http://localhost:8080/glove/path/pages/register.do">公众号注册</a><br/>
 
-	<a href="http://localhost:8080/glove/path/pages/publishhelpinfo.do">发布求助信息</a><br/>
+	<a href="http://localhost:8080/glove/demo/upload/addman.do">发布求助信息</a><br/>
 
 	<a href="http://localhost:8080/glove/backPages/checkProfileList">后台管理系统</a><br/>
 	<a href="http://geilove.org/glove/wechatpay/toPay/20170415/code.do">点我去支付</a><br/>

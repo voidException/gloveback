@@ -83,7 +83,9 @@ public class RegisterLoginController {
 		return userProfileRsp;
 	}
 	
-	//注册
+	// ***************注册，注册的时候应该在UserInfo表中加入一条记录，收听几个官方账号 ************
+	/* *****************其它从User表分出去的功能表也要加入新记录
+	* */
 	@RequestMapping(value="/register",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp registerUser(@RequestBody  UserRegisterVo userRegisterVo,HttpServletResponse httpServletResponse){
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");

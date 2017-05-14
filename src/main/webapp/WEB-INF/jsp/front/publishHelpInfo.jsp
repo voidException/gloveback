@@ -75,7 +75,7 @@
         <div class="promiseBody" style="display:flex;flex-direction: row;align-items: center;justify-content: space-around;">
             <div class="ChengNuoItem">
                 <div>A</div>
-                <input  type="checkbox"  name="chengnuoType" value="1"   />
+                <input  type="checkbox"  name="chengnuoType" value="1"  />
             </div>
             <div class="ChengNuoItem">
                 <div>B</div>
@@ -85,11 +85,6 @@
                 <div>C</div>
                 <input  type="checkbox"  name="chengnuoType" value="3" />
             </div>
-            <%
-                String[]   values   =   request.getParameterValues("chengnuoType");
-                for(int i=1;i<values.length;i++)
-                    System.out.println(values[i]);
-            %>
         </div>
         <div class="PromiseTxT">
             <div class="checkTeamTxt">我的承诺</div>

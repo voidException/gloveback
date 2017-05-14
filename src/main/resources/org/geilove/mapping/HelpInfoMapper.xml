@@ -56,12 +56,21 @@
     cashTwoUUID, accept2MoneyMount, accept2HelpTimes, accept2HelpMenNumber, confirmTwoTimes, 
     doubtTwotimes, dynamicTwo
   </sql>
+  <!--自定义selectByUserUUID-->
+  <select id="selectByUserUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from helpInfo
+    where userUUID = #{useruuid}
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from helpInfo
     where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from helpInfo
     where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}

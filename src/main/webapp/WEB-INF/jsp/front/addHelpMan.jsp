@@ -1,10 +1,11 @@
 
-<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<% String contextPath = request.getContextPath(); %>
-<!DOCTYPE html>
+<%--<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>--%>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>--%>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>--%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+    String contextPath = request.getContextPath();
+%>
 <html>
 <head>
 
@@ -23,7 +24,14 @@
 <!--发布求助信息-->
 <form   action="wapmultiUpload.do"  method="post" enctype="multipart/form-data" class="form-horizontal" role="form" target="hidden_frame">
     <div id="publishInfo" >
-        <input name="token" type="text" style="display: none" value="aaaaaaasddfakdakdnsadnakdaksktoken">
+        <!--以下要用js从本地获取具体值后，然后改变默认值-->
+        <input name="token" type="text" style="display: none" value="e10adc3949ba59abbe56e057f20f883e1">
+        <input name="useruuid" type="text" style="display: none" value="94111BD33D3F474590C535C0BE24905B">
+        <input name="userName" type="text" style="display: none" value="张三">
+        <input name="selfintroduce" type="text" style="display: none" value="我是一个乐观开朗的人">
+        <input name="photoUrl" type="text" style="display: none" value="http://7xihgc.com1.z0.glb.clouddn.com/14.jpg">
+
+
         <div class="ZhengMing">
             <div class="proveHeader">证明信息</div>
             <div class="checkTeam">
@@ -49,23 +57,23 @@
 
             <div class="ShiFo">
                 <div class="ShiFoTxt">是否有身份证明</div>
-                <input class="ShiFoInput"   name="idZhangming"  type="checkbox" value="" />
+                <input class="ShiFoInput"   name="prove"  type="checkbox" value="11" />
             </div>
             <div class="ShiFo">
                 <div class="ShiFoTxt">是否有居委会证明</div>
-                <input class="ShiFoInput"  name="jwZhengming"  type="checkbox" value="" />
+                <input class="ShiFoInput"  name="prove"  type="checkbox" value="22" />
             </div>
             <div class="ShiFo">
                 <div class="ShiFoTxt">是否有医院证明</div>
-                <input class="ShiFoInput"   name="yyZhengming"  type="checkbox" value="" />
+                <input class="ShiFoInput"   name="prove"  type="checkbox" value="33" />
             </div>
             <div class="ShiFo">
                 <div class="ShiFoTxt">是否有贫困证明</div>
-                <input class="ShiFoInput" name="pinkunZhengming" type="checkbox" value="" />
+                <input class="ShiFoInput" name="prove" type="checkbox" value="44" />
             </div>
             <div class="ShiFo">
                 <div class="ShiFoTxt">是否有收款人关系证明</div>
-                <input class="ShiFoInput"  name="relationZhengming"  type="checkbox" value="" />
+                <input class="ShiFoInput"  name="prove"  type="checkbox" value="55" />
             </div>
 
         </div>
@@ -85,11 +93,6 @@
                 <div>C</div>
                 <input  type="checkbox"  name="chengnuoType" value="3" />
             </div>
-            <%
-                String[]   values   =   request.getParameterValues("chengnuoType");
-                for(int i=1;i<values.length;i++)
-                    System.out.println(values[i]);
-            %>
         </div>
         <div class="PromiseTxT">
             <div class="checkTeamTxt">我的承诺</div>
@@ -103,7 +106,7 @@
         </div>
         <div class="checkTeam">
             <div class="checkTeamTxt">截止日期</div>
-            <input class="checkTeamInput"  name="endDate"  type="datetime-local" value="" />
+            <input class="checkTeamInput"  name="endDate"  type="date" value="" />
         </div>
         <div class="checkTeam">
             <div class="checkTeamTxt">募捐金额</div>
@@ -116,7 +119,7 @@
         </div>
         <div class="PromiseTxT">
             <div class="checkTeamTxt">描述详情</div>
-            <textarea class="promiseTextarea" name="description"  rows="30" cols="10" value="" placeholder="800字以内" style="font-size: 15px"></textarea>
+            <textarea class="promiseTextarea" name="content"  rows="30" cols="10" value="" placeholder="800字以内" style="font-size: 15px"></textarea>
         </div>
     </div>
     <div>

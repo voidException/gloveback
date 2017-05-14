@@ -69,11 +69,6 @@ public class JspPageController {
 		return index;
 	}
 
-	@RequestMapping(value="/publishhelpinfo.do",method = RequestMethod.GET)
-	public String addHelpMan(){
-		String index="front/addHelpMan";
-		return index;
-	}
 
 	@RequestMapping(value="/publishItem.do",method = RequestMethod.GET)
 	public String publishItem(){
@@ -101,10 +96,10 @@ public class JspPageController {
 		String index="mobilewap/mobileMainPage";
 		return index;
 	}
-//	@RequestMapping(value="/publishHelpInfo.do",method = RequestMethod.GET)
-//	public String publishHelpInfo(){
-//		String index="front/publishHelpInfo";
-//		return index;
-//	}
+	@RequestMapping(value="/publishHelpInfo.do",method = RequestMethod.GET)
+	public String publishHelpInfo(){
+		String index="front/publishHelpInfo";
+		return index;
+	}
 
 }

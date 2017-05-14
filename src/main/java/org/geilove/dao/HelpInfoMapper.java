@@ -11,6 +11,8 @@ public interface HelpInfoMapper {
 
     HelpInfo selectByPrimaryKey(Long helpeachotherid);
 
+    HelpInfo selectByUserUUID(String useruuid);
+
     int updateByPrimaryKeySelective(HelpInfo record);
 
     int updateByPrimaryKey(HelpInfo record);
