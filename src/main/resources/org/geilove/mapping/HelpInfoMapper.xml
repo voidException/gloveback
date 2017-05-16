@@ -45,6 +45,8 @@
     <result column="confirmTwoTimes" property="confirmtwotimes" jdbcType="INTEGER" />
     <result column="doubtTwotimes" property="doubttwotimes" jdbcType="INTEGER" />
     <result column="dynamicTwo" property="dynamictwo" jdbcType="INTEGER" />
+    <result column="tweetTwoUUID" property="tweettwouuid" jdbcType="VARCHAR" />
+    <result column="tweetTwoID" property="tweettwoid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     helpeachOtherID, helpeachOtherUUID, userID, userUUID, bankCard, bank, bankDate, bankCardName, 
@@ -54,8 +56,9 @@
     acceptFirstHelpTimes, acceptFirstHelpMenNumber, confirmOneTimes, doubtOnetimes, dynamicOne, 
     accept2HelpStartDate, accept2HelpEndDate, promiseTwoType, promiseTwoDesp, cashTwoID, 
     cashTwoUUID, accept2MoneyMount, accept2HelpTimes, accept2HelpMenNumber, confirmTwoTimes, 
-    doubtTwotimes, dynamicTwo
+    doubtTwotimes, dynamicTwo, tweetTwoUUID, tweetTwoID
   </sql>
+
   <!--自定义selectByUserUUID-->
   <select id="selectByUserUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -63,14 +66,12 @@
     from helpInfo
     where userUUID = #{useruuid}
   </select>
-
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from helpInfo
     where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from helpInfo
     where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
@@ -91,8 +92,8 @@
       accept2HelpEndDate, promiseTwoType, promiseTwoDesp, 
       cashTwoID, cashTwoUUID, accept2MoneyMount, 
       accept2HelpTimes, accept2HelpMenNumber, 
-      confirmTwoTimes, doubtTwotimes, dynamicTwo
-      )
+      confirmTwoTimes, doubtTwotimes, dynamicTwo, 
+      tweetTwoUUID, tweetTwoID)
     values (#{helpeachotherid,jdbcType=BIGINT}, #{helpeachotheruuid,jdbcType=VARCHAR}, 
       #{userid,jdbcType=BIGINT}, #{useruuid,jdbcType=VARCHAR}, #{bankcard,jdbcType=VARCHAR}, 
       #{bank,jdbcType=VARCHAR}, #{bankdate,jdbcType=TIMESTAMP}, #{bankcardname,jdbcType=VARCHAR}, 
@@ -108,8 +109,8 @@
       #{accept2helpenddate,jdbcType=TIMESTAMP}, #{promisetwotype,jdbcType=INTEGER}, #{promisetwodesp,jdbcType=VARCHAR}, 
       #{cashtwoid,jdbcType=BIGINT}, #{cashtwouuid,jdbcType=VARCHAR}, #{accept2moneymount,jdbcType=INTEGER}, 
       #{accept2helptimes,jdbcType=INTEGER}, #{accept2helpmennumber,jdbcType=INTEGER}, 
-      #{confirmtwotimes,jdbcType=INTEGER}, #{doubttwotimes,jdbcType=INTEGER}, #{dynamictwo,jdbcType=INTEGER}
-      )
+      #{confirmtwotimes,jdbcType=INTEGER}, #{doubttwotimes,jdbcType=INTEGER}, #{dynamictwo,jdbcType=INTEGER}, 
+      #{tweettwouuid,jdbcType=VARCHAR}, #{tweettwoid,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.HelpInfo" >
     insert into helpInfo
@@ -243,6 +244,12 @@
       <if test="dynamictwo != null" >
         dynamicTwo,
       </if>
+      <if test="tweettwouuid != null" >
+        tweetTwoUUID,
+      </if>
+      <if test="tweettwoid != null" >
+        tweetTwoID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="helpeachotherid != null" >
@@ -373,6 +380,12 @@
       </if>
       <if test="dynamictwo != null" >
         #{dynamictwo,jdbcType=INTEGER},
+      </if>
+      <if test="tweettwouuid != null" >
+        #{tweettwouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="tweettwoid != null" >
+        #{tweettwoid,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -505,6 +518,12 @@
       <if test="dynamictwo != null" >
         dynamicTwo = #{dynamictwo,jdbcType=INTEGER},
       </if>
+      <if test="tweettwouuid != null" >
+        tweetTwoUUID = #{tweettwouuid,jdbcType=VARCHAR},
+      </if>
+      <if test="tweettwoid != null" >
+        tweetTwoID = #{tweettwoid,jdbcType=BIGINT},
+      </if>
     </set>
     where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
   </update>
@@ -551,7 +570,9 @@
       accept2HelpMenNumber = #{accept2helpmennumber,jdbcType=INTEGER},
       confirmTwoTimes = #{confirmtwotimes,jdbcType=INTEGER},
       doubtTwotimes = #{doubttwotimes,jdbcType=INTEGER},
-      dynamicTwo = #{dynamictwo,jdbcType=INTEGER}
+      dynamicTwo = #{dynamictwo,jdbcType=INTEGER},
+      tweetTwoUUID = #{tweettwouuid,jdbcType=VARCHAR},
+      tweetTwoID = #{tweettwoid,jdbcType=BIGINT}
     where helpeachOtherID = #{helpeachotherid,jdbcType=BIGINT}
   </update>
 </mapper>

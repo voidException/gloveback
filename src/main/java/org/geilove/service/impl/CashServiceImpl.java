@@ -25,6 +25,7 @@ public class CashServiceImpl implements CashService {
 
 	public int cashInsert(Cash cash){
 		int tag=cashMapper.insert(cash);
+		System.out.println(tag);
 		return tag;
 	}
 }

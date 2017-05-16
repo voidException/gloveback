@@ -9,4 +9,5 @@ public interface HelpInfoService {
 
     public  HelpInfo selectRecord(String  useruuid);
     public  int  insertRecord(HelpInfo helpInfo);
+    public  int  updateRecord(HelpInfo helpInfo);
 }

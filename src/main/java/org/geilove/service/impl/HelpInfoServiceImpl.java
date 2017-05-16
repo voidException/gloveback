@@ -27,4 +27,10 @@ public class HelpInfoServiceImpl implements HelpInfoService {
         return  helpInfoTag;
     }
 
+    public  int  updateRecord(HelpInfo helpInfo){
+        int helpInfoTag=helpInfoMapper.updateByPrimaryKeySelective(helpInfo);
+        return  helpInfoTag;
+    }
+
+
 }

@@ -89,6 +89,10 @@ public class HelpInfo {
 
     private Integer dynamictwo;
 
+    private String tweettwouuid;
+
+    private Long tweettwoid;
+
     public Long getHelpeachotherid() {
         return helpeachotherid;
     }
@@ -431,5 +435,21 @@ public class HelpInfo {
 
     public void setDynamictwo(Integer dynamictwo) {
         this.dynamictwo = dynamictwo;
+    }
+
+    public String getTweettwouuid() {
+        return tweettwouuid;
+    }
+
+    public void setTweettwouuid(String tweettwouuid) {
+        this.tweettwouuid = tweettwouuid == null ? null : tweettwouuid.trim();
+    }
+
+    public Long getTweettwoid() {
+        return tweettwoid;
+    }
+
+    public void setTweettwoid(Long tweettwoid) {
+        this.tweettwoid = tweettwoid;
     }
 }
