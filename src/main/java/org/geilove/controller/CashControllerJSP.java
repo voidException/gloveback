@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by aihaitao on 16/5/2017.
+ * 这个是发布求助项目时的代码，适用于公众号内发布
  */
 
 @Controller
@@ -60,7 +60,7 @@ public class CashControllerJSP {
     @RequestMapping(value="wapmultiUpload.do")
     @ResponseBody
     public ModelAndView jspmultiUpload(HttpServletRequest request)throws IllegalStateException, IOException {
-        //System.out.println("CashControllerJSp");
+        System.out.println("CashControllerJSp");
         HelpInfo helpInfo; //求助信息表
         Cash cash= new Cash();
         Tweet tweet=new Tweet();
@@ -94,12 +94,33 @@ public class CashControllerJSP {
         String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080
 
         /*@***************下面开始数据校验*******************@*/
+        if (token==null ||token==""||shouZhurenName==null ||shouZhurenName==""||acceptMoneyName==null ||acceptMoneyName==""||
+                acceptMoneyPhone==null ||acceptMoneyPhone==""|| cityName==null||cityName=="" ||userName==null ||userName=="" ||
+                photoUrl==null || photoUrl=="" ||useruuid==null ||photoUrl=="" ||chengnuoContent==null ||chengnuoContent=="" ||
+                targetMoney==null ||targetMoney=="" ||moneyTitle==null ||moneyTitle=="" ||content==null ||content =="" ||
+                dateEndStr==null || dateEndStr=="" ||promises ==null ||proves==null ){
+
+            Map<String,String> model =new HashMap();
+            model.put("result", "您有必要字段为空");
+            ModelAndView modelAndView=new ModelAndView("front/addHelpManResult",model);
+            return modelAndView;
+
+        }
+
+        if (token.length()<=32){
+            Map<String,String> model =new HashMap();
+            model.put("result", "非法操作");
+            ModelAndView modelAndView=new ModelAndView("front/addHelpManResult",model);
+            return modelAndView;
+        }
 
         String userPassword=token.substring(0,32); //token是password和userID拼接成的。
-        String useridStr=token.substring(32);
-        Long userid=Long.valueOf(useridStr).longValue();
-        String passwdTrue=null;
+        String passwdTrue;
+        String useridStr;
+        Long userid;
         try{
+            useridStr=token.substring(32);
+            userid=Long.valueOf(useridStr).longValue();
             passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
         }catch (Exception e){
             Map<String,String> model =new HashMap();
@@ -292,14 +313,26 @@ public class CashControllerJSP {
         cash.setBehelpusernickname(userName);//受助人昵称
         cash.setBehelpusername(shouZhurenName); //受助人名字
         cash.setPromisemiaoshu(chengnuoContent); //承诺
-        Integer targetMoneyInt=Integer.parseInt(targetMoney);
-        cash.setTargetcash(targetMoneyInt); //目标金额
+        try {
+            Integer targetMoneyInt=Integer.parseInt(targetMoney);
+            if (targetMoneyInt>200000){
+                throw new Exception("金额过大");
+            }
+            cash.setTargetcash(targetMoneyInt); //目标金额
+
+        }catch (Exception e){
+            Map<String,String> model =new HashMap();
+            model.put("result","目标金额有误");
+            ModelAndView modelAndView=new ModelAndView("front/addHelpManResult",model);
+            return modelAndView;
+
+        }
 
         cash.setOpentime(dateStart); //账户开启时间
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date closeDate=sdf.parse(dateEndStr);
-            System.out.println(closeDate);
+            //System.out.println(closeDate);
             cash.setClosetime(closeDate);
         }catch (ParseException e){
             //给个默认的下一个月的今天
@@ -320,7 +353,7 @@ public class CashControllerJSP {
         cash.setBackupone(shouZhureniDentityNo); //受助人身份证号
         //各种证明
 
-        if (proves!=null){
+        if (proves!=null && "".equals(proves)){
             for (int k=0;k<proves.length;k++){
                 System.out.println(proves[k]);
                 if ("11".equals(proves[k])){
@@ -344,11 +377,17 @@ public class CashControllerJSP {
                     continue;
                 }
             }
+        }else {
+            Map<String,String> model =new HashMap();
+            model.put("result", "至少有一种证明");
+            ModelAndView modelAndView=new ModelAndView("front/addHelpManResult",model);
+
+            return modelAndView;
         }
         //承诺
         if (promises!=null){
             for(int i=0;i<promises.length;i++){
-                System.out.println(promises[i]);
+               // System.out.println(promises[i]);
                 if ("1".equals(promises[i])){
                     cash.setPromisetype(1);
                     continue;

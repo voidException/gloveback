@@ -81,6 +81,16 @@
     margin-bottom: 5px;:
 }
 
+.button{
+    width: 96%;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    font-size: 16px; -webkit-appearance: none;
+    background-color: #2FAC4C;
+    color: #FFFFFF;
+}
+
 
 
 
