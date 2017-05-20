@@ -29,8 +29,14 @@
 	<a href="http://localhost:8080/glove/backPages/checkProfileList">后台管理系统</a><br/>
 	<a href="http://geilove.org/glove/wechatpay/toPay/20170415/code.do">点我去支付</a><br/>
 	<a href="http://localhost:8080/glove/wechatpay/toPay/20170415/code.do">点我去支付localhost</a><br/>
-
+	<a href="http://localhost:8080/glove/path/pages/userSelfHelp.do">我的求助</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/helpTweetList.do">求助列表</a><br/>
 	<a href="http://localhost:8080/glove/path/pages/mobileMainPage.do">公众号首页</a><br/>
+	<a href="http://localhost:8080/glove/photo/setting.do">设置</a><br/>
+	<a href="http://localhost:8080/glove/profile/goAddProfile.do">完善资料</a><br/>
+
+	<a href="http://localhost:8080/glove/user/resetPassword.do">修改密码</a><br/>
+
 	<div id="app">
 		<h1>Hello App!</h1>
 		<%--<p>--%>

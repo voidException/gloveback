@@ -86,7 +86,7 @@ public class RegisterLoginController {
 	// ***************注册，注册的时候应该在UserInfo表中加入一条记录，收听几个官方账号 ************
 	/* *****************其它从User表分出去的功能表也要加入新记录
 	* */
-	@RequestMapping(value="/register",method=RequestMethod.POST)
+	@RequestMapping(value="/register.do",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp registerUser(@RequestBody  UserRegisterVo userRegisterVo,HttpServletResponse httpServletResponse){
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
 		//这里假设昵称唯一可用，邮箱可用，两次输入的密码一样
@@ -168,7 +168,7 @@ public class RegisterLoginController {
 		}
 		return commonRsp; //这么返回是为了，注册成功立马跳转到主页，和登录时一样。		
 	}
-   //这个是找回密码。
+   //这个是找回密码。邮箱加密作为url参数发送到用户邮箱，然后用户点击url输入新密码
 	@RequestMapping(value="/findpassword",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp findPassword(@RequestBody  FindpwParam param) throws MessagingException{
 		CommonRsp rsp=new CommonRsp();
@@ -231,7 +231,7 @@ public class RegisterLoginController {
 //        message.setRecipient(RecipientType.CC, bcc);
         // 设置邮件标题
         message.setSubject("手套爱心社密码找回邮件");
-        // 应该做一个网页，让用户重置密码
+        // 应该做一个网页，让用户重置密码,这个超链接的参数是加密的用户邮箱和时间参数，用户点击后进入新的页面，然后提交的时候获得2个参数发送到服务器端
         message.setContent("<a href='#'>点击超链接重置密码</a>", "text/html;charset=UTF-8");
         // 发送邮件
         Transport.send(message);
@@ -239,13 +239,21 @@ public class RegisterLoginController {
         rsp.setRetcode(2000);
 		return rsp;
 	}
+
+
+
+	@RequestMapping(value="/resetPassword.do",method = RequestMethod.GET)
+	public String mobileMainPage(){
+		String index="front/resetPasswd";
+		return index;
+	}
 	//修改密码
-	@RequestMapping(value="/resetpass",method=RequestMethod.POST)
+	@RequestMapping(value="/resetpass.do",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp resetPassword(HttpServletRequest request) {
 		CommonRsp commonRsp=new CommonRsp();
 		String token=request.getParameter("token");			
 		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
-		System.out.println(userPassword);
+		//System.out.println(userPassword);
 		String useridStr=token.substring(32);		
 		Long userid=Long.valueOf(useridStr).longValue();
 		//Long userid=Long.parseLong(useridstr);

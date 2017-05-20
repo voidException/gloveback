@@ -61,7 +61,7 @@ public class Tweet {
 
     private String backuptwelve;
 
-    private Integer tobeuseone;
+    private Integer tobeuseone; //救助状态
 
     private Integer tobeusetwo;
 
@@ -74,6 +74,10 @@ public class Tweet {
     private Long cashid;
 
     private String cashuuid;
+
+    private String useruuidtweet;
+
+    private String helpif;
 
 
     public Long getTweetid() {
@@ -350,5 +354,21 @@ public class Tweet {
 
     public void setCashuuid(String cashuuid) {
         this.cashuuid = cashuuid == null ? null : cashuuid.trim();
+    }
+
+    public String getUseruuidtweet() {
+        return useruuidtweet;
+    }
+
+    public void setUseruuidtweet(String useruuidtweet) {
+        this.useruuidtweet = useruuidtweet == null ? null : useruuidtweet.trim();
+    }
+
+    public String getHelpif() {
+        return helpif;
+    }
+
+    public void setHelpif(String helpif) {
+        this.helpif = helpif == null ? null : helpif.trim();
     }
 }

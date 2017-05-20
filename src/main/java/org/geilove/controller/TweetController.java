@@ -3,10 +3,9 @@
  * 这个用来显示首页，但不同于个人主页，它没有粉丝数推文数量等信息。
 */
 package org.geilove.controller;
+import org.geilove.service.TweetService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.geilove.pojo.Tweet;
 import org.geilove.requestParam.DeleteTweetByKeyParam;
 import org.geilove.requestParam.PublishTweetParam;
@@ -38,6 +37,8 @@ public class TweetController {
 	private MainService mainService;
 	@Resource
 	private RegisterLoginService rlService;
+	@Resource
+	private TweetService tweetService;
 
 	/*这个是删除一条推文，因此需要用户名、密码、推文的ID，要授权才能删除，只做逻辑删除*/
 	@RequestMapping(value="/deleteTweetByID")
@@ -123,9 +124,9 @@ public class TweetController {
 				commonRsp.setRetcode(2001);
 			}
 		}catch(Exception e){	
-				commonRsp.setMsg("发布推文抛出异常");
-				commonRsp.setRetcode(2001);
-				return commonRsp;
+			commonRsp.setMsg("发布推文抛出异常");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
 		}
 			
 		commonRsp.setRetcode(2000);
@@ -133,7 +134,84 @@ public class TweetController {
 		return commonRsp;
 	}
 
-		
+	//查看自己发布的求助信息的tweet,
+	@RequestMapping(value = "/{userUUID}/helpselflist.do",method =RequestMethod.GET)
+	public @ResponseBody TweetsRsp helpSelfList( @PathVariable("userUUID") String userUUID,HttpServletRequest request){
+		TweetsRsp tweetRsp=new TweetsRsp();
+		String userUUIDTweet=userUUID;
+		Map<String,Object> map=new HashMap<String,Object>();
+
+		map.put("userUUIDTweet",userUUIDTweet);
+		//map.put("userIDTweet",1);
+		map.put("helpif","yes");
+		map.put("page",0);
+		map.put("pageSize",2);
+
+		List<Tweet> listTweet;
+		try {
+			listTweet=tweetService.getUserSelfHelpTweetsService(map);
+			if (listTweet==null || listTweet.isEmpty()){
+				tweetRsp.setLp(null);
+				tweetRsp.setMsg("没有项目");
+				tweetRsp.setRetcode(2001);
+				return  tweetRsp;
+			}
+
+		}catch (Exception e){
+			tweetRsp.setLp(null);
+			tweetRsp.setMsg("服务异常");
+			tweetRsp.setRetcode(2001);
+			return  tweetRsp;
+		}
+
+		tweetRsp.setLp(listTweet);
+		tweetRsp.setMsg("成功");
+		tweetRsp.setRetcode(2000);
+		return  tweetRsp;
+	}
+
+	//查看所有求助推文
+
+	@RequestMapping(value="/helpTweetlist.do",method= RequestMethod.GET)
+	@ResponseBody
+	public TweetsRsp helpTweetlist(HttpServletRequest request) throws Exception{
+
+		TweetsRsp tuiwenListRsp=new TweetsRsp();
+		Map<String,Object> map=new HashMap<String,Object>();
+
+		String lastUpdate=request.getParameter("lastUpdate");
+		map.put("helpif","yes");
+		map.put("lastUpdate",lastUpdate); //时间
+		map.put("page",0);
+		map.put("pageSize",10);
+
+
+		List<Tweet> listTweet;
+		try {
+			listTweet=tweetService.getHelpTweetListService(map);
+			if (listTweet==null){
+				tuiwenListRsp.setLp(null);
+				tuiwenListRsp.setMsg("没有项目");
+				tuiwenListRsp.setRetcode(2001);
+				return  tuiwenListRsp;
+			}
+
+		}catch (Exception e){
+			tuiwenListRsp.setLp(null);
+			tuiwenListRsp.setMsg("服务异常");
+			tuiwenListRsp.setRetcode(2001);
+			return  tuiwenListRsp;
+		}
+
+		tuiwenListRsp.setLp(listTweet);
+		tuiwenListRsp.setMsg("成功获取数据");
+		tuiwenListRsp.setRetcode(2000);
+		return  tuiwenListRsp;
+	}
+
+
+
+
 }
 
 

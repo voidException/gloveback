@@ -18,18 +18,27 @@
 </head>
 <body id="root" style="margin: 0px">
 <!--这里是登录-->
+<div  id="wechatLogin">
 	<div class="loginWrapper">
 		<div class="loginEmail">
 			<div>邮箱</div>
-			<input id="loginEmailInput" type="email" value="" placeholder="请输入常见邮箱"/>
+			<input id="emailInput" type="email" value="" placeholder="请输入常见邮箱"/>
 		</div>
 		<div class="loginPass">
 			<div>密码</div>
-			<input  id="loginPasswdInput" type="password"   value=""  placeholder="数字字母组成的密码"/>
+			<input  id="passwordInput" type="password"   value=""  placeholder="数字字母组成的密码"/>
 		</div>
-		<div class="doLogin"  v-on:click="dologin">登录</div>
+		<div class="doLogin"   v-on:click="loginIn" >登录</div>
 	</div>
+
+	<!-- 模态弹出框-->
+	<!--这个"modal 初始时是要隐藏的"-->
+	<div id="modalReport" class="modalReport"></div>
+
+</div>
 </body>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/login.js"></script>
+
 </html>
 
 

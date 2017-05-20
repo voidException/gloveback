@@ -37,6 +37,8 @@
     <result column="cityName" property="cityname" jdbcType="VARCHAR" />
     <result column="cashiD" property="cashid" jdbcType="BIGINT" />
     <result column="cashUUID" property="cashuuid" jdbcType="VARCHAR" />
+    <result column="userUUIDTweet" property="useruuidtweet" jdbcType="VARCHAR" />
+    <result column="helpif" property="helpif" jdbcType="VARCHAR" />
   </resultMap>
   
   
@@ -45,7 +47,7 @@
     publishTime, reportedTimes, publicSee, deleteTag, videoAddress, tweetbackUpOne, tweetbackUpTwo, 
     tweetbackUpThree, tweetbackupFour, tweetbackupFive, tweetbackupSix,promise, tweetbackupSeven,
     backupeight, backupneight, backupnine, backupten, backupeleven, backuptwelve, tobeuseone, 
-    tobeusetwo, tobeusethree, cityCode, cityName,cashiD, cashUUID
+    tobeusetwo, tobeusethree, cityCode, cityName,cashiD, cashUUID,userUUIDTweet, helpif
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -53,6 +55,28 @@
     from tweet
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </select>
+
+  <!--查看自己发布的要救助的tweet,-->
+  <select id="getUserSelfHelpTweets" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tweet
+    where userUUIDTweet = #{userUUIDTweet} AND helpif=#{helpif}
+    order by publishTime  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
+
+  <!--查看需要救助的人的推文,这里都选择出来了，实际上可以选择出部分出来-->
+  <select id="getHelpTweetList" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tweet
+    where helpif= #{helpif} AND publishTime &lt; #{lastUpdate}
+    order by publishTime  desc
+    limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+
 <!--根据tweet的uuid获取一条推文，也就是backupneight，这个是推文的uuid-->
   <select id="selectByTweetUUID" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
@@ -60,7 +84,6 @@
     from tweet
     where backupneight = #{tweetuuid,jdbcType=BIGINT}
   </select>
-
 
 
   <!--  以下是自定义，根据用户的id获取一组推文,加载更多 适合查看自己发布的推文-->
@@ -148,7 +171,8 @@
       backupnine, backupten, backupeleven, 
       backuptwelve, tobeuseone, tobeusetwo, 
       tobeusethree, cityCode, cityName,
-      cashiD, cashUUID)
+      cashiD, cashUUID, userUUIDTweet,
+      helpif)
     values (#{tweetid,jdbcType=BIGINT}, #{useridtweet,jdbcType=BIGINT}, #{sourcemsgid,jdbcType=BIGINT}, 
       #{tagid,jdbcType=TINYINT}, #{msgcontent,jdbcType=VARCHAR}, #{topic,jdbcType=BIGINT}, 
       #{commenttimes,jdbcType=INTEGER}, #{ok,jdbcType=INTEGER}, #{boxtimes,jdbcType=INTEGER}, 
@@ -160,7 +184,8 @@
       #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR}, #{backupeleven,jdbcType=VARCHAR}, 
       #{backuptwelve,jdbcType=VARCHAR}, #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, 
       #{tobeusethree,jdbcType=INTEGER}, #{citycode,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR},
-      #{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR})
+      #{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR},#{useruuidtweet,jdbcType=VARCHAR},
+      #{helpif,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.Tweet" >
     insert into tweet
@@ -270,6 +295,12 @@
       <if test="cashuuid != null" >
         cashUUID,
       </if>
+      <if test="useruuidtweet != null" >
+        userUUIDTweet,
+      </if>
+      <if test="helpif != null" >
+        helpif,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tweetid != null" >
@@ -376,6 +407,12 @@
       </if>
       <if test="cashuuid != null" >
         #{cashuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuidtweet != null" >
+        #{useruuidtweet,jdbcType=VARCHAR},
+      </if>
+      <if test="helpif != null" >
+        #{helpif,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -484,6 +521,12 @@
       <if test="cashuuid != null" >
         cashUUID = #{cashuuid,jdbcType=VARCHAR},
       </if>
+      <if test="useruuidtweet != null" >
+        userUUIDTweet = #{useruuidtweet,jdbcType=VARCHAR},
+      </if>
+      <if test="helpif != null" >
+        helpif = #{helpif,jdbcType=VARCHAR},
+      </if>
     </set>
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </update>
@@ -522,7 +565,9 @@
       cityCode = #{citycode,jdbcType=VARCHAR},
       cityName = #{cityname,jdbcType=VARCHAR},
       cashiD = #{cashid,jdbcType=BIGINT},
-      cashUUID = #{cashuuid,jdbcType=VARCHAR}
+      cashUUID = #{cashuuid,jdbcType=VARCHAR},
+      userUUIDTweet = #{useruuidtweet,jdbcType=VARCHAR},
+      helpif = #{helpif,jdbcType=VARCHAR}
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -22,16 +22,23 @@ public interface TweetMapper {
 
     int updateByPrimaryKeySelective(Tweet record);
 
-    int updateByPrimaryKey(Tweet record); 
-    /*查看自己发布的微博*/
+    int updateByPrimaryKey(Tweet record);
 
+    /*查看自己发布的微博*/
     List<Tweet> selectByMainKeyLoadMore(Map<String, Object> map); //自定义方法,根据用户的id，取得一组推文列表,loadMore使用
+
     /*查看别人发布的推文*/
     List<Tweet> selectByMainKeyLoadMoreSHe(Map<String, Object> map);
-    /*用户查看自己主页的推文，自己收听的*/
 
+    /*用户查看自己主页的推文，自己收听的*/
     List<Tweet> findByUserIdsLoadMore(Map<String,Object>maps); //根据获得的用户的一组userids 取出一组微博,供加载更多用;
-    
+
+    /* 查看自己发布的救助 推文userUUIDTweet tobeuseone */
+    List<Tweet> getUserSelfHelpTweets(Map<String,Object> map);
+
+
+    /* 查看审核通过的需要帮助的推文 */
+    List<Tweet> getHelpTweetList(Map<String,Object> map);
     
     
 }

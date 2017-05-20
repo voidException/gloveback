@@ -33,8 +33,14 @@ import javax.servlet.http.HttpSession;
 public class UpdateUserProfileController {
 	@Resource
 	private RegisterLoginService rlService;
-	
-	@RequestMapping("/completeProfile")
+
+
+	@RequestMapping(value="/goAddProfile.do",method = RequestMethod.GET)
+	public String mobileMainPage(){
+		String index="front/completeProfile";
+		return index;
+	}
+	@RequestMapping("/completeProfile.do")
 	public @ResponseBody CommonRsp completeProfile(HttpServletRequest request){
 		CommonRsp commonRsp=new CommonRsp();
 		String token=request.getParameter("token");			

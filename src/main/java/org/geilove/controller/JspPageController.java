@@ -60,7 +60,7 @@ public class JspPageController {
 	}
 	@RequestMapping(value="/register.do",method = RequestMethod.GET)
 	public String register(){
-		String index="front/RRegister";
+		String index="front/register";
 		return index;
 	}
 	@RequestMapping(value="/loginRegister.do",method = RequestMethod.GET)
@@ -99,6 +99,17 @@ public class JspPageController {
 	@RequestMapping(value="/publishHelpInfo.do",method = RequestMethod.GET)
 	public String publishHelpInfo(){
 		String index="front/publishHelpInfo";
+		return index;
+	}
+
+	@RequestMapping(value="/userSelfHelp.do",method = RequestMethod.GET)
+	public String userSelfHelp(){
+		String index="front/userSelfHelp";
+		return index;
+	}
+	@RequestMapping(value="/helpTweetList.do",method = RequestMethod.GET)
+	public String helpTweetList(){
+		String index="front/helpTweetList";
 		return index;
 	}
 

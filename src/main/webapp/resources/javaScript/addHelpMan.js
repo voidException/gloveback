@@ -3,7 +3,7 @@
  */
 
 window.onload = function () {
-   // alert('onload');
+
     //设置input的初始值
 };
 

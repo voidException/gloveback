@@ -46,5 +46,17 @@ public class TweetServiceImpl implements TweetService {
         return lsTweet;
     }
 
+    /* 查看自己发布的救助 推文userUUIDTweet tobeuseone */
+    public List<Tweet> getUserSelfHelpTweetsService(Map<String,Object> map){
+        List<Tweet> lsTweet=tweetMapper.getUserSelfHelpTweets(map);
+        return  lsTweet;
+    }
+
+    /* 查看审核通过的需要帮助的推文 */
+    public List<Tweet> getHelpTweetListService(Map<String,Object> map){
+        List<Tweet> lsTweet=tweetMapper.getHelpTweetList(map);
+        return  lsTweet;
+    }
+
 
 }

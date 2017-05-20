@@ -16,4 +16,11 @@ public interface TweetService {
 
     public List<Tweet> getMyselfPublishedTweetByMyiD(Map<String,Object> maps);
 
+    /* 查看自己发布的救助 推文userUUIDTweet tobeuseone */
+    public List<Tweet> getUserSelfHelpTweetsService(Map<String,Object> map);
+
+    /* 查看审核通过的需要帮助的推文 */
+    public List<Tweet> getHelpTweetListService(Map<String,Object> map);
+
+
 }
