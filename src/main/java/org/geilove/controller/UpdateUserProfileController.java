@@ -2,6 +2,8 @@ package org.geilove.controller;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Resource;
+
+import org.geilove.requestParam.CompleteProfileParam;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,7 @@ public class UpdateUserProfileController {
 		String index="front/completeProfile";
 		return index;
 	}
+	//适用于App移动端
 	@RequestMapping("/completeProfile.do")
 	public @ResponseBody CommonRsp completeProfile(HttpServletRequest request){
 		CommonRsp commonRsp=new CommonRsp();
@@ -76,4 +79,74 @@ public class UpdateUserProfileController {
 		commonRsp.setRetcode(2000);
 		return commonRsp;
 	}
+	@RequestMapping(value = "/completeProfileJSP.do",method = RequestMethod.POST)
+	public @ResponseBody CommonRsp completeProfileJSP(@RequestBody CompleteProfileParam completeProfileParam, HttpServletRequest request){
+		CommonRsp commonRsp=new CommonRsp();
+		String  token=completeProfileParam.getToken();
+		String  realName=completeProfileParam.getRealName();
+		String  identity=completeProfileParam.getIdentity();
+		String  address=completeProfileParam.getAddress();
+        String  college=completeProfileParam.getCollege();
+        String  selfIntroduce=completeProfileParam.getSelfIntroduce();
+        if (token==null || token.length()<32){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("非法操作");
+			return commonRsp;
+		}
+		String userPassword="";
+		String useridStr;
+		Long userid=0L;
+		String passwdTrue="";
+		try{
+			userPassword=token.substring(0,32); //token是password和userID拼接成的。
+			useridStr=token.substring(32);
+			userid=Long.valueOf(useridStr).longValue();
+			passwdTrue=rlService.selectMD5Password(Long.valueOf(userid));
+		}catch (Exception e){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("用户密码不对，非法");
+			return commonRsp;
+		}
+
+		if(!userPassword.equals(passwdTrue)){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("用户密码不对，非法");
+			return commonRsp;
+		}
+
+		if (realName==null &&identity==null &&address==null &&college==null){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("无效更新");
+			return commonRsp;
+		}
+		if (realName.length()>8 || identity.length()!=18 ||selfIntroduce.length()>200 ){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("字段长度不对");
+			return commonRsp;
+		}
+
+		User user=new User();
+		user.setUserid(userid);
+		user.setRealname(realName);
+		user.setIdentitycard(identity);
+		user.setAddress(address);
+		user.setUniversity(college);
+		user.setSelfintroduce(selfIntroduce);
+
+		try{
+			int returnTag=rlService.updateUserSelective(user);
+			//System.out.println(returnTag);
+			if(returnTag!=1){
+				commonRsp.setMsg("完善资料失败");
+				commonRsp.setRetcode(2000);
+				return commonRsp;
+			}
+		}catch(Exception e){
+
+		}
+		commonRsp.setMsg("更新资料成功");
+		commonRsp.setRetcode(2000);
+		return commonRsp;
+	}
+
 }

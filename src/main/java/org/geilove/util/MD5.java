@@ -60,11 +60,7 @@ public class MD5 {
         System.out.println("原始：" + s);
         System.out.println("MD5后：" + string2MD5(s));
         //System.out.println("加密的：" + convertMD5(s));
-        String aa=convertMD5(s);
-        String bb=convertMD5(aa);
-        System.out.println(aa);
-        System.out.println(bb);
-        //System.out.println("解密的：" + convertMD5(convertMD5(s)));
+        System.out.println("解密的：" + convertMD5(convertMD5(s)));
 
     }
 }

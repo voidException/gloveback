@@ -4,7 +4,7 @@
 %>
 <html>
 <head>
-    <title>找回密码</title>
+    <title>重置密码</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,22 +16,22 @@
 </head>
 <body style="background-color: #E1E5E7">
 
-<div class="ZhengMing">
+<div id="resetPasswd">
 
     <div class="checkTeam">
         <div class="checkTeamTxt">原始密码</div>
-        <input  id="acceptMoneyName"  onblur="checkAcceptMoneyName()" class="checkTeamInput"  name="acceptMoneyName"  type="text" value="" placeholder="用户现密码"/>
+        <input  id="originPass"  class="checkTeamInput"  name="originPass"  type="text" value="" placeholder="用户现密码"/>
     </div>
     <div class="checkTeam">
         <div class="checkTeamTxt">新密码</div>
-        <input  id="acceptMoneyPhone" onblur="checkAcceptMoneyPhone()" class="checkTeamInput"   name="acceptMoneyPhone"  type="text" value="" placeholder=""/>
+        <input  id="newPass"  class="checkTeamInput"   name="newPass"  type="text" value="" placeholder=""/>
     </div>
     <div class="checkTeam">
         <div class="checkTeamTxt">重新输入</div>
-        <input   onblur="checkAcceptMoneyPhone()" class="checkTeamInput"   name="acceptMoneyPhone"  type="text" value="" placeholder=""/>
+        <input   id="againPass" class="checkTeamInput"   name="againPass"  type="text" value="" placeholder=""/>
     </div>
     <div class="commitWrapper">
-        <div class="commit">重置</div>
+        <div class="commit" v-on:click="resetPasswd">重置</div>
     </div>
 </div>
 </body>

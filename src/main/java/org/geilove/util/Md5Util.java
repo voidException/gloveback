@@ -33,7 +33,7 @@ public class Md5Util {
         }
         return sb.toString();
     }
-
+     //测试
     public static void main(String[] args) {
         System.out.println(getMd5("123456"));
     }

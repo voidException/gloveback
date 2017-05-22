@@ -12,11 +12,10 @@ import java.util.regex.Pattern;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.map.HashedMap;
+import org.geilove.requestParam.ChangePwParam;
+import org.geilove.requestParam.ResetPasswdParam;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.geilove.pojo.User;
 import org.geilove.requestParam.FindpwParam;
 import org.geilove.vo.UserLoginVo;
@@ -38,6 +37,12 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.geilove.util.DesUtil;
+import org.springframework.web.servlet.ModelAndView;
+
+import static org.geilove.util.DesUtil.decrypt;
+import static org.geilove.util.DesUtil.encrypt;
+
 @Controller
 @RequestMapping("/user")
 public class RegisterLoginController {
@@ -168,11 +173,19 @@ public class RegisterLoginController {
 		}
 		return commonRsp; //这么返回是为了，注册成功立马跳转到主页，和登录时一样。		
 	}
-   //这个是找回密码。邮箱加密作为url参数发送到用户邮箱，然后用户点击url输入新密码
-	@RequestMapping(value="/findpassword",method=RequestMethod.POST)
+
+    /* 1、 跳转到用户输入注册的邮箱  */
+	@RequestMapping(value="/putEmail.do",method = RequestMethod.GET)
+	public String putEmail(){
+		String index="front/putEmail";
+		return index;
+	}
+    /* 2. 这个是找回密码。这里接受邮箱，校验后，发送重置密码的链接到用户邮箱*/
+	@RequestMapping(value="/findpassword.do",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp findPassword(@RequestBody  FindpwParam param) throws MessagingException{
 		CommonRsp rsp=new CommonRsp();
 		String userEmail=param.getUserEmail();
+
 		if(userEmail.length()<10 || userEmail.length()>30 ){
 			rsp.setMsg("邮箱长度不合法");
 			rsp.setRetcode(2001);
@@ -194,23 +207,35 @@ public class RegisterLoginController {
 			rsp.setRetcode(2001);
 			return rsp;
 		}
+
+		String encryptEmail = ""; //放入超链接当中
+		String key = "xxoolqqyywyl@@**^^";  //重要，密钥
+		try{
+			encryptEmail=encrypt(userEmail, key);
+			//userEmail=decrypt(encrypt(userEmail, key), key); //解密
+		}catch (Exception e){
+			rsp.setMsg("加密抛出异常");
+			rsp.setRetcode(2001);
+			return rsp;
+		}
+
 		// 配置发送邮件的环境属性
         final Properties props = new Properties();
         // 表示SMTP发送邮件，需要进行身份验证
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", "smtp.126.com");
         // 发件人的账号
-        props.put("mail.user", "noexception@126.com");
+        props.put("mail.user", "aixinteam@126.com");
         // 访问SMTP服务时需要提供的密码
         props.put("mail.password", "818ooXXaa$$");
         // 构建授权信息，用于进行SMTP进行身份验证
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                // 用户名、密码
-                String userName = props.getProperty("mail.user");
-                String password = props.getProperty("mail.password");
-                return new PasswordAuthentication(userName, password);
+            // 用户名、密码
+			String userName = props.getProperty("mail.user");
+			String password = props.getProperty("mail.password");
+			return new PasswordAuthentication(userName, password);
             }
         };
         // 使用环境属性和授权信息，创建邮件会话
@@ -223,16 +248,12 @@ public class RegisterLoginController {
         // 设置收件人
         InternetAddress to = new InternetAddress(userEmail);
         message.setRecipient(RecipientType.TO, to);
-//        // 设置抄送
-//        InternetAddress cc = new InternetAddress("luo_aaaaa@yeah.net");
-//        message.setRecipient(RecipientType.CC, cc);
-//        // 设置密送，其他的收件人不能看到密送的邮件地址
-//        InternetAddress bcc = new InternetAddress("aaaaa@163.com");
-//        message.setRecipient(RecipientType.CC, bcc);
-        // 设置邮件标题
-        message.setSubject("手套爱心社密码找回邮件");
+
+        message.setSubject("互助管家找回密码(复制链接在浏览器打开)");
+       // String  Url="http://www.geilove.org/glove/user/"+encryptEmail+"/findPasswordUrl.do";
+		String  Url="http://localhost:8080/glove/user/"+encryptEmail+"/findPasswordUrl.do";
         // 应该做一个网页，让用户重置密码,这个超链接的参数是加密的用户邮箱和时间参数，用户点击后进入新的页面，然后提交的时候获得2个参数发送到服务器端
-        message.setContent("<a href='#'>点击超链接重置密码</a>", "text/html;charset=UTF-8");
+        message.setContent("<div>"+Url+"</div>", "text/html;charset=UTF-8");
         // 发送邮件
         Transport.send(message);
         rsp.setMsg("发送成功");
@@ -240,35 +261,149 @@ public class RegisterLoginController {
 		return rsp;
 	}
 
+	/* 3. 用户点击邮箱中的超链接，此路由处理超链接。  encryptEmail是用户邮箱的加密*/
+	@RequestMapping(value="/{encryptEmail}/findPasswordUrl.do",method = RequestMethod.GET)
+	public ModelAndView findPasswordUrl(@PathVariable String encryptEmail){
+		//解密邮箱，放回到findPasswordUrl.jsp 中
+		Map<String,String> model =new HashMap();
+		model.put("result", encryptEmail);
+		ModelAndView modelAndView=new ModelAndView("front/findPasswordUrl",model);
+		return modelAndView;
+	}
 
+	/* 4. 从findPasswordUrl.jsp 中取得用户的加密邮箱，和输入的两次新密码，执行密码修改（更新）*/
+	@RequestMapping(value="/changePasswd.do",method = RequestMethod.POST)
+	@ResponseBody
+	public CommonRsp changePasswd( @RequestBody ChangePwParam changePwParam){
+		CommonRsp commonRsp=new CommonRsp();
+		if (changePwParam==null){
+			commonRsp.setMsg("参数不能为空");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
+		String encryptEmail=changePwParam.getEncryptEmail();
+        String againPass=changePwParam.getAgainPass();
+        String originPass=changePwParam.getOriginPass();
+        if (encryptEmail==null || againPass==null || originPass==null){
+			commonRsp.setMsg("参数不全");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
+		if (!originPass.equals(againPass)){
+			commonRsp.setMsg("密码不一致");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
 
+		String key = "xxoolqqyywyl@@**^^";  //重要，密钥
+        String userEmail;
+        try {
+			userEmail=decrypt(encryptEmail, key);  //解密
+		}catch (Exception e){
+			commonRsp.setMsg("解密抛出异常");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
+		//解密后检查邮箱是否符合要求
+		String regEmail = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+		Pattern pattern=Pattern.compile(regEmail);
+		Matcher matcher=pattern.matcher(userEmail);
+		boolean emailb=matcher.matches();
+		if(!emailb){
+			commonRsp.setMsg("邮箱不符合格式");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
+		String regPass="^[0-9a-zA-Z]{5,17}$"; //邮箱密码的正则表达式
+		Pattern patternPW=Pattern.compile(regPass);
+		Matcher matcherPW=patternPW.matcher(originPass);
+		boolean pwb=matcherPW.matches();
+		if(!pwb){
+			commonRsp.setMsg("密码不符合格式");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
+		Map<String,Object> map=new HashMap<>();
+		map.put("userEmail",userEmail);
+		User checkUser;
+		try {
+			checkUser = registerLoginService.selectByNicknameOrEmail(map);
+		}catch (Exception e){
+			commonRsp.setMsg("用户检查抛出异常");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
+		if (checkUser==null){
+			commonRsp.setMsg("无此用户");
+			commonRsp.setRetcode(2001);
+			return  commonRsp;
+		}
+		Long userid=checkUser.getUserid();
+		//接下来执行密码更新
+		User user=new User();
+		user.setUserid(userid);
+		user.setUserpassword(MD5.string2MD5(originPass)); //密码要加密
+		try{
+			int updateTag=registerLoginService.updateUserSelective(user);
+			if(updateTag!=1){
+				commonRsp.setMsg("密码重置失败");
+				commonRsp.setRetcode(2001);
+				return commonRsp;
+			}
+		}catch(Exception e){
+			commonRsp.setMsg("密码重置抛出异常");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
+		commonRsp.setMsg("密码重置成功");
+		commonRsp.setRetcode(2000);
+		return commonRsp;
+	}
+   /****************************修改密码********************************************************/
+    // 1.跳转到修改密码页面 //
 	@RequestMapping(value="/resetPassword.do",method = RequestMethod.GET)
 	public String mobileMainPage(){
 		String index="front/resetPasswd";
 		return index;
 	}
-	//修改密码
+	// 2.修改密码  //
 	@RequestMapping(value="/resetpass.do",method=RequestMethod.POST)
-	public @ResponseBody CommonRsp resetPassword(HttpServletRequest request) {
+	public @ResponseBody CommonRsp resetPassword(@RequestBody ResetPasswdParam resetPasswdParam ,HttpServletRequest request) {
 		CommonRsp commonRsp=new CommonRsp();
-		String token=request.getParameter("token");			
-		String userPassword=token.substring(0,32); //token是password和userID拼接成的。
-		//System.out.println(userPassword);
-		String useridStr=token.substring(32);		
-		Long userid=Long.valueOf(useridStr).longValue();
-		//Long userid=Long.parseLong(useridstr);
-		String passwdTrue=registerLoginService.selectMD5Password(Long.valueOf(userid));
-		//System.out.println(passwdTrue);
-		
+
+		//String  originPass=request.getParameter("originPass");
+		//String  newPass=request.getParameter("newPass");
+		//String  againPass=request.getParameter("againPass");
+		//String  token=request.getParameter("token");
+
+		String  originPass=resetPasswdParam.getOriginPass();
+		String  newPass=resetPasswdParam.getNewPass();
+		String  againPass=resetPasswdParam.getAgainPass();
+		String  token=resetPasswdParam.getToken();
+
+		String userPassword="";
+		String useridStr="";
+		Long  userid=0L;
+		String passwdTrue="";
+		try{
+			 userPassword=token.substring(0,32); //token是password和userID拼接成的。
+			 useridStr=token.substring(32);
+			 userid=Long.valueOf(useridStr).longValue();
+			 passwdTrue=registerLoginService.selectMD5Password(Long.valueOf(userid));
+
+		}catch ( Exception e){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("非法操作");
+			return commonRsp;
+		}
+
+
 		if(!userPassword.equals(passwdTrue)){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("用户身份验证失败");
 			return commonRsp;
 		}
-		String  originPass=request.getParameter("originPass"); 
-		String  newPass=request.getParameter("newPass");
-		String againPass=request.getParameter("againPass");
-		String md5pass=MD5.string2MD5(originPass); //对原始密码加密
+		String  md5pass=MD5.string2MD5(originPass); //对原始密码加密
 		if(!md5pass.equals(passwdTrue)){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("用户密码不对，非法");
@@ -288,6 +423,7 @@ public class RegisterLoginController {
 		Pattern patternPW=Pattern.compile(regPass);
 		Matcher matcherNewPW=patternPW.matcher(newPass);
 		Matcher matcherAgainPW=patternPW.matcher(newPass);
+
 		boolean pwb=matcherNewPW.matches();
 		boolean againpwb=matcherAgainPW.matches();
 		if(pwb==false ||againpwb==false){
@@ -298,7 +434,7 @@ public class RegisterLoginController {
 		//接下来调用更新user表的方法，对密码进行更新
 		User user=new User();
 		user.setUserid(userid);
-		user.setUserpassword(MD5.string2MD5(newPass));
+		user.setUserpassword(MD5.string2MD5(newPass)); //密码要加密
 		try{
 			int tag=registerLoginService.updateUserSelective(user);
 			if(tag!=1){
@@ -307,13 +443,16 @@ public class RegisterLoginController {
 				return commonRsp;
 			}
 		}catch(Exception e){
-			
+			commonRsp.setMsg("密码更新出现异常");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
 		}
 		commonRsp.setMsg("密码更新成功");
 		commonRsp.setRetcode(2000);
 		return commonRsp;
 	}	
-	
+
+	//通过用户的昵称，获得用户的基本资料信息
 	@RequestMapping(value="/getprofile/bynickname",method=RequestMethod.POST)	
 	public @ResponseBody UserProfileRsp getInfoByUserName(HttpServletRequest request){
 		UserProfileRsp  userProfileRsp=new UserProfileRsp();
@@ -329,7 +468,9 @@ public class RegisterLoginController {
 				return userProfileRsp;
 			}
 		}catch(Exception e){
-			
+			userProfileRsp.setData(user);
+			userProfileRsp.setMsg("获取用户资料抛出异常");
+			userProfileRsp.setRetcode(2001);
 		}
 		userProfileRsp.setData(user);
 		userProfileRsp.setMsg("根据@获取用户信息成功了");
@@ -337,13 +478,6 @@ public class RegisterLoginController {
 		return userProfileRsp;
 	}
 
-	@RequestMapping(value="/loginn.do",method=RequestMethod.POST)
-	public @ResponseBody UserProfileRsp loginUser(HttpServletRequest  request,HttpServletResponse httpServletResponse){
-		UserProfileRsp  userProfileRsp=new UserProfileRsp();
-		userProfileRsp.setRetcode(2000);
-		userProfileRsp.setMsg("好的");
-        return  userProfileRsp;
-	}
 }
 
 
