@@ -26,7 +26,7 @@
 <div class="header">
     <div class="headerLeft">
         <a class="logo"  href="http://www.geilove.org" style="text-decoration: none">
-            <img src="<%=contextPath%>/resources/image/logo.png" style="width: 40px;height: 40px;border-radius: 20px">
+            <img src="http://onejf30n8.bkt.clouddn.com/gongzhonglogo.png" style="width: 40px;height: 40px;border-radius: 20px">
             <div style="color:#00BB3B;cursor: pointer">首页</div>
         </a>
         <a class="logo  appHelp" href="http://www.geilove.org/pages/appDownload" style="text-decoration: none" >
@@ -50,7 +50,7 @@
 
 <footer class="footer">
     <div>
-        <img src="<%=contextPath%>/resources/image/logo.png" style="width: 100px;width: 100px;border-radius: 50px">
+        <img src="http://onejf30n8.bkt.clouddn.com/gongzhonglogo.png" style="width: 100px;width: 100px;border-radius: 50px">
     </div>
     <div class="footerItem">
         <a href="http://www.geilove.org/pages/aboutus" style="text-decoration: none">关于我们</a>

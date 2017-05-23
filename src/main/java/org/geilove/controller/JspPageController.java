@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value="/path/pages")
 public class JspPageController {
 
+	@RequestMapping(value="/header2.do",method = RequestMethod.GET)
+	public String goHeader(){
+		String index="common/header2";
+		return index;
+	}
 	@RequestMapping(value="/helpApp.do",method = RequestMethod.GET)
 	public String helpApp(){
 		String index="front/helpApp";
@@ -24,6 +29,11 @@ public class JspPageController {
 	@RequestMapping(value="/aboutus.do",method = RequestMethod.GET)
 	public String aboutus(){
 		String index="front/aboutus";
+		return index;
+	}
+	@RequestMapping(value="/aboutwe.do",method = RequestMethod.GET)
+	public String aboutwe(){
+		String index="front/aboutwe";
 		return index;
 	}
 	@RequestMapping(value="/faq.do",method = RequestMethod.GET)

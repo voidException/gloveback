@@ -64,3 +64,6 @@
     height: 38px;
     align-items: center
 }
+a{
+    text-decoration: none;
+}

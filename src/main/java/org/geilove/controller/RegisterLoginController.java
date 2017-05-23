@@ -1,6 +1,5 @@
 
 package org.geilove.controller;
-
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -8,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.annotation.Resource;
-
 import org.apache.commons.collections.map.HashedMap;
 import org.geilove.requestParam.ChangePwParam;
 import org.geilove.requestParam.ResetPasswdParam;
@@ -39,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.geilove.util.DesUtil;
 import org.springframework.web.servlet.ModelAndView;
-
 import static org.geilove.util.DesUtil.decrypt;
 import static org.geilove.util.DesUtil.encrypt;
 
@@ -49,8 +45,7 @@ public class RegisterLoginController {
 	
 	@Resource
 	private RegisterLoginService registerLoginService; 
-	
-	
+
 	//登录
 	@RequestMapping(value="/login.do",method=RequestMethod.POST,produces = "application/json")
 	public @ResponseBody UserProfileRsp loginUser(@RequestBody UserLoginVo userLoginVo,HttpServletResponse httpServletResponse){
@@ -370,17 +365,14 @@ public class RegisterLoginController {
 	@RequestMapping(value="/resetpass.do",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp resetPassword(@RequestBody ResetPasswdParam resetPasswdParam ,HttpServletRequest request) {
 		CommonRsp commonRsp=new CommonRsp();
-
 		//String  originPass=request.getParameter("originPass");
 		//String  newPass=request.getParameter("newPass");
 		//String  againPass=request.getParameter("againPass");
 		//String  token=request.getParameter("token");
-
 		String  originPass=resetPasswdParam.getOriginPass();
 		String  newPass=resetPasswdParam.getNewPass();
 		String  againPass=resetPasswdParam.getAgainPass();
 		String  token=resetPasswdParam.getToken();
-
 		String userPassword="";
 		String useridStr="";
 		Long  userid=0L;
@@ -450,8 +442,7 @@ public class RegisterLoginController {
 		commonRsp.setMsg("密码更新成功");
 		commonRsp.setRetcode(2000);
 		return commonRsp;
-	}	
-
+	}
 	//通过用户的昵称，获得用户的基本资料信息
 	@RequestMapping(value="/getprofile/bynickname",method=RequestMethod.POST)	
 	public @ResponseBody UserProfileRsp getInfoByUserName(HttpServletRequest request){

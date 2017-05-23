@@ -12,19 +12,24 @@
 	<title>首页用来测试</title>
 </head>
 <body id="root">
+
+    <a href="http://localhost:8080/glove/path/pages/header2.do">公共头部</a><br/>
+
 	<a href="http://geilove.org/glove/path/pages/aboutus.do?code=021zmCGf2HGaCC0BpKFf26SKGf2zmCGo&state=20170415">关于我们</a><br/>
+
+	<a href="http://geilove.org/glove/path/pages/aboutwe.do">关于我们公众号版本</a><br/>
 
 	<a href="http://geilove.org/glove/path/pages/faq.do">常见问题</a><br/>
 
 	<a href="http://localhost:8080/glove/pages/feedback.do">意见反馈</a><br/>
 
-	<a href="http://localhost:8080/glove/path/pages/helpApp">资助我们</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/helpApp.do">资助我们</a><br/>
 
-	<a href="http://localhost:8080/glove/path/pages/helpAixinshe">赞助爱心社</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/helpAixinshe.do">赞助爱心社</a><br/>
 
 	<a href="http://localhost:8080/glove/path/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">分享到朋友圈</a><br/>
 
-	<a href="http://localhost:8080/glove/path/pages/loginRegister">登录PC</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/loginRegister.do">登录PC</a><br/>
 
 	<a href="http://localhost:8080/glove/path/pages/login.do">公众号登录</a><br/>
 
@@ -32,7 +37,7 @@
 
 	<a href="http://localhost:8080/glove/publishInfo/upload/addman.do">发布求助信息</a><br/>
 
-	<a href="http://localhost:8080/glove/backPages/checkProfileList">后台管理系统</a><br/>
+	<a href="http://localhost:8080/glove/backPages/checkProfileList.do">后台管理系统</a><br/>
 
 	<a href="http://geilove.org/glove/wechatpay/toPay/20170415/code.do">点我去支付</a><br/>
 

@@ -9,7 +9,7 @@ var uppart = new Vue({
     data: {
         useriD:0,  //用户的iD
         nickName:"小神经很ok", //用户的昵称
-        userPhotoUrl:"", //这个应该有个默认的地址
+        userPhotoUrl:"http://onejf30n8.bkt.clouddn.com/gongzhong25.jpg", //这个应该有个默认的地址
         totalDays:30, //共计30天
         title:"给点爱，一起温暖世界", //Tweet的标题
         progressBar:0, //进度条

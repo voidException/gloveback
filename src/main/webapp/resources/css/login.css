@@ -48,6 +48,24 @@ input{
     cursor: pointer;
     color: #ffffff;
 }
+.forget{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5px;
+    cursor: pointer;
+    color: #ffffff;
+}
+a{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 260px;
+    text-decoration: none;
+}
 .modalReport{
     display: none;
     /*background-color:gray;*/

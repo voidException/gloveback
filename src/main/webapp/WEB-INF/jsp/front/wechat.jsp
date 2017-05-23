@@ -33,7 +33,7 @@
     <div class="header">
         <div class="headerChild">
             <div  style=" display:table-cell;vertical-align: middle;">
-                <img style="float: left;height: 40px;width: 32px" src="<%=contextPath%>/resources/image/back.png">
+                <img style="float: left;height: 40px;width: 32px" src="http://onejf30n8.bkt.clouddn.com/gongzhongback.png">
                 <a class="headerChilda" href="#">首页</a>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div style="display:table-cell;text-align:center; vertical-align:middle;">
                 <div style="display: flex;justify-content: center;align-items: center;color: #ffffff">
                     <div>互助</div>
-                    <img src="<%=contextPath%>/resources/image/love.png">
+                    <img src="http://onejf30n8.bkt.clouddn.com/gongzhonglogo.png" style="width: 30px;height: 30px;border-radius: 15px">
                     <div>管家</div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
     <div style="height: 50px"></div>
     <div class="photo">
         <div class="photoLeft">
-            <img src="<%=contextPath%>/resources/image/25.jpg" style="float:left;width: 34px;height: 34px;border-radius: 17px;margin-top: 10px;margin-left: 10px;">
+            <img :src="userPhotoUrl" style="float:left;width: 34px;height: 34px;border-radius: 17px;margin-top: 10px;margin-left: 10px;">
             <div style="float: left;font-size: 14px; height:34px;line-height: 34px;padding-top: 10px;padding-left: 10px;">{{nickName}}</div>
         </div>
         <div class="photoRight">
@@ -83,10 +83,10 @@
     </div>
     <div style="clear: both;height: 10px"></div>
     <%--以下以后要删除--%>
-    <div  class="clickWo" onclick="clickMe()">点击不到我</div>
-    <div onclick="alertComment()">显示评论框</div>
-    <div onclick="showDialog()">显示dialog</div>
-    <div onclick="loginByEmail()">邮箱登录</div>
+    <%--<div  class="clickWo" onclick="clickMe()">点击不到我</div>--%>
+    <%--<div onclick="alertComment()">显示评论框</div>--%>
+    <%--<div onclick="showDialog()">显示dialog</div>--%>
+    <%--<div onclick="loginByEmail()">邮箱登录</div>--%>
 
     <!--目标金额,已筹金额,次数-->
     <div  class="target" >
@@ -130,27 +130,27 @@
             <div style="font-weight: bold;font-size: 15px;color: #666">资料证明</div>
             <div style="display: flex;flex-direction: row;justify-content: flex-end;align-items: center">
                 <div style="color: #43AC43;font-size: 15px">责任声明</div>
-                <img style="width: 26px;height: 26px" src="<%=contextPath%>/resources/image/more.png" />
+                <img style="width: 26px;height: 26px" src="http://onejf30n8.bkt.clouddn.com/gongzhongmore.png" />
             </div>
         </div>
         <div style="margin-top: 14px">
             <div style="font-size: 15px">认证机构</div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">{{authority}}</div>
             </div>
         </div>
         <div style="margin-top: 14px">
             <div style="font-size: 15px">监督小组</div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">{{monitoringGroup}}</div>
             </div>
         </div>
         <div style="margin-top: 14px;">
             <div style="font-size: 15px;">具体负责人</div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">{{concreteStudent}}</div>
             </div>
         </div>
@@ -158,11 +158,11 @@
             <div style="font-size: 15px;">收款人</div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;">
                 <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                    <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                    <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                     <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">{{receiveMoneyMan}}</div>
                 </div>
                 <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px;margin-left: 20px">
-                    <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                    <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                     <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">关系证明已提交</div>
                 </div>
             </div>
@@ -170,19 +170,19 @@
         <div style="margin-top: 14px;">
             <div style="font-size: 15px;">受助人</div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">{{needHelpMan}}</div>
             </div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">身份证明已提交</div>
             </div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">医院证明已提交</div>
             </div>
             <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-start;padding-top: 6px">
-                <img style="width: 12px;height: 12px" src="<%=contextPath%>/resources/image/selected.png">
+                <img style="width: 12px;height: 12px" src="http://onejf30n8.bkt.clouddn.com/gongzhongselected.png">
                 <div style="color: #2FAC4C;font-size: 13px;margin-top: 3px;margin-left: 2px">居委会证明已提交</div>
             </div>
         </div>
@@ -199,7 +199,7 @@
                 </template>
             </div>
             <div>
-                <img src="<%=contextPath%>/resources/image/more.png">
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhongmore.png">
             </div>
         </div>
         <div style="display:flex;align-items:center;height: 30px;margin-top: 0px;margin-bottom: 10px;background: #F5F5F5">
@@ -305,7 +305,7 @@
                         <div style="margin-top: 5px">{{item.moneySource.helptime}}</div>
                     </div>
                 </div>
-                <img src="<%=contextPath%>/resources/image/pinglun2.png" style="height: 18px;width: 18px;cursor: pointer;"
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhongpinglun2.png" style="height: 18px;width: 18px;cursor: pointer;"
                      id="commentToDynamic"
                      v-on:click="commentToDynamic"
                      v-bind:data-moneysourceid="item.moneySource.moneysourceid"
@@ -394,11 +394,11 @@
     <div id="loginEmail" class="loginEmail">
         <div class="loginMain">
             <div class="closeWrapper">
-                <img class="clickImg"    v-on:click="closeLoginModal"    src="<%=contextPath%>/resources/image//close2.png">
+                <img class="clickImg"    v-on:click="closeLoginModal"    src="http://onejf30n8.bkt.clouddn.com/gongzhongclose2.png">
             </div>
 
             <div class="logoWrapper">
-                <img src="<%=contextPath%>/resources/image/512.png" style="width: 50px;height: 50px;border-radius: 25px" />
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhong512.png" style="width: 50px;height: 50px;border-radius: 25px" />
             </div>
             <div  id="errorTips" class="errorTips">错误提示</div>
             <!--邮箱,密码输入域-->
@@ -416,9 +416,9 @@
             </div>
             <!--微信登录-->
             <div class="wechatQQweibo">
-                <div><img  class="wechatImg"   src="<%=contextPath%>/resources/image/wechat.png"></div>
-                <div><img  class="wechatImg"   src="<%=contextPath%>/resources/image/weibo.png"></div>
-                <div><img  class="wechatImg"    src="<%=contextPath%>/resources/image/QQ.png"></div>
+                <div><img  class="wechatImg"   src="http://onejf30n8.bkt.clouddn.com/gongzhongwechat.png"></div>
+                <div><img  class="wechatImg"   src="http://onejf30n8.bkt.clouddn.com/gongzhongweibo.png"></div>
+                <div><img  class="wechatImg"   src="http://onejf30n8.bkt.clouddn.com/gongzhongQQ.png"></div>
             </div>
         </div>
     </div>
@@ -431,7 +431,7 @@
 <div class="footer">
     <div class="zhuafa" style="width: 46%;display: flex;align-items: center;justify-content: center">
         <span>转发</span>
-        <img  style="height: 30px;width: 30px" src="<%=contextPath%>/resources/image/zhuanfa.png">
+        <img  style="height: 30px;width: 30px" src="http://onejf30n8.bkt.clouddn.com/gongzhongzhuafa.png">
     </div>
     <div class="donate"  style="width: 46%;height: 40px;border-radius:20px;display: flex;align-items: center;justify-content: center;background-color: #2FAC4C">
         <span style="color: #ffffff">捐助Ta</span>

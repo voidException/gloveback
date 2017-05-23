@@ -22,19 +22,19 @@
 <div id="mobileMainDiv" >
     <div>
         <%--2选择1--%>
-        <div class="userPart" style="display: none">
+        <div class="userPart" style="display: block">
             <div class="logoWrapper">
-                <img src="<%=contextPath%>/resources/image/xiong.png"  style="width: 60px;height: 60px;border-radius: 30px"/>
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 60px;height: 60px;border-radius: 30px"/>
             </div>
             <div class="loginReg">
-                <a class="login"  href="#" >注册</a>
-                <a class="login"  href="#">登录</a>
+                <a class="login"  href="http://localhost:8080/glove/path/pages/register.do">注册</a>
+                <a class="login"  href="http://localhost:8080/glove/path/pages/login.do">登录</a>
             </div>
         </div>
 
-        <div style="margin: 10px;background-color: #FFFFFF;border-radius: 4px">
+        <div style=" margin: 10px;background-color: #FFFFFF;border-radius: 4px">
             <div class="userPhoto">
-                <img src="<%=contextPath%>/resources/image/xiong.png"  style="width: 50px;height: 50px;border-radius: 25px"/>
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 50px;height: 50px;border-radius: 25px"/>
                 <div style="font-weight: bold;font-family: STHeiti Light ;margin-left: 5px">昵称是什么</div>
             </div>
             <div class="helpcommon">
@@ -48,28 +48,32 @@
                 <div style="font-weight: bold;font-family: STHeiti Light ;">500元</div>
             </div>
             <div class="IpublishWrapper">
-                <img src="<%=contextPath%>/resources/image/iPublish.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
-                <div>我的求助</div>
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhongmyhelp.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
+                <a href="http://localhost:8080/glove/path/pages/userSelfHelp.do">我的求助</a>
+            </div>
+            <div class="IpublishWrapper">
+                <img src="http://onejf30n8.bkt.clouddn.com/gongzhongsetting.png"  style="width: 20px;height: 20px;border-radius: 10px"/>
+                <a href="http://localhost:8080/glove/photo/setting.do">设置</a>
             </div>
 
         </div>
     </div>
 
     <div class="publishWrapper">
-        <img src="<%=contextPath%>/resources/image/publish.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
-        <div>发布项目</div>
+        <img src="http://onejf30n8.bkt.clouddn.com/gongzhongaddHelpMan.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
+        <a href="http://localhost:8080/glove/publishInfo/upload/addman.do">发布求助信息</a>
     </div>
     <div class="zizhu">
-        <div class="donate">赞助我们</div>
-        <div class="donatelove">资助爱心社</div>
+        <div class="donate"><a href="http://localhost:8080/glove/path/pages/helpApp.do">资助我们</a></div>
+        <div class="donatelove"><a href="http://localhost:8080/glove/path/pages/helpAixinshe.do">赞助爱心社</a></div>
     </div>
     <div class="aboutus">
-        <img src="<%=contextPath%>/resources/image/publish.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
-        <div>关于我们</div>
+        <img src="http://onejf30n8.bkt.clouddn.com/gongzhongaboutUs.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
+        <div><a href="http://localhost:8080/glove/path/pages/aboutwe.do">关于我们</a></div>
     </div>
     <div class="publishWrapper">
-        <img src="<%=contextPath%>/resources/image/publish.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
-        <div>常见问题</div>
+        <img src="http://onejf30n8.bkt.clouddn.com/gongzhongfaq.png"  style="width: 24px;height: 24px;border-radius: 12px"/>
+        <div><a href="http://geilove.org/glove/path/pages/faq.do">常见问题</a></div>
     </div>
 </div>
 
