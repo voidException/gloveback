@@ -15,13 +15,14 @@
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
 </head>
-<body style="background-color: #E1E5E7">
-    <div style=" background-color: #00BB3B;  display: flex;flex-direction: row;align-items: center;justify-content: space-between;border-bottom: 1px solid #00BB3B;width: 100%  ">
+<body  style="background-color: #E1E5E7">
+<div id="setBody">
+    <div id="setting" style=" background-color: #00BB3B;  display: flex;flex-direction: row;align-items: center;justify-content: space-between;border-bottom: 1px solid #00BB3B;width: 100%  ">
         <a href="http://localhost:8080/glove/path/pages/mobileMainPage.do" style="width: 40px; margin-left: 10px;text-decoration: none;font-size: 18px;color: white">首页</a>
         <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 30px;height: 30px;border-radius: 15px"/>
         <div style="width: 40px"></div>
     </div>
-    <form class="photo"   method="post" action="jspupload.do"  enctype="multipart/form-data" class="form-horizontal" role="form">
+    <form  class="photo"   method="post" action="jspupload.do"  enctype="multipart/form-data" class="form-horizontal" role="form">
         <input  id="token"  name="token" type="text" style="display: none" value="e10adc3949ba59abbe56e057f20f883e1">
         <div  class="upload">
             <div style="margin-left: 10px">
@@ -42,8 +43,9 @@
         <div><a href="http://localhost:8080/glove/user/resetPassword.do">修改密码</a></div>
     </div>
     <div class="loginout">
-        <div class="dologinOut">退出</div>
+        <div class="dologinOut"  onclick="logOut()">退出</div>
     </div>
+</div>
 </body>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/setting.js"></script>
 

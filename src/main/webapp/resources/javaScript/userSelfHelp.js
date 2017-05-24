@@ -1,4 +1,4 @@
-
+//如果用户没有发布求助信息，就隐藏这一块
 
 new Vue({
     el: '#userSelfHelp',
@@ -6,9 +6,7 @@ new Vue({
         lp:[],
     },
     mounted: function () {
-
             let url='http://localhost:8080/glove/weibos/94111BD33D3F474590C535C0BE24905B/helpselflist.do'
-
             var that=this;
             this.$http.get(url).then(response => {
                 console.log(response.body);
@@ -17,8 +15,21 @@ new Vue({
                     that.$nextTick(function(){
                         this.lp=response.body.lp.concat(this.lp);
                     });
+                    let  noData=document.getElementById("noData");
+                    noData.style.display="none";
+
+                    let  userSelfHelp=document.getElementById("userSelfHelp");
+                    userSelfHelp.style.display="block";
                     // console.log("hahha");
                     // console.log(this.lp);
+                }else{
+                    //这里处理没有数据的表现
+                    let  noData=document.getElementById("noData");
+                    noData.style.display="flex";
+
+                    let  userSelfHelp=document.getElementById("userSelfHelp");
+                    userSelfHelp.style.display="none";
+
                 }
 
             }, err => {

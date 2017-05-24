@@ -35,7 +35,7 @@ function checkAcceptMoneyName() {
     let acceptMoneyName=document.getElementById("acceptMoneyName").value;
     //console.log(cityName);
     if (acceptMoneyName==null || acceptMoneyName==""){
-        return alert("名字不能为空")
+         alert("名字不能为空")
     }else {
         if (acceptMoneyName.length>8){
             return alert("名字太长")

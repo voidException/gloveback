@@ -22,7 +22,7 @@
 <div id="mobileMainDiv" >
     <div>
         <%--2选择1--%>
-        <div class="userPart" style="display: block">
+        <div id="notLogin" class="userPart" style="display: block">
             <div class="logoWrapper">
                 <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 60px;height: 60px;border-radius: 30px"/>
             </div>
@@ -32,20 +32,20 @@
             </div>
         </div>
 
-        <div style=" margin: 10px;background-color: #FFFFFF;border-radius: 4px">
+        <div   id="hasLogin" style=" display: none; margin: 10px;background-color: #FFFFFF;border-radius: 4px">
             <div class="userPhoto">
                 <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 50px;height: 50px;border-radius: 25px"/>
-                <div style="font-weight: bold;font-family: STHeiti Light ;margin-left: 5px">昵称是什么</div>
+                <div style="font-weight: bold;font-family: STHeiti Light ;margin-left: 5px">{{usernickname}}</div>
             </div>
             <div class="helpcommon">
                 <div style="margin-left: 5px">我帮助</div>
-                <div  style="font-weight: bold;font-family: STHeiti Light ;">200人</div>
-                <div  style="font-weight: bold;font-family: STHeiti Light ;">400元</div>
+                <div  style="font-weight: bold;font-family: STHeiti Light ;">{{userhelpsman}}<span style="font-size: 13px;font-weight: normal">人</span></div>
+                <div  style="font-weight: bold;font-family: STHeiti Light ;">{{userdonate}}<span style="font-size: 13px;font-weight: normal">元</span></div>
             </div>
             <div class="helpcommon">
                 <div style="margin-left: 5px">帮助我</div>
-                <div style="font-weight: bold;font-family: STHeiti Light ;">800人</div>
-                <div style="font-weight: bold;font-family: STHeiti Light ;">500元</div>
+                <div style="font-weight: bold;font-family: STHeiti Light ;">{{amountaccept}}<span style="font-size: 13px;font-weight: normal">人</span></div>
+                <div style="font-weight: bold;font-family: STHeiti Light ;">{{acceptmoney}}<span style="font-size: 13px;font-weight: normal">元</span></div>
             </div>
             <div class="IpublishWrapper">
                 <img src="http://onejf30n8.bkt.clouddn.com/gongzhongmyhelp.png"  style="width: 24px;height: 24px;border-radius: 12px"/>

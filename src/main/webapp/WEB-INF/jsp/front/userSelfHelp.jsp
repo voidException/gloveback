@@ -14,7 +14,9 @@
 </head>
 <body  style="background-color: #d9d9d9">
 
-
+<div id="noData" class="noData">
+    您还未发布求助信息。
+</div>
 <div  id="userSelfHelp" class="userSelfHelp">
     <template v-for="item in lp">
     <div  v-on:click="goTimeline" style="cursor:pointer ;">
@@ -38,6 +40,7 @@
     </div>
     </template>
 </div>
+
 </body>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/userSelfHelp.js"></script>
 </html>

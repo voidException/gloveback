@@ -1,4 +1,14 @@
+.noData{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+}
+
 .userSelfHelp{
+    display: none;
     margin-top: 5px;
     background-color: #ffffff;
 }
