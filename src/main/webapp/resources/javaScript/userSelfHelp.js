@@ -6,10 +6,18 @@ new Vue({
         lp:[],
     },
     mounted: function () {
-            let url='http://localhost:8080/glove/weibos/94111BD33D3F474590C535C0BE24905B/helpselflist.do'
+            //从本地获取用户的UUID
+            let userUUID=localStorage.getItem("backupten"); //从本地获得用户的uuid
+            if (userUUID==null){
+                alert("请登录");
+                setTimeout(function () {
+                    window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do"; //
+                },500)
+            }
+            let url="http://localhost:8080/glove/weibos/"+userUUID+"/helpselflist.do" ;
             var that=this;
             this.$http.get(url).then(response => {
-                console.log(response.body);
+               // console.log(response.body);
                 //存储或者改变相应的值
                 if (response.body.retcode==2000){
                     that.$nextTick(function(){

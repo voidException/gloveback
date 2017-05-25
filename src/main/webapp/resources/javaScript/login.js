@@ -46,12 +46,12 @@ new Vue({
 
                 //存储或者改变相应的值
                 if (response.body.retcode==2000){
-                    sessionStorage.setItem("userToken",response.body.data.backupfour);
-                    sessionStorage.setItem("usernickname",response.body.data.usernickname);
-                    sessionStorage.setItem("userphoto",response.body.data.userphoto);
-                    sessionStorage.setItem("userid",response.body.data.userid);
-                    sessionStorage.setItem("useruuid",response.body.data.backupten);
-                    sessionStorage.setItem("loginTag","logined");  //登录标志
+                    // sessionStorage.setItem("userToken",response.body.data.backupfour);
+                    // sessionStorage.setItem("usernickname",response.body.data.usernickname);
+                    // sessionStorage.setItem("userphoto",response.body.data.userphoto);
+                    // sessionStorage.setItem("userid",response.body.data.userid);
+                    // sessionStorage.setItem("useruuid",response.body.data.backupten);
+                    // sessionStorage.setItem("loginTag","logined");  //登录标志
 
                     //console.log(sessionStorage.getItem("usernickname"));
                     localStorage.setItem("userid",response.body.data.userid);
@@ -78,7 +78,6 @@ new Vue({
                     localStorage.setItem("userdonate",response.body.data.userdonate);
                     localStorage.setItem("amountaccept",response.body.data.amountaccept);
                     localStorage.setItem("acceptmoney",response.body.data.acceptmoney);
-                    localStorage.setItem("backupten",response.body.data.backupten);
                     localStorage.setItem("backupten",response.body.data.backupten);
                     localStorage.setItem("userhelpsman",response.body.data.userhelpsman);
                     window.location.href="http://localhost:8080/glove"

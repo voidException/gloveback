@@ -25,34 +25,34 @@
 <form  id="form"   action="wapmultiUpload.do"  method="post"   enctype="multipart/form-data" class="form-horizontal" role="form" target="hidden_frame">
     <div id="publishInfo" >
         <!--以下要用js从本地获取具体值后，然后改变默认值-->
-        <input  id="token"  name="token" type="text" style="display: none" value="e10adc3949ba59abbe56e057f20f883e1">
-        <input  id="useruuid" name="useruuid" type="text" style="display: none" value="94111BD33D3F474590C535C0BE24905B">
-        <input  id="userName" name="userName" type="text" style="display: none" value="张三">
-        <input  id="selfintroduce"  name="selfintroduce" type="text" style="display: none" value="我是一个乐观开朗的人">
-        <input  id="photoUrl" name="photoUrl" type="text" style="display: none" value="http://7xihgc.com1.z0.glb.clouddn.com/14.jpg">
+        <input  id="token"  name="token" type="text" style="display: none" value="">
+        <input  id="useruuid" name="useruuid" type="text" style="display: none" value="">
+        <input  id="userName" name="userName" type="text" style="display: none" value="">
+        <input  id="selfintroduce"  name="selfintroduce" type="text" style="display: none" value="">
+        <input  id="photoUrl" name="photoUrl" type="text" style="display: none" value="">
 
 
         <div class="ZhengMing">
             <div class="proveHeader">证明信息</div>
             <div class="checkTeam">
                 <div class="checkTeamTxt">所在城市</div>
-                <input  id="cityName"  onblur="checkCityName()" class="checkTeamInput"   name="cityName" type="text" value="" placeholder="重要，例如临沂市"/>
+                <input  id="cityName"  onblur="checkCityName()" class="checkTeamInput"   name="cityName" type="text" value="" placeholder="8字以内" maxlength="8"/>
             </div>
             <div class="checkTeam">
                 <div class="checkTeamTxt">受助人姓名</div>
-                <input id="shouZhurenName"   onblur="checkShouZhurenName()" class="checkTeamInput"    name="shouZhurenName" type="text" value="" placeholder="身份证上姓名"/>
+                <input id="shouZhurenName"   onblur="checkShouZhurenName()" class="checkTeamInput"    name="shouZhurenName" type="text" value="" placeholder="8字以内" maxlength="8"/>
             </div>
             <div class="checkTeam">
                 <div class="checkTeamTxt">受助人ID</div>
-                <input  id="shouZhureniDentityNo"  onblur="checkShouZhureniDentityNo()" class="checkTeamInput" name="shouZhureniDentityNo"  type="text" value="" placeholder="填写身份证号"/>
+                <input  id="shouZhureniDentityNo"  onblur="checkShouZhureniDentityNo()" class="checkTeamInput" name="shouZhureniDentityNo"  type="text" value="" placeholder="填写身份证号" maxlength="18"/>
             </div>
             <div class="checkTeam">
                 <div class="checkTeamTxt">收款人姓名</div>
-                <input  id="acceptMoneyName"  onblur="checkAcceptMoneyName()" class="checkTeamInput"  name="acceptMoneyName"  type="text" value="" placeholder="填写收款人姓名"/>
+                <input  id="acceptMoneyName"  onblur="checkAcceptMoneyName()" class="checkTeamInput"  name="acceptMoneyName"  type="text" value="" placeholder="填写收款人姓名" maxlength="8"/>
             </div>
             <div class="checkTeam">
                 <div class="checkTeamTxt">收款人电话</div>
-                <input  id="acceptMoneyPhone" onblur="checkAcceptMoneyPhone()" class="checkTeamInput"   name="acceptMoneyPhone"  type="text" value="" placeholder="填写手机号"/>
+                <input  id="acceptMoneyPhone" onblur="checkAcceptMoneyPhone()" class="checkTeamInput"   name="acceptMoneyPhone"  type="text" value="" placeholder="填写手机号" maxlength="11"/>
             </div>
 
             <div class="ShiFo">
@@ -96,7 +96,7 @@
         </div>
         <div class="PromiseTxT">
             <div class="checkTeamTxt">我的承诺</div>
-            <textarea   id="chengnuoContent"  onblur="checkChengnuoContent()" class="promiseTextarea"  name="chengnuoContent"  rows="10" cols="10" value="" placeholder="写下承诺"></textarea>
+            <textarea   id="chengnuoContent"  onblur="checkChengnuoContent()" class="promiseTextarea"  name="chengnuoContent"  rows="10" cols="10" value="" placeholder="写下承诺" maxlength="200"></textarea>
         </div>
         <%--捐款信息--%>
         <div class="proveHeader">捐款信息</div>
@@ -110,16 +110,16 @@
         </div>
         <div class="checkTeam">
             <div class="checkTeamTxt">募捐金额</div>
-            <input  id="targetMoney"  onblur="checkTargetMoney()" class="checkTeamInput"  name="targetMoney"  type="number" value="" placeholder="务必输入整数，单位元"/>
+            <input  id="targetMoney"  onblur="checkTargetMoney()" class="checkTeamInput"  name="targetMoney"  type="number" value="" placeholder="务必输入整数，小于20万"/>
             <div>元</div>
         </div>
         <div class="checkTeam">
             <div class="checkTeamTxt">筹款标题</div>
-            <input  id="moneyTitle"   onblur="checkMoneyTitle()" class="checkTeamInput"  name="moneyTitle"  type="text" value="" placeholder="16字以内"/>
+            <input  id="moneyTitle"   onblur="checkMoneyTitle()" class="checkTeamInput"  name="moneyTitle"  type="text" value="" placeholder="16字以内" maxlength="16"/>
         </div>
         <div class="PromiseTxT">
             <div class="checkTemTxt">描述详情</div>
-            <textarea id="content" onblur="checkContent()" class="promiseTextarea" name="content"  rows="30" cols="10" value="" placeholder="800字以内" style="font-size: 15px"></textarea>
+            <textarea id="content" onblur="checkContent()" class="promiseTextarea" name="content"  rows="30" cols="10" value="" placeholder="800字以内" maxlength="800" style="font-size: 15px"></textarea>
         </div>
     </div>
     <div>

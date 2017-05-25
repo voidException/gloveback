@@ -16,8 +16,9 @@ new Vue({
     },
     methods:{
         logOut:function (){
+            console.log("logout")
             localStorage.clear();
-            window.location.href="http://localhost:8080/glove/"
+            window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do"
         }
     }
 

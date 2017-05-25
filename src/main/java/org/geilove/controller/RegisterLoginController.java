@@ -204,7 +204,7 @@ public class RegisterLoginController {
 		}
 
 		String encryptEmail = ""; //放入超链接当中
-		String key = "xxoolqqyywyl@@**^^";  //重要，密钥
+		String key = "xxoolqqyywyl@@**^^";  //重要，密钥(加密)
 		try{
 			encryptEmail=encrypt(userEmail, key);
 			//userEmail=decrypt(encrypt(userEmail, key), key); //解密
@@ -290,7 +290,7 @@ public class RegisterLoginController {
 			return  commonRsp;
 		}
 
-		String key = "xxoolqqyywyl@@**^^";  //重要，密钥
+		String key = "xxoolqqyywyl@@**^^";  //重要，密钥（解密）
         String userEmail;
         try {
 			userEmail=decrypt(encryptEmail, key);  //解密

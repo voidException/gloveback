@@ -14,7 +14,7 @@ public class TimeLine {
     private  Tweet tweet;
     private  Cash  cash;
     private  List<Confirm> confirmList;
-
+    private  UserPartProfile userPartProfile;
 
     public void setUserPartProfile(UserPartProfile userPartProfile) {
         this.userPartProfile = userPartProfile;
@@ -44,7 +44,6 @@ public class TimeLine {
         this.confirmList = confirmList;
     }
 
-    private  UserPartProfile userPartProfile;
 
     public UserPartProfile getUserPartProfile() {
         return userPartProfile;

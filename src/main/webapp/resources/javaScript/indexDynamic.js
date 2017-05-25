@@ -106,7 +106,7 @@ new Vue({
 
                 var requestParam={
                     "userIDBehelped":1,
-                    "cashiD":1,
+                    //"cashiD":1,
                     "page":2,
                     "pageSize":4,
                     "timeStamp":"2017-09-04 00:00:00"
@@ -129,7 +129,7 @@ new Vue({
         //2.这里应该从页面获取参数，
         var param={
             "userIDBehelped":1,
-            "cashiD":1,
+            //"cashiD":1,
             "page":0,
             "pageSize":2,
             "timeStamp":"2017-09-04 00:00:00"

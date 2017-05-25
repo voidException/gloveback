@@ -9,8 +9,8 @@ new Vue({
     },
     methods: {
         fullFillProfile: function () {
-            let token=sessionStorage.getItem("token"); //待统一
 
+            let token=localStorage.getItem("backupfour"); //
             let realName=document.getElementById("realName").value;
             let identity=document.getElementById("identity").value;
             let address=document.getElementById("address").value;
@@ -18,10 +18,14 @@ new Vue({
             let mobilePhone=document.getElementById("mobilePhone").value;
             let selfIntroduce=document.getElementById("selfIntroduce").value;
             if (token==null){
-               // return  alert("尚未登录");
+                alert("请登录");
+               setTimeout(function () {
+                   window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do";
+               },500)
+                return;
             }
-            if(realName==null && identity==null  && address==null && college==null && mobilePhone==null){
-                return alert("请属于有效更新资料")
+            if(realName=="" && identity==""  && address=="" && college=="" && mobilePhone==""){
+                return alert("所有字段不得为空")
             }
 
             let param={
@@ -34,17 +38,17 @@ new Vue({
                 selfIntroduce:selfIntroduce
             };
             this.$http.post('http://localhost:8080/glove/profile/completeProfileJSP.do',param).then(response => {
-                console.log(response.body);
-
+                //console.log(response.body);
                 if(response.body.retcode==2000){
                     alert("更新成功");
-                    window.location.href="www.geilove.org/mobile"
+                    window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do";
+                    return;
                 }else {
                     alert("更新失败");
                 }
 
             }, err => {
-                console.log(err);
+                //console.log(err);
                 alert("更新出现异常")
             });
 

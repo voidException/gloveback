@@ -56,7 +56,7 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<OtherPartHelpPojo> getProfileByUserIDs(List<Long> useridList){
 		List<OtherPartHelpPojo> userPhotos=new ArrayList<OtherPartHelpPojo>();
-		userPhotos=userMapper.selectUserPartProfile(useridList);              //通过用户表获取列表
+		userPhotos=userMapper.selectUserPartProfile(useridList); //通过用户表获取列表
 		return userPhotos; 
 	}
 	

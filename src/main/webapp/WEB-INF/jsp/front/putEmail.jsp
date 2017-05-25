@@ -32,7 +32,7 @@
         methods: {
             putEmail: function () {
                 if(this.stopTag==1){
-                    console.log("stopTag")
+                    //console.log("stopTag")
                     return;
                 }
                 this.stopTag=1;

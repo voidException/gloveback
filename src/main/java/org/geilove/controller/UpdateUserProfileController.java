@@ -79,16 +79,19 @@ public class UpdateUserProfileController {
 		commonRsp.setRetcode(2000);
 		return commonRsp;
 	}
+
+	//适用于网页端更新
 	@RequestMapping(value = "/completeProfileJSP.do",method = RequestMethod.POST)
 	public @ResponseBody CommonRsp completeProfileJSP(@RequestBody CompleteProfileParam completeProfileParam, HttpServletRequest request){
 		CommonRsp commonRsp=new CommonRsp();
+
 		String  token=completeProfileParam.getToken();
 		String  realName=completeProfileParam.getRealName();
 		String  identity=completeProfileParam.getIdentity();
 		String  address=completeProfileParam.getAddress();
         String  college=completeProfileParam.getCollege();
         String  selfIntroduce=completeProfileParam.getSelfIntroduce();
-        if (token==null || token.length()<32){
+        if (token==null || token.length()<33){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("非法操作");
 			return commonRsp;
@@ -114,12 +117,12 @@ public class UpdateUserProfileController {
 			return commonRsp;
 		}
 
-		if (realName==null &&identity==null &&address==null &&college==null){
+		if (realName==null &&identity==null &&address==null &&college==null ){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("无效更新");
 			return commonRsp;
 		}
-		if (realName.length()>8 || identity.length()!=18 ||selfIntroduce.length()>200 ){
+		if (realName.length()>8 || identity.length()!=18 ||selfIntroduce.length()>100 ||address.length()>25 ||college.length()>25 ){
 			commonRsp.setRetcode(2001);
 			commonRsp.setMsg("字段长度不对");
 			return commonRsp;
@@ -135,13 +138,16 @@ public class UpdateUserProfileController {
 
 		try{
 			int returnTag=rlService.updateUserSelective(user);
-			//System.out.println(returnTag);
+
 			if(returnTag!=1){
 				commonRsp.setMsg("完善资料失败");
-				commonRsp.setRetcode(2000);
+				commonRsp.setRetcode(2001);
 				return commonRsp;
 			}
 		}catch(Exception e){
+			commonRsp.setMsg("完善资料出现异常");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
 
 		}
 		commonRsp.setMsg("更新资料成功");

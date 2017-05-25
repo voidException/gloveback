@@ -84,7 +84,7 @@ new Vue({
                     refer:dataReferInteger,
                     content:content
                 };
-                this.$http.post('http://localhost:8080/glove/itemprogress/addupdatecomment',param).then(response => {
+                this.$http.post('http://localhost:8080/glove/itemprogress/addupdatecomment.do',param).then(response => {
                     //console.log(response.body);
                     this.cancelPinglun();
                     //这里呢，要显示dialog，

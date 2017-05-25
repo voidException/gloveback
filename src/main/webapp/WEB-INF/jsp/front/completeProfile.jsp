@@ -20,27 +20,27 @@
 
     <div class="checkTeam">
         <div class="checkTeamTxt">真实姓名</div>
-        <input  id="realName"   class="checkTeamInput"  name="realName"  type="text" value="" placeholder="用户真实姓名"/>
+        <input  id="realName"   class="checkTeamInput"  name="realName"  type="text" value="" placeholder="用户真实姓名" maxlength="8"/>
     </div>
     <div class="checkTeam">
         <div class="checkTeamTxt">身份证号</div>
-        <input  id="identity"  class="checkTeamInput"   name="identity"  type="text" value="" placeholder="填写身份证号"/>
+        <input  id="identity"  class="checkTeamInput"   name="identity"  type="text" value="" placeholder="18位身份证号" maxlength="18"/>
     </div>
     <div class="checkTeam">
         <div class="checkTeamTxt">家庭住址</div>
-        <input  id="address"  class="checkTeamInput"   name="address"  type="text" value="" placeholder="家庭住址"/>
+        <input  id="address"  class="checkTeamInput"   name="address"  type="text" value="" placeholder="120字符以内" maxlength="120"/>
     </div>
     <div class="checkTeam">
         <div class="checkTeamTxt">毕业大学</div>
-        <input id="college"    class="checkTeamInput"    name="college" type="text" value="" placeholder="填写毕业院校"/>
+        <input id="college"    class="checkTeamInput"    name="college" type="text" value="" placeholder="25字以内" maxlength="25"/>
     </div>
     <div class="checkTeam">
         <div class="checkTeamTxt">手机号码</div>
-        <input id="mobilePhone"    class="checkTeamInput"    name="mobilePhone" type="text" value="" placeholder="手机号码"/>
+        <input id="mobilePhone"    class="checkTeamInput"    name="mobilePhone" type="number" value="" placeholder="11位手机号" maxlength="11"/>
     </div>
     <div>
         <div class="checkTeamTxt">自我介绍</div>
-        <textarea id="selfIntroduce"   name="selfIntroduce"  rows="10" cols="10" value="" placeholder="100以内介绍自己"></textarea>
+        <textarea id="selfIntroduce"   name="selfIntroduce"  rows="10" cols="10" value="" placeholder="100以内介绍自己" maxlength="100"></textarea>
     </div>
 
     <div class="commitWrapper">

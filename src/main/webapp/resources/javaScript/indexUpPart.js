@@ -7,6 +7,10 @@
 var uppart = new Vue({
     el: '#uppart',
     data: {
+        tweet:null,
+        cash:null,
+        confirmList:[],
+
         useriD:0,  //用户的iD
         nickName:"小神经很ok", //用户的昵称
         userPhotoUrl:"http://onejf30n8.bkt.clouddn.com/gongzhong25.jpg", //这个应该有个默认的地址

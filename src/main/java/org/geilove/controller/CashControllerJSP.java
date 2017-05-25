@@ -104,7 +104,14 @@ public class CashControllerJSP {
             model.put("result", "您有必要字段为空");
             ModelAndView modelAndView=new ModelAndView("front/addHelpManResult",model);
             return modelAndView;
-
+        }
+        if (shouZhurenName.length()<2 ||shouZhurenName.length()>8 || shouZhureniDentityNo.length()!=18 || acceptMoneyName.length()<2 ||
+                acceptMoneyName.length()>8 ||acceptMoneyPhone.length()!=11 || cityName.length()<2 || cityName.length()>8 || userName.length()<3 ||
+                userName.length()>30 || useruuid.length() <32 ||chengnuoContent.length()<30 ||moneyTitle.length()<6 || content.length()<200 ){
+            Map<String,String> model =new HashMap();
+            model.put("result", "您有必要字段长度不符合");
+            ModelAndView modelAndView=new ModelAndView("front/addHelpManResult",model);
+            return modelAndView;
         }
 
         if (token.length()<=32){

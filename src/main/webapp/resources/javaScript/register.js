@@ -49,6 +49,13 @@ new Vue({
             var registerNickNameInput=document.getElementById("registerNickNameInput").value; //昵称
             var registerCityInput=document.getElementById("registerCityInput").value;   //城市
 
+
+            if (!this.verify(param)){
+                return alert("输入有误");
+            }
+            if (registerCityInput.length>8 ||registerCityInput==null){
+                return alert("城市名字有误")
+            }
             //接下来发送注册请求
             let param={
                 userNickName:registerNickNameInput,
@@ -57,14 +64,8 @@ new Vue({
                 cityName:registerCityInput,
             };
 
-            if (!this.verify(param)){
-                return alert("输入有误");
-            }
-            if (registerCityInput.length>8 ||registerCityInput==null){
-                return alert("城市名字有误")
-            }
             this.$http.post('http://localhost:8080/glove/user/register.do',param).then(response => {
-                console.log(response.body);
+                //console.log(response.body);
                 this.userProfile=response.body.data;
                 if(response.body.retcode==2000){
 

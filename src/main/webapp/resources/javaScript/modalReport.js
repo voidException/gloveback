@@ -80,7 +80,7 @@ new Vue({
                 tuiwenid:tweetiD
             };
 
-            this.$http.post('http://localhost:8080/glove/confirm/report2',paramReport).then(response => {
+            this.$http.post('http://localhost:8080/glove/confirm/report2.do',paramReport).then(response => {
                  console.log(response.body);
                 //这里呢，要显示dialog，
                 this.showDialog(response.body.msg); //显示登录结果

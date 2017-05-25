@@ -18,8 +18,8 @@ new Vue({
                 return;
             }
             this.stopTag=1;
-            let encryptEmail="H0Am8jdfLzK3ChuW78NnaQ==";
-            //let encryptEmail=document.getElementById("encryptEmail").value;
+            // let encryptEmail="H0Am8jdfLzK3ChuW78NnaQ==";
+            let encryptEmail=document.getElementById("encryptEmail").value;
             let originPass=document.getElementById("originPass").value;
             let againPass=document.getElementById("againPass").value;
 
@@ -28,11 +28,15 @@ new Vue({
                 this.stopTag=0;
                 return alert("参数不得为空")
             }
-            //检查邮箱格式
-
             if (originPass!=againPass){
                 this.stopTag=0;
                 return alert("两次密码不一致")
+            }
+            let regP=/^[0-9|a-z|A-Z]\w{5,17}$/; //6-18w位数字和字母组成的密码
+
+            if( originPass.length<6 ||originPass.length>18|| !regP.test(originPass)){
+                this.stopTag=0;
+                return alert("密码格式不对");
             }
 
             let param={

@@ -3,18 +3,46 @@
  */
 
 window.onload = function () {
-
     //设置input的初始值
+    let  token=localStorage.getItem("backupfour");
+    let  useruuid=localStorage.getItem("backupten");
+    let  userName=localStorage.getItem("usernickname");
+    let  selfintroduce=localStorage.getItem("selfintroduce") || "用户还没有简介";
+    let  userphoto=localStorage.getItem("userphoto");
+    if(token==null || useruuid==null || userName==null || userphoto==null){
+        alert("请登录");
+        setTimeout(function(){
+            window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do"; //公众号首页
+        },500)
+
+        return;
+    }
+    let tokenInput=document.getElementById("token");
+    let useruuidInput=document.getElementById("useruuid") ;
+    let userNameInput=document.getElementById("userName");
+    let selfintroduceInput=document.getElementById("selfintroduce");
+    let photoUrlInput=document.getElementById("photoUrl");
+
+    tokenInput.value=token;
+    useruuidInput.value=useruuid;
+    userNameInput.value=userName;
+    selfintroduceInput.value=selfintroduce;
+    photoUrlInput.value=userphoto;
+    //console.log(document.getElementById("token").value)
+
 };
 
 function checkCityName() {
     let cityName=document.getElementById("cityName").value;
     //console.log(cityName);
     if (cityName==null || cityName==""){
-         return alert("城市名字不能为空")
+        //alert("城市名字不能为空");
+        return;
+
     }else {
         if (cityName.length>8){
-            return alert("城市名字太长")
+            //alert("城市名字太长");
+            return;
         }
     }
 }
@@ -23,10 +51,12 @@ function checkShouZhurenName() {
     let shouZhurenName=document.getElementById("shouZhurenName").value;
     //console.log(cityName);
     if (shouZhurenName==null || shouZhurenName==""){
-        return alert("名字不能为空")
+        //alert("名字不能为空");
+         return;
     }else {
         if (shouZhurenName.length>8){
-            return alert("名字太长")
+            // alert("名字太长");
+            return;
         }
     }
 }
@@ -35,10 +65,11 @@ function checkAcceptMoneyName() {
     let acceptMoneyName=document.getElementById("acceptMoneyName").value;
     //console.log(cityName);
     if (acceptMoneyName==null || acceptMoneyName==""){
-         alert("名字不能为空")
+        //alert("名字不能为空")
     }else {
         if (acceptMoneyName.length>8){
-            return alert("名字太长")
+            //alert("名字太长");
+            return;
         }
     }
 }
@@ -50,10 +81,12 @@ function  checkShouZhureniDentityNo() {
     let shouZhureniDentityNo=document.getElementById("shouZhureniDentityNo").value;
     //console.log(cityName);
     if (shouZhureniDentityNo==null || shouZhureniDentityNo==""){
-        return alert("受助人身份证不能为空")
+        //alert("受助人身份证不能为空");
+        return;
     }else {
         if (shouZhureniDentityNo.length!=18 ){
-            alert("身份证长度不对")
+            //alert("身份证长度不对")
+            return;
         }
     }
 }
@@ -62,11 +95,14 @@ function  checkAcceptMoneyPhone(){
     let acceptMoneyPhone=document.getElementById("acceptMoneyPhone").value;
     //console.log(cityName);
     if (acceptMoneyPhone==null || acceptMoneyPhone==""){
-        return alert("收款人手机号不能为空")
+        // alert("收款人手机号不能为空");
+        return;
     }else {
         if (acceptMoneyPhone.length!=11 ){
             console.log(acceptMoneyPhone.length);
-            return alert("手机号码有误")
+            // alert("手机号码有误");
+            return;
+
         }
     }
 
@@ -76,17 +112,19 @@ function  checkChengnuoContent(){
     let chengnuoContent=document.getElementById("chengnuoContent").value;
     //console.log(cityName);
     if (chengnuoContent==null || chengnuoContent==""){
-        return alert("承诺不能为空，至少10字")
+        // alert("承诺不能为空，至少30字");
+        return;
     }else {
-        if (chengnuoContent.length<10 ){
-            return alert("承诺太短")
+        if (chengnuoContent.length<30 ){
+            // alert("承诺太短");
+            return;
         }
     }
 }
 
 function  checkendDate(){
     let endDate=document.getElementById("endDate").value;
-    console.log(endDate)
+    //console.log(endDate)
 }
 
 function  checkTargetMoney(){
@@ -98,13 +136,15 @@ function  checkTargetMoney(){
     let targetMoney=document.getElementById("targetMoney").value;
 
     if (targetMoney==null || targetMoney==""){
-        return alert("募捐金额不能为空")
+        // alert("募捐金额不能为空");
+        return;
     }else {
 
         let  targetMoneyInt=parseInt(targetMoney);
         //console.log(targetMoneyInt);
         if( !isInteger(targetMoneyInt)){
-            return alert("必须为整数")
+             alert("必须为整数");
+            return;
         }
     }
 }
@@ -112,10 +152,12 @@ function  checkMoneyTitle(){
     let moneyTitle=document.getElementById("moneyTitle").value;
     //console.log(moneyTitle);
     if (moneyTitle==null || moneyTitle==""){
-        return alert("筹款标题不能为空")
+        // alert("筹款标题不能为空");
+        return;
     }else {
         if(moneyTitle.length<5){
-            return alert("标题太短")
+            //alert("标题太短");
+            return;
         }
     }
 
@@ -125,10 +167,12 @@ function checkContent(){
     let content=document.getElementById("content").value;
     //console.log(moneyTitle);
     if (content==null || content==""){
-        return alert("情况描述不能为空")
+        //alert("情况描述不能为空");
+        return;
     }else {
         if(content.length<200){
-            return alert("不能低于200字")
+            // alert("不能低于200字");
+            return;
         }
     }
 }

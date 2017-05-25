@@ -77,7 +77,7 @@ new Vue({
             //发送请求前先，隐藏弹出框，避免多次点击
             this.closeLoginModal();
             //发送网络请求
-            this.$http.post('http://localhost:8080/glove/user/login',userAccount).then(response => {
+            this.$http.post('http://localhost:8080/glove/user/login.do',userAccount).then(response => {
                 console.log(response.body);
                 //这里呢，要显示dialog，
                 this.showDialog(response.body.msg); //显示登录结果
