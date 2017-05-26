@@ -39,6 +39,12 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 		return  lms;
 	}
 
+	//获取完整的，"支持了" 列表
+	public  List<MoneySource> getGuyHelpMeByCashUUID(Map<String,Object>  map){
+		List<MoneySource>  lms=moneySourceMapper.getMoneySourceListByCashUUID(map);
+		return  lms;
+	} //获取帮助我的人
+
 	//对"支持了" 进行评论
 	public  CommonRsp addOneComment(MoneysrcPinglun  moneysrcPinglun){
 		   CommonRsp  commonRsp=new CommonRsp();

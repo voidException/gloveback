@@ -27,7 +27,7 @@
 
 	<a href="http://localhost:8080/glove/path/pages/helpAixinshe.do">赞助爱心社</a><br/>
 
-	<a href="http://localhost:8080/glove/path/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10">分享到朋友圈</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/shareTotimeline.do?userUUID=94111BD33D3F474590C535C0BE24905B&tweetUUID=5eedb509-f9d5-41eb-acc5-e51d25275607&cashUUID=5fedb509-f9d5-41eb-acc5-e51d25275607">分享到朋友圈</a><br/>
 
 	<a href="http://localhost:8080/glove/path/pages/loginRegister.do">登录PC</a><br/>
 

@@ -119,6 +119,7 @@ public class WechatShare {
             return  timeLineRsp;
         }
         /* 证实列表*/
+        /**
         List<Confirm> confirmList=new ArrayList<Confirm>();
         Map<String,Object> map=new HashMap<String,Object>();
         Long tweetid=tweet.getTweetid();
@@ -146,6 +147,7 @@ public class WechatShare {
             timeLineRsp.setConfirmCode(2001);
 
         }
+         **/
         timeLineRsp.setLp(timeLine);
         timeLineRsp.setRetcode(2000);
         timeLineRsp.setMsg("朋友圈分享页面数据成功获取");

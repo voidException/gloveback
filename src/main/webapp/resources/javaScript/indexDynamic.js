@@ -90,14 +90,19 @@ new Vue({
             this.updateORprogress=false;
             this.updateORprogress2=true;
         },
+        getQueryString: function (name) {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
 
     },
 
     mounted: function () {
-        //console.log('mounted 钩子执行...');
-        //1.这里监听滚动条事件
-        // var d = document.getElementById("part1").offsetHeight;
-       // return ;  //暂时return，方便开发2017-04-10
+        /* 当用户捐助时，从后台能获取到openid、受助人uuid、还有cashUUID，这里根据cashUUID获取*/
+        //let userUUID=this.getQueryString("userUUID");
+        //let tweetUUID= this.getQueryString("tweetUUID");
+        let cashUUID= this.getQueryString("cashUUID");
         var that=this;
         window.addEventListener("scroll", function(event) {
             var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -136,7 +141,7 @@ new Vue({
         };
 
         this.$http.post('http://localhost:8080/glove/moneysource/backuplist',param).then(response => {
-            console.log(response.body);
+            //console.log(response.body);
            this.lp=response.body.lp;
         }, err => {
             console.log(err);

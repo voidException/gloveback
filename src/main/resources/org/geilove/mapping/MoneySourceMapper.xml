@@ -29,7 +29,20 @@
       #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
   <!--自定义结束 -->
-
+  <!--  待完成支付通知后继续开发-->
+  <select id="getMoneySourceListByCashUUID" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    moneysource
+    where
+    backupFour= #{useruuid,jdbcType=BIGINT} AND helpTime &lt; #{lastTime}
+    order by
+    helpTime  desc
+    limit
+    #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+  </select>
+  <!--自定义结束 -->
 
    <!--  自定义，获取帮助我的人的ids，加载更多-->
   <select id="selectMenHelpMeloadMore" resultType="org.geilove.sqlpojo.PartHelpPojo" >

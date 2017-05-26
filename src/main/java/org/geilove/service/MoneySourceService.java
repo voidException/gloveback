@@ -16,6 +16,10 @@ public interface MoneySourceService {
         //获取完整的，"支持了" 列表
         public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map); //获取帮助我的人
 
+        //获取完整的，"支持了" 列表
+        public  List<MoneySource> getGuyHelpMeByCashUUID(Map<String,Object>  map); //获取帮助我的人
+
+
         //根据MoneySourceID 获取其对应的评论
         public  List<MoneysrcPinglun> getMoneySourcePingLuns(Map<String,Object>  map); //获取一条"支持了"的评论列表
 

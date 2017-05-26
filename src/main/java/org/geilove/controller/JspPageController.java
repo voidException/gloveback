@@ -51,8 +51,9 @@ public class JspPageController {
 		String index="front/wechat";
 		return index;
 	}
-	@RequestMapping(value="/shareTotimeline/{tweetiD}",method=RequestMethod.GET)
-	public  String shareTimeline(@PathVariable("tweetiD") Long tweetiD, HttpServletRequest request){
+	//分享到朋友圈
+	@RequestMapping(value="/shareTotimeline.do",method=RequestMethod.GET)
+	public  String shareTimeline( HttpServletRequest request){
 		String index="front/wechat";
 		return index;
 	}

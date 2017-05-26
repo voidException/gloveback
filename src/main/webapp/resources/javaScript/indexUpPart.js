@@ -7,42 +7,9 @@
 var uppart = new Vue({
     el: '#uppart',
     data: {
-        tweet:null,
-        cash:null,
-        confirmList:[],
-
-        useriD:0,  //用户的iD
-        nickName:"小神经很ok", //用户的昵称
-        userPhotoUrl:"http://onejf30n8.bkt.clouddn.com/gongzhong25.jpg", //这个应该有个默认的地址
-        totalDays:30, //共计30天
-        title:"给点爱，一起温暖世界", //Tweet的标题
-        progressBar:0, //进度条
-        endDate:"2017-10-10", //结束日期
-        targetMoney:100000, //目标金额
-        realMoney:1314,  //已抽到钱数
-        helpTimes:100, //捐助次数
-        tweet:"各位好心热心人士你们好！泣血跪求各位能施援手，共救我哥哥的命。我20岁叫赵艳芳。我哥叫赵家胜。我是她的妹妹。他今年22岁。于2017年1月8日上午发生车祸，他为了闪避车导致的。现在伤的非常严重。 身上多处骨折，肋骨也断了，脑部受到严重的脑震荡，有出血，水肿的现象，现在没有什么意识。肺部也受到很大的创伤，现在感染的很厉害，只能靠吸氧机呼吸。我家是单亲家庭。", //项目详情
-        imgOneUrl:'http://localhost:8080/glove/resources/image/1.jpg', //照片的地址
-        imgTwoUrl:"http://localhost:8080/glove/resources/image/2.jpg",
-        imgThreeUrl:"http://localhost:8080/glove/resources/image/25.jpg",
-        imgFourUrl:"http://localhost:8080/glove/resources/image/4.jpg",
-        imgFiveUrl:"http://localhost:8080/glove/resources/image/5.jpg",
-        imgSixUrl:"http://localhost:8080/glove/resources/image/6.jpeg",
-        imgSevenUrl:"",
-        imgEightUrl:"",
-        authority:"互助管家", //认证机构
-        monitoringGroup:"互助管家社会监督处",
-        concreteStudent:"北京大学艾海涛", //具体负责人
-        receiveMoneyMan:"王二五的爹" ,     //收款人
-        needHelpMan:"王二五",     //受助人
-        identityProve:2,  //身份证明已提交
-        hospitalProve:2, //医院证明已提交
-        villageProve:2,  //居委会证明已提交
-        otherProve:2,  //其它证明已提交
-        affirmPeopleCount:80, //证实人数
-        defaultAffirmUrl:"", //当没有人证实时，就显示这个默认的图片
-        affirmImgUrls:['http://localhost:8080/glove/resources/image/1.jpg','http://localhost:8080/glove/resources/image/5.jpg','http://localhost:8080/glove/resources/image/25.jpg','http://localhost:8080/glove/resources/image/4.jpg']
-
+        tweet:{},
+        cash:{},
+        affirmImgUrls:['http://localhost:8080/glove/resources/image/1.jpg','http://localhost:8080/glove/resources/image/5.jpg','http://localhost:8080/glove/resources/image/25.jpg','http://localhost:8080/glove/resources/image/4.jpg'],
     },
 
     methods: {
@@ -58,13 +25,30 @@ var uppart = new Vue({
         },
         handleClick: function() {
         },
+
+        getQueryString: function (name) {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
     },
-    mounted: function () {
-        this.$http.get('http://localhost:8080/glove/timelinetweet/info/1').then(response => {
-           // console.log(response.body);
-            this.bodyMsg=response.body;
+    created: function () { //应该从浏览器url地址中获取参数userUUID,tweetUUID,cashUUID，组成url地址访问
+
+        let userUUID=this.getQueryString("userUUID");
+        let tweetUUID= this.getQueryString("tweetUUID");   //"5eedb509-f9d5-41eb-acc5-e51d25275607";
+        let cashUUID= this.getQueryString("cashUUID"); //"5fedb509-f9d5-41eb-acc5-e51d25275607";
+
+        let  url="http://localhost:8080/glove/wechatShare/"+userUUID+'/'+tweetUUID+'/'+cashUUID;
+
+        this.$http.get(url).then(response => {
+             console.log(response.body.lp);
+            // this.bodyMsg=response.body;
             this.$nextTick(function() {
-             //   console.log(this.bodyMsg);
+
+                this.tweet=response.body.lp.tweet;
+                this.cash=response.body.lp.cash;
+                //当点击查看正式人列表的时候，再真正获取数据
+                //this.affirmImgUrls=response.body.lp.confirmList;
             });
         }, err => {
             console.log(err);

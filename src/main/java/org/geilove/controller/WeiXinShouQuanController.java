@@ -43,10 +43,9 @@ public class WeiXinShouQuanController {
                 System.out.println(e);
             }
         }
-         // 测试数据，后续删掉
+         // 测试数据，后续删掉 ，这里根据orderId 重定向到不同的网页，一是支付，二是关联用户邮箱
         //openId="openId";
         orderId="orderId";
-
         Map<String,String> model =new HashMap();
         model.put("openId", openId);
         model.put("orderId", orderId);
@@ -55,6 +54,7 @@ public class WeiXinShouQuanController {
     }
 
     // 用户点击支付，先发送请求到这里获取必须的参数。prepayid，这里调用统一下单接口
+    // 可以获得受助人的UUID  和 对应的cashUUID
     // https://api.mch.weixin.qq.com/pay/unifiedorder
     @RequestMapping(value="/weixinJSBridge/invoke.do",method = RequestMethod.POST)
     public @ResponseBody  Object getCallH5Param(@RequestBody UnifiedPartParam unifiedPartParam, HttpServletRequest request, HttpServletResponse response){
@@ -73,7 +73,7 @@ public class WeiXinShouQuanController {
         orderParam.put("attach", attach);
         orderParam.put("body", body);
         orderParam.put("openid", openId); //openId
-        orderParam.put("out_trade_no", orderId.toString());   //商户订单号
+        orderParam.put("out_trade_no", orderId.toString());   //商户订单号，在这里应该生成作为Moneysource的uuid，然后和受助人uuid，cashUUD存入资金来源表
 
        // orderParam.put("ip", request.getRemoteAddr());        //终端IP
         orderParam.put("ip", "192.168.0.106");

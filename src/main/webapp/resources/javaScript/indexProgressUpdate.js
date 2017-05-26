@@ -140,7 +140,7 @@ new Vue({
         };
 
         this.$http.post('http://localhost:8080/glove/itemprogress/updatelist',param).then(response => {
-            console.log(response.body);
+            //console.log(response.body);
             this.lp=response.body.lp;
         }, err => {
             console.log(err);
