@@ -25,7 +25,7 @@ public interface MoneySourceService {
         public  List<MoneysrcPinglun> getMoneySourcePingLuns(Map<String,Object>  map); //获取一条"支持了"的评论列表
 
         //"支持了" 也就是用户捐钱一次
-        public CommonRsp addBackupService(BackUpParam backUpParam); //这个要加入事务支持
+        //public CommonRsp addBackupService(BackUpParam backUpParam); //这个要加入事务支持
 
         //对"支持了" 进行一次评论
         public  CommonRsp addOneComment(MoneysrcPinglun  moneysrcPinglun) ;

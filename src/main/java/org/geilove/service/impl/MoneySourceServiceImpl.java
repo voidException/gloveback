@@ -32,10 +32,10 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 	 private HelpInfoServiceImpl helpInfoService;
 	 @Resource
 	 private CashService cashService;
-	@Resource
-	private DoubleFansMapper  doubleFansMapper;
-	@Resource
-	private MainService mainService;
+	 @Resource
+	 private DoubleFansMapper  doubleFansMapper;
+	 @Resource
+	 private MainService mainService;
 
 //	 //获取我帮助的人的
 //	 public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map){
@@ -184,6 +184,7 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 		 }else {//没有关联邮箱，执行简单的数据更新  openidUser表和Cash表moneySource表(统一的昵称，头像，userUUID)
 		 	try{
 		 		// 1.对openidUser表进行更新或插入，为了以后关联，待生成表
+
 
 				// 2.Cash 表更新，为了让用户看到钱数增加
 				Cash  cash=cashService.getCashRecordByUUID(cashUUID);
