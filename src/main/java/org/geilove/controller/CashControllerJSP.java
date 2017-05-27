@@ -260,7 +260,7 @@ public class CashControllerJSP {
         tweet.setDeletetag((byte)1); //1代表未删除
         // tweet.setVideoaddress(null); //推文只限制3张图
         tweet.setTweetbackupsix(0); //默认承诺0，代表承诺A
-        tweet.setBackupneight(tweetUUID); //tweet的UUID
+        //tweet.setBackupneight(tweetUUID); //tweet的UUID
         tweet.setBackupnine(userName); //用户的昵称
         tweet.setBackupten(selfIntroduce); //用户的自我介绍
         tweet.setBackupeleven(photoUrl); //用户的头像地址
@@ -427,8 +427,9 @@ public class CashControllerJSP {
         //5.HelpInfo 表增加，在创建用户的时候就增加用户对应该记录
         // 注意检查是第一次还是第二次
         helpInfo.setHelpeachotherid(helpInfoMainID);
-        helpInfo.setHelpeachotheruuid(helpeachotheruuid); //用户的UUID
+        helpInfo.setHelpeachotheruuid(helpeachotheruuid);
         helpInfo.setUserid(userid); //被帮助人的id
+        helpInfo.setUseruuid(useruuid); //被帮助用户的uuid
         //这儿需要判定是第一次还是第二次
         if (helpInfoTimes==0){ //第一次
             helpInfo.setTweetoneuuid(tweetUUID);

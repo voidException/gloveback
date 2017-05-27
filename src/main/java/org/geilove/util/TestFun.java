@@ -12,8 +12,10 @@ public class TestFun {
     public  static  void  main(String[] args) {
 //        String uuid = UUID.randomUUID().toString();
 //        System.out.print(uuid);
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-        System.out.println(uuid);
+        //String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        //System.out.println(uuid);
+        System.out.println(UUID.randomUUID());
+        System.out.print(UUID.randomUUID().toString().length());
 //
 //        try{
 //            Enumeration allNetInterfaces = NetworkInterface.getNetworkInterfaces();

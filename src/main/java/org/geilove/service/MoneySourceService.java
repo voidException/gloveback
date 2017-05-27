@@ -9,14 +9,15 @@ import org.geilove.requestParam.BackUpParam;
 import org.geilove.response.CommonRsp;
 import org.geilove.sqlpojo.PartHelpPojo;
 public interface MoneySourceService {
-//        public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map); //获取我帮助的人
-//        public   List<PartHelpPojo> getHelpMeMen( Map<String,Object> map);//获取帮助我的人
+       // public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map); //获取我帮助的人
+       //public   List<PartHelpPojo> getHelpMeMen( Map<String,Object> map);//获取帮助我的人
 
+        public  void wxNotify(MoneySource  moneySource); //用户支持一次的方法
 
-        //获取完整的，"支持了" 列表
+        //获取完整的，"支持了" 列表通过id，已废弃
         public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map); //获取帮助我的人
 
-        //获取完整的，"支持了" 列表
+        //获取完整的，"支持了" 列表，通过uuid，待完成,这里应该用MoneySource的子集代替
         public  List<MoneySource> getGuyHelpMeByCashUUID(Map<String,Object>  map); //获取帮助我的人
 
 

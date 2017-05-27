@@ -16,6 +16,7 @@ public interface MoneySourceMapper {
 
     MoneySource selectByPrimaryKey(Long moneysourceid);
 
+    MoneySource selectByCashUUID(String cashUUID); //xml没写
 
     List<PartHelpPojo>  selectMenHelpMeloadMore(Map<String,Object> map); //自定义，获取帮助我的，加载更多
 
