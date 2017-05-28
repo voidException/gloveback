@@ -119,6 +119,8 @@ public class Cash {
 
     private String cashcitycode;
 
+    private String useruuid;
+
     public Long getCashid() {
         return cashid;
     }
@@ -581,5 +583,13 @@ public class Cash {
 
     public void setCashcitycode(String cashcitycode) {
         this.cashcitycode = cashcitycode == null ? null : cashcitycode.trim();
+    }
+
+    public String getUseruuid() {
+        return useruuid;
+    }
+
+    public void setUseruuid(String useruuid) {
+        this.useruuid = useruuid == null ? null : useruuid.trim();
     }
 }

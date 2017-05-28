@@ -50,6 +50,9 @@
     <result column="tobeuseone" jdbcType="INTEGER" property="tobeuseone" />
     <result column="tobeusetwo" jdbcType="INTEGER" property="tobeusetwo" />
     <result column="tobeusethree" jdbcType="INTEGER" property="tobeusethree" />
+    <result column="cityName" property="cityname" jdbcType="VARCHAR" />
+    <result column="openId" property="openid" jdbcType="VARCHAR" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
   </resultMap>
 
 
@@ -152,8 +155,10 @@
     followCount, notSay, notSayTime, canSayTime, userPhoto, photoUpload, backupOne, backupTwo, 
     backupThree, backupFour, backupFive, backupSix,userHelpsMan,userDonate,amountAccept,acceptMoney,beHelpTime,beHelpedType,
     backupseven, backupeight, backupnine, backupten, 
-    tobeuseone, tobeusetwo, tobeusethree
+    tobeuseone, tobeusetwo, tobeusethree, cityName, openId, userUUID
   </sql>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
@@ -161,6 +166,20 @@
     where userID = #{userid,jdbcType=BIGINT}
   </select>
 
+  <!--根据用户的UUId 选择用户，-->
+  <select id="selectByUUID" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userUUID=#{userUUID,jdbcType=VARCHAR}
+  </select>
+  <!--根据用户的openId 选择用户，-->
+  <select id="selectByopenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where openId=#{openId,jdbcType=VARCHAR}
+  </select>
   <!-- 以下是自定义的,根据用户昵称或者邮箱选择出记录，-->
   <select id="selectByNicknameOrEmail" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     select
@@ -202,7 +221,7 @@
       backupFive, backupSix,userHelpsMan,userDonate,amountAccept,acceptMoney,beHelpTime,beHelpedType,
       backupseven, 
       backupeight, backupnine, backupten, 
-      tobeuseone, tobeusetwo, tobeusethree)
+      tobeuseone, tobeusetwo, tobeusethree,cityName, openId, userUUID)
     values (#{userid,jdbcType=BIGINT}, #{digital,jdbcType=BIGINT}, #{usernickname,jdbcType=VARCHAR}, 
       #{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, #{usertype,jdbcType=TINYINT}, 
       #{certificatetype,jdbcType=TINYINT}, #{realname,jdbcType=VARCHAR}, #{identitycard,jdbcType=VARCHAR}, 
@@ -219,7 +238,8 @@
       #{behelptime,jdbcType=TIMESTAMP},#{behelpedtype,jdbcType=INTEGER},
       #{backupseven,jdbcType=VARCHAR}, 
       #{backupeight,jdbcType=VARCHAR}, #{backupnine,jdbcType=VARCHAR}, #{backupten,jdbcType=VARCHAR}, 
-      #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, #{tobeusethree,jdbcType=INTEGER}
+      #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, #{tobeusethree,jdbcType=INTEGER},
+      #{cityname,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.User" >
@@ -369,6 +389,15 @@
       <if test="tobeusethree != null">
         tobeusethree,
       </if>
+      <if test="cityname != null" >
+        cityName,
+      </if>
+      <if test="openid != null" >
+        openId,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -514,6 +543,15 @@
       </if>
       <if test="tobeusethree != null">
         #{tobeusethree,jdbcType=INTEGER},
+      </if>
+      <if test="cityname != null" >
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -661,6 +699,15 @@
       <if test="tobeusethree != null">
         tobeusethree = #{tobeusethree,jdbcType=INTEGER},
       </if>
+      <if test="cityname != null" >
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
     </set>
     where userID = #{userid,jdbcType=BIGINT}
   </update>
@@ -711,7 +758,10 @@
       backupten = #{backupten,jdbcType=VARCHAR},
       tobeuseone = #{tobeuseone,jdbcType=INTEGER},
       tobeusetwo = #{tobeusetwo,jdbcType=INTEGER},
-      tobeusethree = #{tobeusethree,jdbcType=INTEGER}
+      tobeusethree = #{tobeusethree,jdbcType=INTEGER},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      openId = #{openid,jdbcType=VARCHAR},
+      userUUID = #{useruuid,jdbcType=VARCHAR}
     where userID = #{userid,jdbcType=BIGINT}
   </update>
 </mapper>

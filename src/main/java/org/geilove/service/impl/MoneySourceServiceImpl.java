@@ -5,16 +5,14 @@ import java.util.*;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.map.HashedMap;
-import org.geilove.dao.DoubleFansMapper;
-import org.geilove.dao.MoneySourceMapper;
-import org.geilove.dao.MoneysrcPinglunMapper;
-import org.geilove.dao.UserMapper;
+import org.geilove.dao.*;
 import org.geilove.pojo.*;
 import org.geilove.requestParam.BackUpParam;
 import org.geilove.response.CommonRsp;
 import org.geilove.service.CashService;
 import org.geilove.service.MainService;
 import org.geilove.service.MoneySourceService;
+import org.geilove.service.WechatLogService;
 import org.geilove.sqlpojo.PartHelpPojo;
 import org.geilove.sqlpojo.PartWatchPojo;
 import org.springframework.stereotype.Service;
@@ -31,11 +29,16 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 	 @Resource
 	 private HelpInfoServiceImpl helpInfoService;
 	 @Resource
-	 private CashService cashService;
+	 private CashMapper cashMapper;
 	 @Resource
 	 private DoubleFansMapper  doubleFansMapper;
 	 @Resource
+	 private OpenidUserMapper openidUserMapper;
+	 @Resource
 	 private MainService mainService;
+	 @Resource
+	 private WechatLogService wechatLogService;
+
 
 //	 //获取我帮助的人的
 //	 public   List<PartHelpPojo> getIhelpMen( Map<String,Object> map){
@@ -47,21 +50,39 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 //    	 List<PartHelpPojo> php=moneySourceMapper.selectMenHelpMe(map);
 //		 return php;
 //     }
+
+	public  static   void main(String[]args){
+		String uuid="a1e0c875-379a-40ad-b3d3-a17534ae92c41654727c-40f9-42ba-b8a2-d492e2a1d0ed";
+		//String uuid=UUID.randomUUID().toString();
+		System.out.println(uuid);
+		System.out.println(uuid.length());
+		System.out.println(uuid.substring(0,36));
+		System.out.println(uuid.substring(36));
+	}
     //如果微信通知成功了，就执行该服务中的这个方法，如果失败了就执行另一个服务删除moneySource中存在的数据，成功还是失败在Controller里面判定
 	public  void  wxNotify(MoneySource  moneySource){//moneySource 中的部分数据由微信通知传递过来，更早的数据来自于预付订单生成时插入
 
 		 String attach=moneySource.getAttach(); //cashUUID+userGoodGuyUUID
-		 String cashUUID=attach.substring(0,35);
-		 String userGoodGuyUUID=attach.substring(36);
+		 String cashUUID=attach.substring(0,36); //cashUUID
+		 String userGoodGuyUUID=attach.substring(36);//userGoodGuyUUID
 		 String moneySourceUUID=moneySource.getOutTradeNo(); //moneysourceuuid
-         String openid=moneySource.getOpenid();
+         String openId=moneySource.getOpenid(); //openId
+
+		 WechatLog wechatLog=new WechatLog();  //跑出异常
          //捐助人的uuid
 		 User user=null;
 		 try{
 			 //通过moneySouce中的openid查询user表，看用户是否关联了邮箱，
-			 user=userMapper.selectByUserOpenid(openid); //待实现，帮助人user
+			 user=userMapper.selectByopenId(openId); //待实现，帮助人user
 		 }catch (Exception e){
-		 	   //这个怎么处理好呢，这里只是查询下是不是存在的，如果抛出了异常？概率很小！
+		 	 //记录日志，到数据库
+			 wechatLog.setClassname("MoneySourceServiceImpl");
+			 wechatLog.setMethodname("wxNotify");
+			 wechatLog.setLog(e.getMessage());
+			 wechatLog.setLogtime(new Date());
+			 wechatLog.setLogdescription("使用openId查询user是否存在");
+			 wechatLog.setOther(openId);
+			 return; //
 		 }
 
 		 if(user!=null  ){ //关联了邮箱，执行复杂的更新，能获取到用户的uuid
@@ -70,22 +91,91 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 			 String  userDonatePhotoUrl=user.getUserphoto(); //获取用户的头像地址
 			 moneySource.setHelpmanusername(userDonateNickName);
 			 moneySource.setHelpmanphotourl(userDonatePhotoUrl);
-			 moneySource.setMoneysourceuuid(moneySourceUUID);
-			 int updateTag=moneySourceMapper.updateByPrimaryKeySelective(moneySource); //应该是插入
 
+			 moneySource.setCashuuid(cashUUID); //关联的cashUUID
+			 moneySource.setUseruuidgoodguy(userGoodGuyUUID);//帮助人的uuid
+			 moneySource.setMoneysourceuuid(moneySourceUUID); //本记录的UUID
+  			 try{
+				 int updateTag=moneySourceMapper.insert(moneySource); //应该是插入
+				 if (updateTag!=1){
+				 	return; //没有插入成功
+				 }
+			 }catch (Exception e){
+				 //记录日志，到数据库
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("moneySourceMapper.insert");
+				 wechatLog.setOther(attach);
+				 return;
+			 }
 
-			 // 2.更新cash表，受助人相关信息要更新
-			 Cash  cash=cashService.getCashRecordByUUID(cashUUID);
+			 // 2.更新cash表，realCash 被帮助的次数要更新
+			 Cash  cash=new Cash();
+			 try{
+				 cash=cashMapper.selectByCashUUID(cashUUID);
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("cashMapper.selectByCashUUID");
+				 wechatLog.setOther(cashUUID);
+				 return;
+			 }
+
+			 int targetcash=cash.getTargetcash();
+			 Byte cashOK= cash.getCashok();
+
 			 Integer  realCash=cash.getRealcash();
 			 realCash=realCash+moneySource.getMoneynum();
-			 String  userUUIDBehelped=cash.getBeHelpUserUUID(); //受助用户的用户的uuid
-			 int cashUpdateTag=cashService.updateCash(cash);
+             if (realCash>targetcash){
+             	cashOK=2; //达到募捐金额
+			 }
+			 int sumBackup=cash.getSumbackup(); //支持的次数
+			 sumBackup=sumBackup+1;
+
+			 /*----受助用户的用户的uuid-----*/
+			 String  userUUIDBehelped=cash.getUseruuid();
+			 cash.setRealcash(realCash);
+			 cash.setCashok(cashOK);
+			 cash.setSumbackup(sumBackup);
+			 try {
+				 int cashUpdateTag=cashMapper.updateByPrimaryKeySelective(cash);
+				 if (cashUpdateTag!=1){
+				 	return;
+				 }
+			 }catch ( Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("cashMapper.updateByPrimaryKeySelective");
+				 wechatLog.setOther(cashUUID);
+				 return;
+			 }
 
 			 // 3.更新受助人接受的总钱数等表helpInfo表
-			 HelpInfo helpInfo= helpInfoService.selectRecord(userUUIDBehelped);
+			 HelpInfo helpInfo=new HelpInfo();
+			 try {
+				  helpInfo= helpInfoService.selectRecord(userUUIDBehelped);
+				  if (helpInfo==null){
+				  	return;
+				  }
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("helpInfoService.selectRecord");
+				 wechatLog.setOther(userUUIDBehelped);
+				 return;
+			 }
 
 			 if (helpInfo!=null){
 				 Integer money=0;
+				 int totalMoney;
 				 if (helpInfo.getCashtwouuid()!=null  ){//达到发布2次求助信息
 					 money=helpInfo.getAccept2moneymount();
 					 money=money+moneySource.getMoneynum();
@@ -97,26 +187,71 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 					helpInfo.setAcceptfirstmoneymount(money);
 				 }
 				 //执行更新helpInfo表
-				 int helpInfoInsertTag=helpInfoService.updateRecord(helpInfo);
+				 totalMoney=helpInfo.getDonatemount()+moneySource.getMoneynum();
+				 helpInfo.setDonatemount(totalMoney);
+				 try {
+					 int helpInfoInsertTag=helpInfoService.updateRecord(helpInfo);
+					 if (helpInfoInsertTag!=1){
+					 	return;
+					 }
+				 }catch (Exception e){
+					 wechatLog.setClassname("MoneySourceServiceImpl");
+					 wechatLog.setMethodname("wxNotify");
+					 wechatLog.setLog(e.getMessage());
+					 wechatLog.setLogtime(new Date());
+					 wechatLog.setLogdescription("helpInfoService.updateRecord");
+					 wechatLog.setOther(userUUIDBehelped);
+					 return;
+				 }
+
+			 }
+			 // 4.更新受助人的User表，因为粉丝增加了。
+			 User  beHelpUser;
+			 try {
+				 beHelpUser=userMapper.selectByUUID(userUUIDBehelped); //这个是受助人user
+				 if (beHelpUser==null){
+				 	return;
+				 }
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("userMapper.selectByUUID");
+				 wechatLog.setOther(userUUIDBehelped);
+				 return;
 			 }
 
-			 // 4.更新受助人的User表，因为粉丝增加了。
-			 User beHelpUser=userMapper.getUserByUUID(userUUIDBehelped); //这个是受助人user
 			 Integer beHelpUserFollow=user.getFollowcount(); //收听人的数量
-			 beHelpUserFollow=beHelpUserFollow+1;
 			 Integer acceptMoney=user.getAcceptmoney(); //用户获得捐钱的总数
-			 acceptMoney=acceptMoney+moneySource.getMoneynum();
 			 Integer amountAccept=user.getAmountaccept();
+
+			 beHelpUserFollow=beHelpUserFollow+1;
+			 acceptMoney=acceptMoney+moneySource.getMoneynum();
 			 amountAccept=amountAccept+1;
+
 			 user.setFollowcount(beHelpUserFollow);
 			 user.setAcceptmoney(acceptMoney);
 			 user.setAmountaccept(amountAccept);
-			 int beHelpUserUpdateTag=userMapper.updateByPrimaryKeySelective(user); //执行更行
+			 try {
+				 int beHelpUserUpdateTag=userMapper.updateByPrimaryKeySelective(user); //执行更新
+				 if (beHelpUserUpdateTag!=1){
+				 	return;
+				 }
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("userMapper.updateByPrimaryKeySelective");
+				 wechatLog.setOther(userUUIDBehelped);
+				 return;
+			 }
 
 			 // 5.更新DoubleFans表，受助人成为帮助人的粉丝，
-
 			 Long goodGuyID=user.getUserid();
 			 Long beHelpUserID=beHelpUser.getUserid();
+
 			 DoubleFans doubleFans=new DoubleFans();
 			 doubleFans.setUseridbefocus(goodGuyID);
 			 doubleFans.setUseridfollowe(beHelpUserID);
@@ -125,22 +260,34 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 			 map.put("taUserid",beHelpUserID);
 			 map.put("myUserid",goodGuyID);
 			 //查询下有没有已经关注，
-			 PartWatchPojo partWatchPojo= doubleFansMapper.watchOrNot(map);
-             if (partWatchPojo==null){
-             	//执行插入
-				 int  doubleFansTag=doubleFansMapper.insert(doubleFans);
-			 }else {
-             	//执行更行
-				 int updateDoubleFansTag=doubleFansMapper.updateByPrimaryKeySelective(doubleFans);
+			 PartWatchPojo partWatchPojo;
+			 try {
+				 partWatchPojo= doubleFansMapper.watchOrNot(map);
+				 if (partWatchPojo==null){
+					 //执行插入
+					 int  doubleFansTag=doubleFansMapper.insert(doubleFans);
+				 }else {
+					 //执行更行
+					 int updateDoubleFansTag=doubleFansMapper.updateByPrimaryKeySelective(doubleFans);
+				 }
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("doubleFansMapper.watchOrNot");
+				 wechatLog.setOther(userUUIDBehelped);
+				 return;
 			 }
-			 // 6.更新Tweet表，捐款人发布一条推文
+
+			 // 6.更新Tweet表，捐款人发布一条推文,该表加入userUUID
 			 Tweet tweet=new Tweet();
+			 String msgContent="感谢@"+user.getUsernickname()+" "+"为@"+beHelpUser.getUsernickname()+"捐钱，互助管家官方对此表示感谢！";
 			 tweet.setBackupneight(UUID.randomUUID().toString()); //tweet 的uuid
-			 //tweet.setCashuuid(cashUUID); //cash 的uuid
 			 tweet.setUseridtweet(beHelpUser.getUserid()); //发布推文的userid
 			 tweet.setSourcemsgid(new Long(1));//1代表非转发
-			 //tweet.setBackuptwelve(moneyTitle); //筹款标题
-			 tweet.setMsgcontent("感谢先生的捐助，祝福"); //放入推文内容到tweet中
+			 tweet.setUseruuidtweet(userGoodGuyUUID);
+			 tweet.setMsgcontent(msgContent); //放入推文内容到tweet中
 			 tweet.setTagid((byte)1 );
 			 tweet.setTopic(new Long(1));
 			 tweet.setBoxtimes(0);
@@ -150,63 +297,193 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 			 tweet.setReportedtimes(0);
 			 tweet.setPublicsee((byte)1); //1代表可见
 			 tweet.setDeletetag((byte)1); //1代表未删除
-			 // tweet.setVideoaddress(null); //推文只限制3张图
-			 tweet.setTweetbackupsix(0); //默认承诺0，代表承诺A
+			 tweet.setTweetbackupsix(0); //默认承诺0，
 			 tweet.setBackupnine(beHelpUser.getUsernickname()); //用户的昵称
-			 //tweet.setBackupten(selfIntroduce); //用户的自我介绍
 			 tweet.setBackupeleven(beHelpUser.getUserphoto()); //用户的头像地址
 			 tweet.setCityname("中国"); //用户所在的城市
-			 tweet.setTweetbackupfour(1); //备用4等于1代表是一个普通的推文2代表的是救助
-			 Integer tag=mainService.addTweet(tweet);
+			 tweet.setTweetbackupfour(0); //备用4等于1代表是一个普通的推文2代表的是救助
+			 try {
+				 Integer tag=mainService.addTweet(tweet);
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("mainService.addTweet");
+				 wechatLog.setOther(userGoodGuyUUID);
+				 //return;
+			 }
 
 			 // 7.更新HelpInfo表，捐款人信息更新,
-			 HelpInfo  helpInfoFgoodGuy=helpInfoService.selectRecord(userGoodGuyUUID); //
+			 HelpInfo  helpInfoFgoodGuy=new HelpInfo();
+			 try {
+				 helpInfoFgoodGuy=helpInfoService.selectRecord(userGoodGuyUUID); //
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("helpInfoService.selectRecord");
+				 wechatLog.setOther(userGoodGuyUUID);
+			 }
+
 			 if (helpInfoFgoodGuy!=null){
 				 Integer donateMount=0;
-				 Integer helTimes=0;
+				 Integer helpTimes=0;
 				 donateMount=moneySource.getMoneynum()+helpInfoFgoodGuy.getDonatemount(); //捐钱总数
-				 helTimes=helpInfoFgoodGuy.getHelptimes()+1; //帮助次数+1
+				 helpTimes=helpInfoFgoodGuy.getHelptimes()+1; //帮助次数+1
+				 helpInfoFgoodGuy.setDonatemount(donateMount);
+				 helpInfoFgoodGuy.setHelptimes(helpTimes);
 				 //执行更新helpInfo表
-				 int helpInfoInsertTag=helpInfoService.updateRecord(helpInfoFgoodGuy);
+				 try {
+					 int helpInfoInsertTag=helpInfoService.updateRecord(helpInfoFgoodGuy);
+				 }catch (Exception e){
+					 wechatLog.setClassname("MoneySourceServiceImpl");
+					 wechatLog.setMethodname("wxNotify");
+					 wechatLog.setLog(e.getMessage());
+					 wechatLog.setLogtime(new Date());
+					 wechatLog.setLogdescription("helpInfoService.updateRecord");
+					 wechatLog.setOther(userGoodGuyUUID);
+				 }
+
 			 }// 按道理是必须存在的，注册的时候就创建了一条记录
 
 			 // 8.更新User表， 捐款人信息更新
-			 User helpUser=userMapper.selectByUserEmail(userGoodGuyUUID); //待实现
+			 User helpUser=new User();
+			 try {
+				 helpUser=userMapper.selectByUUID(userGoodGuyUUID);
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("userMapper.selectByUUID");
+				 wechatLog.setOther(userGoodGuyUUID);
+			 }
+
 			 if (helpUser!=null){
 			 	 //粉丝，捐钱数等增加
 				 int  fansCount=helpUser.getFanscount()+1;  //粉丝总数+1
 				 int  moneyDonate=helpUser.getUserdonate()+moneySource.getMoneynum(); //捐钱总数
 				 int  helpTimes=helpUser.getUserhelpsman()+1;
-				 int  helpUserUpdateTag=userMapper.updateByPrimaryKey(helpUser); //
-
+				 helpUser.setFanscount(fansCount);
+				 helpUser.setUserdonate(moneyDonate);
+				 helpUser.setUserhelpsman(helpTimes);
+				 try {
+					 int  helpUserUpdateTag=userMapper.updateByPrimaryKey(helpUser);
+				 }catch ( Exception e){
+					 wechatLog.setClassname("MoneySourceServiceImpl");
+					 wechatLog.setMethodname("wxNotify");
+					 wechatLog.setLog(e.getMessage());
+					 wechatLog.setLogtime(new Date());
+					 wechatLog.setLogdescription("userMapper.updateByPrimaryKey");
+					 wechatLog.setOther(userGoodGuyUUID);
+				 }
 			 }
+			 return;
 
 		 }else {//没有关联邮箱，执行简单的数据更新  openidUser表和Cash表moneySource表(统一的昵称，头像，userUUID)
+			 OpenidUser openidUser=null;
+			 String openidUserUUID=UUID.randomUUID().toString();
 		 	try{
-		 		// 1.对openidUser表进行更新或插入，为了以后关联，待生成表
-
-
-				// 2.Cash 表更新，为了让用户看到钱数增加
-				Cash  cash=cashService.getCashRecordByUUID(cashUUID);
-				Integer  realCash=cash.getRealcash();
-				realCash=realCash+moneySource.getMoneynum();
-				String  userUUIDBehelped=cash.getBeHelpUserUUID(); //受助用户的用户的uuid
-				int cashUpdateTag=cashService.updateCash(cash);
-
-				// 3.moneySource 表更新,为了显示在动态列表上
-				String  userNickName="互助管家人";
-				String  userPhoto=""; //默认头像地址
-				moneySource.setHelpmanusername(userNickName);
-				moneySource.setHelpmanphotourl(userPhoto);
-				moneySource.setMoneysourceuuid(moneySourceUUID);
-				int updateTag=moneySourceMapper.updateByPrimaryKeySelective(moneySource);  //应该是插入
+		 		// 1.对openidUser表进行更新或插入，为了以后关联
+				openidUser=openidUserMapper.selectByOpenId(openId);
 
 			}catch (Exception e){
-
+				wechatLog.setClassname("MoneySourceServiceImpl");
+				wechatLog.setMethodname("wxNotify");
+				wechatLog.setLog(e.getMessage());
+				wechatLog.setLogtime(new Date());
+				wechatLog.setLogdescription("openidUserMapper.selectByOpenId");
+				wechatLog.setOther(openId);
 			}
+			 if (openidUser==null){
+				 openidUser=new OpenidUser(); //new
+				 openidUser.setOpenid(openId);
+				 openidUser.setOpeniduseruuid(openidUserUUID);
+				 openidUser.setDonatedate(new Date());
+				 openidUser.setUsertotalhelp(1);
+				 openidUser.setUsertotaldonate(moneySource.getMoneynum());
+				 //插入
+				 try{
+				 	openidUserMapper.insert(openidUser);
+				 }catch (Exception e){
+					 wechatLog.setClassname("MoneySourceServiceImpl");
+					 wechatLog.setMethodname("wxNotify");
+					 wechatLog.setLog(e.getMessage());
+					 wechatLog.setLogtime(new Date());
+					 wechatLog.setLogdescription("openidUserMapper.insert");
+					 wechatLog.setOther(openId);
+				 }
+			 }else {
+				 int userTotalHelp=openidUser.getUsertotalhelp()+1;
+				 int userTotalDonate=openidUser.getUsertotaldonate()+moneySource.getMoneynum();
+				 openidUser.setOpenid(openId);
+				 openidUser.setOpeniduseruuid(openidUserUUID);
+				 openidUser.setDonatedate(new Date());
+				 openidUser.setUsertotalhelp(userTotalHelp);
+				 openidUser.setUsertotaldonate(userTotalDonate);
+				 //更新
+				 try {
+				 	openidUserMapper.updateByPrimaryKeySelective(openidUser);
+				 }catch (Exception e){
+					 wechatLog.setClassname("MoneySourceServiceImpl");
+					 wechatLog.setMethodname("wxNotify");
+					 wechatLog.setLog(e.getMessage());
+					 wechatLog.setLogtime(new Date());
+					 wechatLog.setLogdescription("openidUserMapper.updateByPrimaryKeySelective");
+					 wechatLog.setOther(openId);
+				 }
+
+			 }
+				// 2.Cash 表更新，为了让用户看到钱数增加
+			 Cash  cash=null;
+			 try{
+				 cash=cashMapper.selectByCashUUID(cashUUID);
+
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("cashMapper.selectByCashUUID");
+				 wechatLog.setOther(cashUUID);
+			 }
+			 if (cash!=null){
+				 try {
+					 Integer  realCash=cash.getRealcash();
+					 int helpTimes=cash.getSumbackup()+1;
+					 realCash=realCash+moneySource.getMoneynum();
+					 cash.setRealcash(realCash);
+					 cash.setSumbackup(helpTimes);
+					 int cashUpdateTag=cashMapper.updateByPrimaryKeySelective(cash);
+				 }catch (Exception e){
+					 wechatLog.setClassname("MoneySourceServiceImpl");
+					 wechatLog.setMethodname("wxNotify");
+					 wechatLog.setLog(e.getMessage());
+					 wechatLog.setLogtime(new Date());
+					 wechatLog.setLogdescription("cashMapper.updateByPrimaryKeySelective");
+					 wechatLog.setOther(cashUUID);
+				 }
+			 }
+			// 3.moneySource 表更新,为了显示在动态列表上
+			String  userNickName="互助管家人";
+			String  userPhoto="http://onejf30n8.bkt.clouddn.com/gongzhong512.png"; //默认头像地址
+			moneySource.setHelpmanusername(userNickName);
+			moneySource.setHelpmanphotourl(userPhoto);
+			moneySource.setMoneysourceuuid(moneySourceUUID); //32位
+			 try {
+				 int updateTag=moneySourceMapper.insert(moneySource);  //应该是插入
+			 }catch (Exception e){
+				 wechatLog.setClassname("MoneySourceServiceImpl");
+				 wechatLog.setMethodname("wxNotify");
+				 wechatLog.setLog(e.getMessage());
+				 wechatLog.setLogtime(new Date());
+				 wechatLog.setLogdescription("moneySourceMapper.insert");
+				 wechatLog.setOther(moneySourceUUID);
+			 }
 		 }
 	}
-
 
 	//获取"支持了"列表
 	public  List<MoneySource> getGuyHelpMe(Map<String,Object>  map){

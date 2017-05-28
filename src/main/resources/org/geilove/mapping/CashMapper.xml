@@ -60,6 +60,7 @@
     <result column="cashTweetUUID" property="cashtweetuuid" jdbcType="VARCHAR" />
     <result column="cashCityName" property="cashcityname" jdbcType="VARCHAR" />
     <result column="cashCityCode" property="cashcitycode" jdbcType="VARCHAR" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     cashID, cashUUID, userIDCash, beHelpUserID, beHelpUserNickName, beHelpUserName, dutyUserID, 
@@ -70,7 +71,7 @@
     sumBackup, sumManBackup, sumDays, progressState, createDate, offlinePassDate, moneyUseUpDate, 
     lastend, acceptMoneyMan, acceptMoneyManiD, checkUseriD, checkUserUUID, checkUserNickname, 
     backupOne, backupTwo, backupThree, backupFour, backupFive, backupSix, promiseDsp, 
-    cashTweetiD, cashTweetUUID, cashCityName, cashCityCode
+    cashTweetiD, cashTweetUUID, cashCityName, cashCityCode, userUUID
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -111,7 +112,7 @@
       backupTwo, backupThree, backupFour, 
       backupFive, backupSix, promiseDsp, 
       cashTweetiD, cashTweetUUID, cashCityName, 
-      cashCityCode)
+      cashCityCode, userUUID)
     values (#{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR}, #{useridcash,jdbcType=BIGINT}, 
       #{behelpuserid,jdbcType=BIGINT}, #{behelpusernickname,jdbcType=VARCHAR}, #{behelpusername,jdbcType=VARCHAR}, 
       #{dutyuserid,jdbcType=BIGINT}, #{dutyusernickname,jdbcType=VARCHAR}, #{dutyusername,jdbcType=VARCHAR}, 
@@ -131,7 +132,7 @@
       #{backuptwo,jdbcType=VARCHAR}, #{backupthree,jdbcType=VARCHAR}, #{backupfour,jdbcType=VARCHAR}, 
       #{backupfive,jdbcType=INTEGER}, #{backupsix,jdbcType=INTEGER}, #{promisedsp,jdbcType=INTEGER}, 
       #{cashtweetid,jdbcType=BIGINT}, #{cashtweetuuid,jdbcType=VARCHAR}, #{cashcityname,jdbcType=VARCHAR}, 
-      #{cashcitycode,jdbcType=VARCHAR})
+      #{cashcitycode,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.Cash" >
     insert into cash
@@ -310,6 +311,9 @@
       <if test="cashcitycode != null" >
         cashCityCode,
       </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cashid != null" >
@@ -485,6 +489,9 @@
       </if>
       <if test="cashcitycode != null" >
         #{cashcitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -662,6 +669,9 @@
       <if test="cashcitycode != null" >
         cashCityCode = #{cashcitycode,jdbcType=VARCHAR},
       </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
     </set>
     where cashID = #{cashid,jdbcType=BIGINT}
   </update>
@@ -723,7 +733,8 @@
       cashTweetiD = #{cashtweetid,jdbcType=BIGINT},
       cashTweetUUID = #{cashtweetuuid,jdbcType=VARCHAR},
       cashCityName = #{cashcityname,jdbcType=VARCHAR},
-      cashCityCode = #{cashcitycode,jdbcType=VARCHAR}
+      cashCityCode = #{cashcitycode,jdbcType=VARCHAR},
+      userUUID = #{useruuid,jdbcType=VARCHAR}
     where cashID = #{cashid,jdbcType=BIGINT}
   </update>
 </mapper>

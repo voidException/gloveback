@@ -345,6 +345,7 @@ public class CashControllerJSP {
             //给个默认的下一个月的今天
             System.out.println(e.getMessage());
         }
+        cash.setUseruuid(useruuid);
         cash.setCountstate( new Byte("1")); //关闭
         cash.setRealcash(0); //当前实际金额是0
         cash.setGetmoneytag(new Byte("1")); //1 不可以提取善款

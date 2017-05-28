@@ -54,7 +54,7 @@ public class WeiXinShouQuanController {
     }
 
     // 用户点击支付，先发送请求到这里获取必须的参数。prepayid，这里调用统一下单接口
-    // 可以获得受助人的UUID  和 对应的cashUUID
+    // 可以获得受助人的UUID  和 对应的cashUUID，以及moneySourceUUID，放在attach等里面。(非常重要)
     // https://api.mch.weixin.qq.com/pay/unifiedorder
     @RequestMapping(value="/weixinJSBridge/invoke.do",method = RequestMethod.POST)
     public @ResponseBody  Object getCallH5Param(@RequestBody UnifiedPartParam unifiedPartParam, HttpServletRequest request, HttpServletResponse response){

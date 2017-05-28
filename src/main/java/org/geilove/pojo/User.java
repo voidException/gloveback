@@ -98,6 +98,12 @@ public class User {
     private Integer tobeusetwo; //查看我帮助的人，或者帮助我的人，这个存储具体的钱数
 
     private Integer tobeusethree;
+
+    private String cityname; //用户所在的城市
+
+    private String openid; //公众号id
+
+    private String useruuid; //用户的uuid
     
 	public Long getUserid() {
         return userid;
@@ -482,5 +488,28 @@ public class User {
 	    public void setTobeusethree(Integer tobeusethree) {
 	        this.tobeusethree = tobeusethree;
 	    }
+        public String getCityname() {
+            return cityname;
+        }
+
+        public void setCityname(String cityname) {
+            this.cityname = cityname == null ? null : cityname.trim();
+        }
+
+        public String getOpenid() {
+            return openid;
+        }
+
+        public void setOpenid(String openid) {
+            this.openid = openid == null ? null : openid.trim();
+        }
+
+        public String getUseruuid() {
+            return useruuid;
+        }
+
+        public void setUseruuid(String useruuid) {
+            this.useruuid = useruuid == null ? null : useruuid.trim();
+        }
     
 }
