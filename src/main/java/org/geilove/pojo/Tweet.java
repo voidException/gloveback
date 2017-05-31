@@ -79,6 +79,16 @@ public class Tweet {
 
     private String helpif;
 
+    private String helptype;
+
+    private String imageurlone;
+
+    private String imageurltwo;
+
+    private String imageurlthree;
+
+    private String zhibourl;
+
 
     public Long getTweetid() {
         return tweetid;
@@ -370,5 +380,45 @@ public class Tweet {
 
     public void setHelpif(String helpif) {
         this.helpif = helpif == null ? null : helpif.trim();
+    }
+
+    public String getHelptype() {
+        return helptype;
+    }
+
+    public void setHelptype(String helptype) {
+        this.helptype = helptype == null ? null : helptype.trim();
+    }
+
+    public String getImageurlone() {
+        return imageurlone;
+    }
+
+    public void setImageurlone(String imageurlone) {
+        this.imageurlone = imageurlone == null ? null : imageurlone.trim();
+    }
+
+    public String getImageurltwo() {
+        return imageurltwo;
+    }
+
+    public void setImageurltwo(String imageurltwo) {
+        this.imageurltwo = imageurltwo == null ? null : imageurltwo.trim();
+    }
+
+    public String getImageurlthree() {
+        return imageurlthree;
+    }
+
+    public void setImageurlthree(String imageurlthree) {
+        this.imageurlthree = imageurlthree == null ? null : imageurlthree.trim();
+    }
+
+    public String getZhibourl() {
+        return zhibourl;
+    }
+
+    public void setZhibourl(String zhibourl) {
+        this.zhibourl = zhibourl == null ? null : zhibourl.trim();
     }
 }

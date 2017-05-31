@@ -102,9 +102,15 @@ public class JspPageController {
 		String index="front/userProtocolPC";
 		return index;
 	}
-	@RequestMapping(value="/mobileMainPage.do",method = RequestMethod.GET)
+
+	@RequestMapping(value="/mobileMain.do",method = RequestMethod.GET)
+	public String woWechat(){
+		String index="mobilewap/mobileMain";
+		return index;
+	}
+	@RequestMapping(value="/mobileWo.do",method = RequestMethod.GET)
 	public String mobileMainPage(){
-		String index="mobilewap/mobileMainPage";
+		String index="mobilewap/mobileWo";
 		return index;
 	}
 	@RequestMapping(value="/publishHelpInfo.do",method = RequestMethod.GET)
@@ -121,6 +127,11 @@ public class JspPageController {
 	@RequestMapping(value="/helpTweetList.do",method = RequestMethod.GET)
 	public String helpTweetList(){
 		String index="front/helpTweetList";
+		return index;
+	}
+	@RequestMapping(value="/jianduchu.do",method = RequestMethod.GET)
+	public String jianduchu(){
+		String index="mobilewap/supervise";
 		return index;
 	}
 

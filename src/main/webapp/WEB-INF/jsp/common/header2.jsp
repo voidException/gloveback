@@ -12,7 +12,7 @@
 </head>
 <body>
 <div style="display: flex;flex-direction: row;align-items: center;justify-content: space-between;border-bottom: 1px solid #00BB3B;width: 100%  ">
-    <a href="http://localhost:8080/glove/path/pages/mobileMainPage.do" style="width: 40px;text-decoration: none;font-size: 18px">首页</a>
+    <a href="http://localhost:8080/glove/path/pages/mobileWo.do" style="width: 40px;text-decoration: none;font-size: 18px">首页</a>
     <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 28px;height: 28px;border-radius: 14px"/>
     <div style="width: 40px"></div>
 </div>

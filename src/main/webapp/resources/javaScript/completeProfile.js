@@ -20,7 +20,7 @@ new Vue({
             if (token==null){
                 alert("请登录");
                setTimeout(function () {
-                   window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do";
+                   window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do";
                },500)
                 return;
             }
@@ -41,7 +41,7 @@ new Vue({
                 //console.log(response.body);
                 if(response.body.retcode==2000){
                     alert("更新成功");
-                    window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do";
+                    window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do";
                     return;
                 }else {
                     alert("更新失败");

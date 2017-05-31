@@ -180,6 +180,8 @@ public class TweetController {
 		Map<String,Object> map=new HashMap<String,Object>();
 
 		String lastUpdate=request.getParameter("lastUpdate");
+		String helpType=request.getParameter("helpType");
+		map.put("helpType",helpType); //类型
 		map.put("helpif","yes");
 		map.put("lastUpdate",lastUpdate); //时间
 		map.put("page",0);

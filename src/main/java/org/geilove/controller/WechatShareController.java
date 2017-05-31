@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 @Controller
 @RequestMapping("/wechatShare")
-public class WechatShare {
+public class WechatShareController {
     @Resource
     private MainService mainService;
     @Resource

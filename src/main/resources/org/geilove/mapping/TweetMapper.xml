@@ -39,6 +39,11 @@
     <result column="cashUUID" property="cashuuid" jdbcType="VARCHAR" />
     <result column="userUUIDTweet" property="useruuidtweet" jdbcType="VARCHAR" />
     <result column="helpif" property="helpif" jdbcType="VARCHAR" />
+    <result column="helpType" property="helptype" jdbcType="VARCHAR" />
+    <result column="imageUrlOne" property="imageurlone" jdbcType="VARCHAR" />
+    <result column="imageUrlTwo" property="imageurltwo" jdbcType="VARCHAR" />
+    <result column="imageUrlThree" property="imageurlthree" jdbcType="VARCHAR" />
+    <result column="zhiboUrl" property="zhibourl" jdbcType="VARCHAR" />
   </resultMap>
   
   
@@ -47,7 +52,8 @@
     publishTime, reportedTimes, publicSee, deleteTag, videoAddress, tweetbackUpOne, tweetbackUpTwo, 
     tweetbackUpThree, tweetbackupFour, tweetbackupFive, tweetbackupSix,promise, tweetbackupSeven,
     backupeight, backupneight, backupnine, backupten, backupeleven, backuptwelve, tobeuseone, 
-    tobeusetwo, tobeusethree, cityCode, cityName,cashiD, cashUUID,userUUIDTweet, helpif
+    tobeusetwo, tobeusethree, cityCode, cityName,cashiD, cashUUID,userUUIDTweet, helpif,
+    helpType, imageUrlOne, imageUrlTwo, imageUrlThree, zhiboUrl
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -72,7 +78,7 @@
     select
     <include refid="Base_Column_List" />
     from tweet
-    where helpif= #{helpif} AND publishTime &lt; #{lastUpdate}
+    where helpif= #{helpif} AND publishTime &lt; #{lastUpdate} AND helpType=#{helpType}
     order by publishTime  desc
     limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
   </select>
@@ -172,7 +178,8 @@
       backuptwelve, tobeuseone, tobeusetwo, 
       tobeusethree, cityCode, cityName,
       cashiD, cashUUID, userUUIDTweet,
-      helpif)
+      helpif, helpType, imageUrlOne,
+      imageUrlTwo, imageUrlThree, zhiboUrl)
     values (#{tweetid,jdbcType=BIGINT}, #{useridtweet,jdbcType=BIGINT}, #{sourcemsgid,jdbcType=BIGINT}, 
       #{tagid,jdbcType=TINYINT}, #{msgcontent,jdbcType=VARCHAR}, #{topic,jdbcType=BIGINT}, 
       #{commenttimes,jdbcType=INTEGER}, #{ok,jdbcType=INTEGER}, #{boxtimes,jdbcType=INTEGER}, 
@@ -185,7 +192,8 @@
       #{backuptwelve,jdbcType=VARCHAR}, #{tobeuseone,jdbcType=INTEGER}, #{tobeusetwo,jdbcType=INTEGER}, 
       #{tobeusethree,jdbcType=INTEGER}, #{citycode,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR},
       #{cashid,jdbcType=BIGINT}, #{cashuuid,jdbcType=VARCHAR},#{useruuidtweet,jdbcType=VARCHAR},
-      #{helpif,jdbcType=VARCHAR})
+      #{helpif,jdbcType=VARCHAR}, #{helptype,jdbcType=VARCHAR}, #{imageurlone,jdbcType=VARCHAR},
+      #{imageurltwo,jdbcType=VARCHAR}, #{imageurlthree,jdbcType=VARCHAR}, #{zhibourl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.geilove.pojo.Tweet" >
     insert into tweet
@@ -301,6 +309,21 @@
       <if test="helpif != null" >
         helpif,
       </if>
+      <if test="helptype != null" >
+        helpType,
+      </if>
+      <if test="imageurlone != null" >
+        imageUrlOne,
+      </if>
+      <if test="imageurltwo != null" >
+        imageUrlTwo,
+      </if>
+      <if test="imageurlthree != null" >
+        imageUrlThree,
+      </if>
+      <if test="zhibourl != null" >
+        zhiboUrl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tweetid != null" >
@@ -413,6 +436,21 @@
       </if>
       <if test="helpif != null" >
         #{helpif,jdbcType=VARCHAR},
+      </if>
+      <if test="helptype != null" >
+        #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlone != null" >
+        #{imageurlone,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurltwo != null" >
+        #{imageurltwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlthree != null" >
+        #{imageurlthree,jdbcType=VARCHAR},
+      </if>
+      <if test="zhibourl != null" >
+        #{zhibourl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -527,6 +565,21 @@
       <if test="helpif != null" >
         helpif = #{helpif,jdbcType=VARCHAR},
       </if>
+      <if test="helptype != null" >
+        helpType = #{helptype,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlone != null" >
+        imageUrlOne = #{imageurlone,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurltwo != null" >
+        imageUrlTwo = #{imageurltwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurlthree != null" >
+        imageUrlThree = #{imageurlthree,jdbcType=VARCHAR},
+      </if>
+      <if test="zhibourl != null" >
+        zhiboUrl = #{zhibourl,jdbcType=VARCHAR},
+      </if>
     </set>
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </update>
@@ -567,7 +620,12 @@
       cashiD = #{cashid,jdbcType=BIGINT},
       cashUUID = #{cashuuid,jdbcType=VARCHAR},
       userUUIDTweet = #{useruuidtweet,jdbcType=VARCHAR},
-      helpif = #{helpif,jdbcType=VARCHAR}
+      helpif = #{helpif,jdbcType=VARCHAR},
+      helpType = #{helptype,jdbcType=VARCHAR},
+      imageUrlOne = #{imageurlone,jdbcType=VARCHAR},
+      imageUrlTwo = #{imageurltwo,jdbcType=VARCHAR},
+      imageUrlThree = #{imageurlthree,jdbcType=VARCHAR},
+      zhiboUrl = #{zhibourl,jdbcType=VARCHAR}
     where tweetID = #{tweetid,jdbcType=BIGINT}
   </update>
 </mapper>

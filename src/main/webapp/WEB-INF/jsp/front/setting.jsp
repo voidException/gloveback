@@ -18,7 +18,7 @@
 <body  style="background-color: #E1E5E7">
 <div id="setBody">
     <div  style=" background-color: #00BB3B;  display: flex;flex-direction: row;align-items: center;justify-content: space-between;border-bottom: 1px solid #00BB3B;width: 100%  ">
-        <a href="http://localhost:8080/glove/path/pages/mobileMainPage.do" style="width: 40px; margin-left: 10px;text-decoration: none;font-size: 18px;color: white">首页</a>
+        <a href="http://localhost:8080/glove/path/pages/mobileWo.do" style="width: 40px; margin-left: 10px;text-decoration: none;font-size: 18px;color: white">首页</a>
         <img src="http://onejf30n8.bkt.clouddn.com/gongzhongicon108x108.png"  style="width: 30px;height: 30px;border-radius: 15px"/>
         <div style="width: 40px"></div>
     </div>

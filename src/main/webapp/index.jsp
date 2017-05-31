@@ -43,13 +43,17 @@
 
 	<a href="http://localhost:8080/glove/wechatpay/toPay/20170415/code.do">点我去支付localhost</a><br/>
 
+	<a href="http://localhost:8080/glove/path/pages/mobileWo.do">公众号我的</a><br/>
+
 	<a href="http://localhost:8080/glove/path/pages/userSelfHelp.do">我的求助</a><br/>
 
-	<a href="http://localhost:8080/glove/path/pages/helpTweetList.do">求助列表</a><br/>
-
-	<a href="http://localhost:8080/glove/path/pages/mobileMainPage.do">公众号首页</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/helpTweetList.do?helpType=dabing">大病求助</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/helpTweetList.do?helpType=shangxue">资助贫困生</a><br/>
+	<a href="http://localhost:8080/glove/path/pages/helpTweetList.do?helpType=college">支持母校</a><br/>
 
 	<a href="http://localhost:8080/glove/photo/setting.do">设置</a><br/>
+
+	<a href="http://localhost:8080/glove/path/pages/mobileMain.do">公众号首页</a><br/>
 
 	<a href="http://localhost:8080/glove/profile/goAddProfile.do">完善资料</a><br/>
 
@@ -59,6 +63,7 @@
 
 	<a href="http://localhost:8080/glove/user/H0Am8jdfLzK3ChuW78NnaQ==/findPasswordUrl.do">找回密码（发送到用户邮箱的超链接）</a><br/>
 
+	<a href="http://localhost:8080/glove/path/pages/jianduchu.do">监督处</a><br/>
 
 </body> 
 </html>

@@ -60,7 +60,7 @@ public class CashControllerJSP {
     @RequestMapping(value="wapmultiUpload.do")
     @ResponseBody
     public ModelAndView jspmultiUpload(HttpServletRequest request)throws IllegalStateException, IOException {
-        System.out.println("CashControllerJSp");
+       // System.out.println("CashControllerJSp");
         HelpInfo helpInfo; //求助信息表
         Cash cash= new Cash();
         Tweet tweet=new Tweet();

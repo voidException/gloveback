@@ -59,7 +59,7 @@ new Vue({
                     //接下来，应该清除本地缓存，让用户重新登录，待完成
                     alert("重置密码成功");
                     setTimeout(function(){
-                        window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do" //跳转到首页
+                        window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do" //跳转到首页
                     },100);
 
                 }else {

@@ -12,7 +12,7 @@ window.onload = function () {
     if(token==null || useruuid==null || userName==null || userphoto==null){
         alert("请登录");
         setTimeout(function(){
-            window.location.href="http://localhost:8080/glove/path/pages/mobileMainPage.do"; //公众号首页
+            window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do"; //公众号首页
         },500)
 
         return;

@@ -9,12 +9,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Resource;
 import org.apache.commons.collections.map.HashedMap;
-import org.geilove.requestParam.ChangePwParam;
-import org.geilove.requestParam.ResetPasswdParam;
+import org.geilove.dao.OpenidUserMapper;
+import org.geilove.dao.UserMapper;
+import org.geilove.pojo.MoneySource;
+import org.geilove.pojo.OpenidUser;
+import org.geilove.requestParam.*;
+import org.geilove.service.LinkService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.geilove.pojo.User;
-import org.geilove.requestParam.FindpwParam;
 import org.geilove.vo.UserLoginVo;
 import org.geilove.service.RegisterLoginService;
 import org.geilove.util.MD5;
@@ -44,7 +47,28 @@ import static org.geilove.util.DesUtil.encrypt;
 public class RegisterLoginController {
 	
 	@Resource
-	private RegisterLoginService registerLoginService; 
+	private RegisterLoginService registerLoginService;
+	@Resource
+	private UserMapper userMapper;
+	@Resource
+	private OpenidUserMapper openidUserMapper;
+
+	@Resource
+	private LinkService linkService;
+
+	class LinkThread  extends  Thread {
+
+		public SubOpenIDEmailParam subOpenIDEmailParam;
+
+		public LinkThread(SubOpenIDEmailParam  subOpenIDEmailParam){  //构造方法
+
+			this.subOpenIDEmailParam=subOpenIDEmailParam;
+		}
+		public  void  run(){
+			linkService.linkEmail(this.subOpenIDEmailParam);
+			System.out.print(subOpenIDEmailParam.getEmail());
+		}
+	}
 
 	//登录
 	@RequestMapping(value="/login.do",method=RequestMethod.POST,produces = "application/json")
@@ -59,16 +83,8 @@ public class RegisterLoginController {
 			userProfileRsp.setRetcode(2001); //不存在此用户
 		}
 		else {
-			//这里应该对密码进行md5加密，然后验证
 			String pw=Md5Util.getMd5(userLoginVo.getUserPassword());
-			//System.out.println(pw);
-			//System.out.println(user.getUserpassword());
 			if(pw.equals(user.getUserpassword())){
-				//这里应该加入token
-				//CheckUser checkUser =new CheckUser(userLoginVo.getUserPassword());
-				//TokenData tokenData=new TokenData();
-				//stokenData=checkUser.handleToken();
-				//执行插入
 				String token=pw+user.getUserid();
 				user.setBackupfour(token);
 				userProfileRsp.setData(user);
@@ -444,7 +460,7 @@ public class RegisterLoginController {
 		return commonRsp;
 	}
 	//通过用户的昵称，获得用户的基本资料信息
-	@RequestMapping(value="/getprofile/bynickname",method=RequestMethod.POST)	
+	@RequestMapping(value="/getprofile/bynickname.do",method=RequestMethod.POST)
 	public @ResponseBody UserProfileRsp getInfoByUserName(HttpServletRequest request){
 		UserProfileRsp  userProfileRsp=new UserProfileRsp();
 		String nickname=request.getParameter("nickname"); //获得用户的昵称
@@ -467,6 +483,93 @@ public class RegisterLoginController {
 		userProfileRsp.setMsg("根据@获取用户信息成功了");
 		userProfileRsp.setRetcode(2000);
 		return userProfileRsp;
+	}
+
+	//用户进入公众号的"我" 关联openId和userEmail
+	@RequestMapping(value="/openidemail.do",method=RequestMethod.POST)
+	public  @ResponseBody UserProfileRsp openIdlinkEmail( @RequestBody Openidemail openidemail){
+		UserProfileRsp userProfileRsp=new UserProfileRsp();
+		//OpenidToemailParam openidToemailParam=new OpenidToemailParam();
+		String  email=openidemail.getEmail();
+		String  token=openidemail.getToken();
+		String  openId=openidemail.getOpenId();
+		//用户可能在微信之外打开此页面
+		if (openId==null){
+			userProfileRsp.setRetcode(2001);
+			userProfileRsp.setMsg("请在微信中打开此页面");
+			userProfileRsp.setData(null);
+			return userProfileRsp;
+		}
+		// 1.用openId 查user表
+		User user=new User();
+		try{
+			user=userMapper.selectByopenId(openId); //待实现，帮助人user
+		}catch (Exception e){
+			//抛出异常了，但不应该阻止，这里记录日志
+		}
+
+		if (user!=null){
+			userProfileRsp.setData(user);
+			userProfileRsp.setMsg("成功");
+			userProfileRsp.setRetcode(2000);
+			return userProfileRsp;
+		}
+		//2. 代码走到这里，说明没有关联email，用openId查openIdUser表，
+		OpenidUser openidUser=null;
+		try {
+			openidUser=openidUserMapper.selectByOpenId(openId);
+		}catch (Exception e){
+		   //记录日志，这里不终止程序，openidUser一定是null,因为下面需要关联
+		}
+
+		if (openidUser==null ){ //用户未曾捐钱过
+			if (email!=null && token!=null && openId!=null){ //未曾捐钱，但有账号，也应该关联
+				//开启线程，关联
+				SubOpenIDEmailParam openidTemail=new SubOpenIDEmailParam();
+				openidTemail.setEmail(email);
+				openidTemail.setOpenId(openId);
+				openidTemail.setToken(token);
+				//开启线程
+				LinkThread linkThread=new LinkThread(openidTemail);
+				linkThread.start();
+				user.setAmountaccept(0);
+				user.setUserdonate(0);
+				user.setUserhelpsman(0);
+				user.setAcceptmoney(0);
+				userProfileRsp.setData(user);
+				userProfileRsp.setRetcode(2000);
+				userProfileRsp.setMsg("数据获取成功");
+				return userProfileRsp;
+			}else {
+				userProfileRsp.setRetcode(2001);
+				userProfileRsp.setMsg("请求数据为空");
+				return userProfileRsp;
+			}
+
+		}
+		if (openidUser!=null){ //用户捐钱
+
+			SubOpenIDEmailParam openidTemail=new SubOpenIDEmailParam();
+			openidTemail.setEmail(email);
+			openidTemail.setOpenId(openId);
+			openidTemail.setToken(token);
+			openidTemail.setUsertotaldonate(openidTemail.getUsertotaldonate());
+			openidTemail.setUsertotalhelp(openidTemail.getUsertotalhelp());
+			//开启线程
+			LinkThread linkThread=new LinkThread(openidTemail);
+			linkThread.start();
+
+			user.setAcceptmoney(0);
+			user.setAmountaccept(0);
+			user.setUserdonate(openidUser.getUsertotaldonate());
+			user.setUserhelpsman(openidUser.getUsertotalhelp());
+			userProfileRsp.setMsg("获取数据成功");
+			userProfileRsp.setRetcode(2000);
+			userProfileRsp.setData(user);
+			return  userProfileRsp;
+
+		}
+		return  userProfileRsp;
 	}
 
 }

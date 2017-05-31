@@ -6,13 +6,13 @@
 <html>
 <head>
 
-    <title>首页</title>
+    <title>我</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no" />
-    <link rel="stylesheet" href="<%=contextPath%>/resources/css/mobileMainPage.css">
+    <link rel="stylesheet" href="<%=contextPath%>/resources/css/mobileWo.css">
     <link rel="stylesheet" href="<%=contextPath%>/resources/css/index.css">
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/resources/jquery/vue-resource.min.js"></script>
@@ -38,12 +38,12 @@
                 <div style="font-weight: bold;font-family: STHeiti Light ;margin-left: 5px">{{usernickname}}</div>
             </div>
             <div class="helpcommon">
-                <div style="margin-left: 5px">我帮助</div>
+                <div style="margin-left: 5px;font-size: 14px;color: #6f7a7e">我帮助</div>
                 <div  style="font-weight: bold;font-family: STHeiti Light ;">{{userhelpsman}}<span style="font-size: 13px;font-weight: normal">人</span></div>
                 <div  style="font-weight: bold;font-family: STHeiti Light ;">{{userdonate}}<span style="font-size: 13px;font-weight: normal">元</span></div>
             </div>
             <div class="helpcommon">
-                <div style="margin-left: 5px">帮助我</div>
+                <div style="margin-left: 5px;font-size: 14px;color: #6f7a7e">帮助我</div>
                 <div style="font-weight: bold;font-family: STHeiti Light ;">{{amountaccept}}<span style="font-size: 13px;font-weight: normal">人</span></div>
                 <div style="font-weight: bold;font-family: STHeiti Light ;">{{acceptmoney}}<span style="font-size: 13px;font-weight: normal">元</span></div>
             </div>
@@ -64,6 +64,7 @@
         <a href="http://localhost:8080/glove/publishInfo/upload/addman.do">发布求助信息</a>
     </div>
     <div class="zizhu">
+        <img src="http://onejf30n8.bkt.clouddn.com/gongzhonghelpMe.png"  style="width: 24px;height: 24px;border-radius: 12px;position: absolute;left: 20px"/>
         <div class="donate"><a href="http://localhost:8080/glove/path/pages/helpApp.do">资助我们</a></div>
         <div class="donatelove"><a href="http://localhost:8080/glove/path/pages/helpAixinshe.do">赞助爱心社</a></div>
     </div>
@@ -77,7 +78,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/mobileMainPage.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/mobileWo.js"></script>
 </body>
 </html>
 

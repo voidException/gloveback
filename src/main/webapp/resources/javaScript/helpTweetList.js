@@ -12,8 +12,10 @@ new Vue({
 
        // let url='http://localhost:8080/glove/weibos/helpTweetlist.do?lastUpdate="2018-09-02"'
         let baseurl='http://localhost:8080/glove/weibos/helpTweetlist.do'
-        let update="2018-09-02";
-        let urlfinal=baseurl+'?'+"lastUpdate="+update;
+        let update="2028-09-02";
+        let helpType=this.getQueryString("helpType");
+        let urlfinal=baseurl+'?'+"lastUpdate="+update+"&&helpType="+helpType;
+
         console.log(urlfinal)
         var that=this;
         this.$http.get(urlfinal).then(response => {
@@ -33,6 +35,13 @@ new Vue({
         });
     },
     methods:{
+        getQueryString:function(name) {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)
+                return  unescape(r[2]);
+            return null;
+        },
         goTimeline:function () {
             window.location.href="http://localhost:8080/glove/path/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10"
         }

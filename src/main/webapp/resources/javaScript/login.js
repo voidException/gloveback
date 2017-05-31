@@ -42,7 +42,7 @@ new Vue({
             //发送请求前先，隐藏弹出框，避免多次点击
             //发送网络请求
             this.$http.post('http://localhost:8080/glove/user/login.do',userAccount).then(response => {
-                console.log(response.body);
+                //console.log(response.body);
 
                 //存储或者改变相应的值
                 if (response.body.retcode==2000){
@@ -80,7 +80,7 @@ new Vue({
                     localStorage.setItem("acceptmoney",response.body.data.acceptmoney);
                     localStorage.setItem("backupten",response.body.data.backupten);
                     localStorage.setItem("userhelpsman",response.body.data.userhelpsman);
-                    window.location.href="http://localhost:8080/glove"
+                    window.location.href="http://localhost:8080/glove/path/pages/mobileWo.do"
                 }
 
             }, err => {

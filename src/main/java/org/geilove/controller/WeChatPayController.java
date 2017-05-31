@@ -1,6 +1,9 @@
 package org.geilove.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.geilove.pojo.MoneySource;
+
+import org.geilove.service.MoneySourceService;
 import org.geilove.utils.WeChatUtils;
 import org.geilove.utils.WxHttpClientUtils;
 import org.geilove.utils.WxUrlUtils;
@@ -14,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import net.glxn.qrgen.javase.QRCode;
+
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +35,23 @@ import java.util.Map;
 @Controller
 public class WeChatPayController {
 	Logger logger= Logger.getLogger(this.getClass());
+	@Resource
+	private MoneySourceService moneySourceService;
+
+	//内部类
+	class NotifyThread  extends  Thread {
+
+		public MoneySource  moneySource;
+
+		public NotifyThread(MoneySource  moneySource){  //构造方法
+
+			this.moneySource=moneySource;
+		}
+		public  void  run(){
+			moneySourceService.wxNotify(this.moneySource);
+			System.out.print(moneySource.getMoneynum());
+		}
+	}
 
 	/**
 	 * 跳转到微信支付
@@ -61,6 +83,9 @@ public class WeChatPayController {
 			String return_code = "FAIL";
 			String return_msg = "";
 			Map<String, String> map = new HashMap<String, String>();
+
+			MoneySource moneySource=new MoneySource(); //所有微信返回的数据应该放入这里面
+
 			Document document = DocumentHelper.parseText(wxData);
 			Element root = document.getRootElement();
 			for(Iterator i = root.elementIterator(); i.hasNext();) {
@@ -68,11 +93,53 @@ public class WeChatPayController {
 				map.put(element.getName(), element.getText());
 			}
 			if(WxUrlUtils.checkSign(map)){
-				logger.info("签名验证通过!");
 				logger.info(JSONObject.toJSON(map));
-				String trade_no = map.get("transaction_id");//交易号
+				String appid=map.get("appid");
+				String mch_id=map.get("mch_id");
+				String device_info=map.get("device_info");
+				String nonce_str=map.get("nonce_str");
+				String sign=map.get("sign");
+				String sign_type=map.get("sign_type");
+				String result_code=map.get("result_code");
+				String err_code=map.get("err_code");
+				String err_code_des=map.get("err_code_des");
+				String openid=map.get("openid");
+				String is_subscribe=map.get("is_subscribe");
+				String trade_type=map.get("trade_type");
+				String bank_type=map.get("bank_type");
+				String total_fee=(String)map.get("total_fee"); //需要转换为int 类型
+			    String fee_type=map.get("fee_type");
+				String transaction_id = map.get("transaction_id");//交易号
 				String out_trade_no = map.get("out_trade_no");//订单号
-				logger.info("解析返回状态");
+				String attach=map.get("attach");
+				String time_end=map.get("time_end");
+
+				moneySource.setAppid(appid);
+				moneySource.setMchId(mch_id);
+				moneySource.setDeviceInfo(device_info);
+				moneySource.setNonceStr(nonce_str);
+				moneySource.setSign(sign);
+				moneySource.setSignType(sign_type);
+				moneySource.setResultCode(result_code);
+				moneySource.setErrCode(err_code);
+				moneySource.setErrCodeDes(err_code_des);
+				moneySource.setOpenid(openid);
+				moneySource.setIsSubscribe(is_subscribe);
+				moneySource.setTradeType(trade_type);
+				moneySource.setBankType(bank_type);
+				moneySource.setTotalFee(Integer.parseInt(total_fee)); //这个强制转换不知道行不行
+				moneySource.setBackupthree(total_fee); //这个得测试下，究竟是什么
+				moneySource.setFeeType(fee_type);
+				moneySource.setTransactionId(transaction_id);
+				moneySource.setOutTradeNo(out_trade_no);
+				moneySource.setAttach(attach);
+				moneySource.setTimeEnd(time_end);
+
+				//开启异步线程
+				NotifyThread notifyThread=new NotifyThread(moneySource);
+				notifyThread.start();
+
+                //尽早返回数据给微信，避免多次重复通知
 				if(map.get("return_code").equals("SUCCESS") && map.get("result_code").equals("SUCCESS")){
 					logger.info("=============支付成功-更新业务状态start=============");
 					return_code = "SUCCESS";
