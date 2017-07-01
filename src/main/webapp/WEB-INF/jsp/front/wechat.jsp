@@ -86,7 +86,6 @@
     <%--<div onclick="alertComment()">显示评论框</div>--%>
     <%--<div onclick="showDialog()">显示dialog</div>--%>
     <%--<div onclick="loginByEmail()">邮箱登录</div>--%>
-
     <!--目标金额,已筹金额,次数-->
     <div  class="target" >
         <div class="targetMoneyWrapper">
@@ -323,10 +322,10 @@
         <div v-show="updateORprogress" :key="item.moneySource.moneysourceid"  style="border-bottom: 1px solid rgba(0,0,0,.15);margin-top: 2px">
             <div style="display: flex;justify-content: space-between;align-items: flex-end;padding: 10px;">
                 <div style="display: flex">
-                    <img :src="item.moneySource.backuptwo" style="height: 36px;width: 36px;border-radius: 18px">
+                    <img :src="item.moneySource.helpmanphotourl" style="height: 36px;width: 36px;border-radius: 18px">
                     <div style="margin-left: 10px">
                         <div style="display: flex;align-items: flex-start">
-                            <div>{{item.moneySource.backupone}}</div>
+                            <div>{{item.moneySource.helpmanusername}}</div>
                             <div style="margin-left: 10px">支持了</div>
                             <div style="margin-left: 10px">{{item.moneySource.moneynum}}</div>
                         </div>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.PayMoneyMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.PayMoney" >
+    <id column="payMoneyID" property="paymoneyid" jdbcType="BIGINT" />
+    <result column="payMoneyUUID" property="paymoneyuuid" jdbcType="VARCHAR" />
+    <result column="accountUUID" property="accountuuid" jdbcType="VARCHAR" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="categoryType" property="categorytype" jdbcType="VARCHAR" />
+    <result column="wechatPay" property="wechatpay" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    payMoneyID, payMoneyUUID, accountUUID, userUUID, categoryType, wechatPay
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from payMoney
+    where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from payMoney
+    where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.PayMoney" >
+    insert into payMoney (payMoneyID, payMoneyUUID, accountUUID, 
+      userUUID, categoryType, wechatPay
+      )
+    values (#{paymoneyid,jdbcType=BIGINT}, #{paymoneyuuid,jdbcType=VARCHAR}, #{accountuuid,jdbcType=VARCHAR}, 
+      #{useruuid,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, #{wechatpay,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.PayMoney" >
+    insert into payMoney
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paymoneyid != null" >
+        payMoneyID,
+      </if>
+      <if test="paymoneyuuid != null" >
+        payMoneyUUID,
+      </if>
+      <if test="accountuuid != null" >
+        accountUUID,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="categorytype != null" >
+        categoryType,
+      </if>
+      <if test="wechatpay != null" >
+        wechatPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paymoneyid != null" >
+        #{paymoneyid,jdbcType=BIGINT},
+      </if>
+      <if test="paymoneyuuid != null" >
+        #{paymoneyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountuuid != null" >
+        #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpay != null" >
+        #{wechatpay,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.PayMoney" >
+    update payMoney
+    <set >
+      <if test="paymoneyuuid != null" >
+        payMoneyUUID = #{paymoneyuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountuuid != null" >
+        accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytype != null" >
+        categoryType = #{categorytype,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatpay != null" >
+        wechatPay = #{wechatpay,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.PayMoney" >
+    update payMoney
+    set payMoneyUUID = #{paymoneyuuid,jdbcType=VARCHAR},
+      accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      userUUID = #{useruuid,jdbcType=VARCHAR},
+      categoryType = #{categorytype,jdbcType=VARCHAR},
+      wechatPay = #{wechatpay,jdbcType=DECIMAL}
+    where payMoneyID = #{paymoneyid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -48,7 +48,7 @@
     from
     moneysource
     where
-    userIDBehelped= #{userBeHelpID,jdbcType=BIGINT} AND helpTime &lt; #{lastTime}
+    cashUUID= #{cashUUID} AND helpTime &lt; #{lastTime}
     order by
     helpTime  desc
     limit

@@ -121,30 +121,44 @@ new Vue({
                 modal.style.display="block";
                 tips.style.display="block";
             }
-        }
+        },
+        getQueryString: function (name) { //获取浏览器参数
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        },
     },
 
     mounted: function () {
-        //console.log('mounted 钩子执行...');
-        //1.这里监听滚动条事件
-        // var d = document.getElementById("part1").offsetHeight
+        //1. 进度更新显示的条数是固定的。
 
-        //2.这里应该从页面获取参数，
+        let userUUID=this.getQueryString("userUUID");
+        let cashUUID=this.getQueryString("cashUUID");
+        //2.这里应该从页面获取参数
         var param={
-            "userIDBehelped":1,
-            "tweetid":1,
-            "cashid":1,
+            "userUUID":userUUID,
+            "cashUUID":cashUUID,
             "page":0,
-            "pageSize":5,
-            "timeStamp":"2017-09-04 00:00:00"
+            "pageSize":6,
+            "timeStamp":"2027-09-05 00:00:00"
         };
 
-        this.$http.post('http://localhost:8080/glove/itemprogress/updatelist',param).then(response => {
-            //console.log(response.body);
-            this.lp=response.body.lp;
-        }, err => {
-            console.log(err);
-        });
+        var that=this;
+
+        setTimeout(function(){
+            that.$http.post('http://localhost:8080/glove/itemprogress/updatelist',param).then(response => {
+                //console.log(response.body);
+                //this.lp=response.body.lp;
+
+                that.$nextTick(function(){
+                    that.lp=response.body.lp.concat(this.lp);
+                });
+
+            }, err => {
+                console.log(err);
+            });
+        },1000)
+
     },
 
 })

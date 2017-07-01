@@ -39,7 +39,7 @@
     from
     itemProgress
     where
-    cashiD=#{cashid,jdbcType=BIGINT}  AND itemID= #{tweetid,jdbcType=BIGINT} AND updateTime &lt; #{lastTime}
+    cashUUID=#{cashUUID,jdbcType=VARCHAR}  AND uuid= #{userUUID,jdbcType=VARCHAR} AND updateTime &lt; #{lastTime}
     order by
     updateTime  desc
     limit

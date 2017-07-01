@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.geilove.dao.UserAccountMapper" >
+  <resultMap id="BaseResultMap" type="org.geilove.pojo.UserAccount" >
+    <id column="userAccountID" property="useraccountid" jdbcType="BIGINT" />
+    <result column="userUUID" property="useruuid" jdbcType="VARCHAR" />
+    <result column="accountUUID" property="accountuuid" jdbcType="VARCHAR" />
+    <result column="breakIf" property="breakif" jdbcType="VARCHAR" />
+    <result column="buildRelationDate" property="buildrelationdate" jdbcType="TIMESTAMP" />
+    <result column="breakRelationDate" property="breakrelationdate" jdbcType="TIMESTAMP" />
+    <result column="buildRelationDescription" property="buildrelationdescription" jdbcType="VARCHAR" />
+    <result column="breakRelationDescription" property="breakrelationdescription" jdbcType="VARCHAR" />
+    <result column="payTimes" property="paytimes" jdbcType="INTEGER" />
+    <result column="payTotalMoney" property="paytotalmoney" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.geilove.pojo.UserAccount" extends="BaseResultMap" >
+    <result column="userAccountUUID" property="useraccountuuid" jdbcType="VARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userAccountID, userUUID, accountUUID, breakIf, buildRelationDate, breakRelationDate, 
+    buildRelationDescription, breakRelationDescription, payTimes, payTotalMoney
+  </sql>
+  <sql id="Blob_Column_List" >
+    userAccountUUID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userAccount
+    where userAccountID = #{useraccountid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from userAccount
+    where userAccountID = #{useraccountid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.geilove.pojo.UserAccount" >
+    insert into userAccount (userAccountID, userUUID, accountUUID, 
+      breakIf, buildRelationDate, breakRelationDate, 
+      buildRelationDescription, breakRelationDescription, 
+      payTimes, payTotalMoney, userAccountUUID
+      )
+    values (#{useraccountid,jdbcType=BIGINT}, #{useruuid,jdbcType=VARCHAR}, #{accountuuid,jdbcType=VARCHAR}, 
+      #{breakif,jdbcType=VARCHAR}, #{buildrelationdate,jdbcType=TIMESTAMP}, #{breakrelationdate,jdbcType=TIMESTAMP}, 
+      #{buildrelationdescription,jdbcType=VARCHAR}, #{breakrelationdescription,jdbcType=VARCHAR}, 
+      #{paytimes,jdbcType=INTEGER}, #{paytotalmoney,jdbcType=DECIMAL}, #{useraccountuuid,jdbcType=VARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.geilove.pojo.UserAccount" >
+    insert into userAccount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="useraccountid != null" >
+        userAccountID,
+      </if>
+      <if test="useruuid != null" >
+        userUUID,
+      </if>
+      <if test="accountuuid != null" >
+        accountUUID,
+      </if>
+      <if test="breakif != null" >
+        breakIf,
+      </if>
+      <if test="buildrelationdate != null" >
+        buildRelationDate,
+      </if>
+      <if test="breakrelationdate != null" >
+        breakRelationDate,
+      </if>
+      <if test="buildrelationdescription != null" >
+        buildRelationDescription,
+      </if>
+      <if test="breakrelationdescription != null" >
+        breakRelationDescription,
+      </if>
+      <if test="paytimes != null" >
+        payTimes,
+      </if>
+      <if test="paytotalmoney != null" >
+        payTotalMoney,
+      </if>
+      <if test="useraccountuuid != null" >
+        userAccountUUID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="useraccountid != null" >
+        #{useraccountid,jdbcType=BIGINT},
+      </if>
+      <if test="useruuid != null" >
+        #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountuuid != null" >
+        #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="breakif != null" >
+        #{breakif,jdbcType=VARCHAR},
+      </if>
+      <if test="buildrelationdate != null" >
+        #{buildrelationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="breakrelationdate != null" >
+        #{breakrelationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buildrelationdescription != null" >
+        #{buildrelationdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="breakrelationdescription != null" >
+        #{breakrelationdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="paytimes != null" >
+        #{paytimes,jdbcType=INTEGER},
+      </if>
+      <if test="paytotalmoney != null" >
+        #{paytotalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="useraccountuuid != null" >
+        #{useraccountuuid,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.geilove.pojo.UserAccount" >
+    update userAccount
+    <set >
+      <if test="useruuid != null" >
+        userUUID = #{useruuid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountuuid != null" >
+        accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="breakif != null" >
+        breakIf = #{breakif,jdbcType=VARCHAR},
+      </if>
+      <if test="buildrelationdate != null" >
+        buildRelationDate = #{buildrelationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="breakrelationdate != null" >
+        breakRelationDate = #{breakrelationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buildrelationdescription != null" >
+        buildRelationDescription = #{buildrelationdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="breakrelationdescription != null" >
+        breakRelationDescription = #{breakrelationdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="paytimes != null" >
+        payTimes = #{paytimes,jdbcType=INTEGER},
+      </if>
+      <if test="paytotalmoney != null" >
+        payTotalMoney = #{paytotalmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="useraccountuuid != null" >
+        userAccountUUID = #{useraccountuuid,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where userAccountID = #{useraccountid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.geilove.pojo.UserAccount" >
+    update userAccount
+    set userUUID = #{useruuid,jdbcType=VARCHAR},
+      accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      breakIf = #{breakif,jdbcType=VARCHAR},
+      buildRelationDate = #{buildrelationdate,jdbcType=TIMESTAMP},
+      breakRelationDate = #{breakrelationdate,jdbcType=TIMESTAMP},
+      buildRelationDescription = #{buildrelationdescription,jdbcType=VARCHAR},
+      breakRelationDescription = #{breakrelationdescription,jdbcType=VARCHAR},
+      payTimes = #{paytimes,jdbcType=INTEGER},
+      payTotalMoney = #{paytotalmoney,jdbcType=DECIMAL},
+      userAccountUUID = #{useraccountuuid,jdbcType=VARBINARY}
+    where userAccountID = #{useraccountid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.geilove.pojo.UserAccount" >
+    update userAccount
+    set userUUID = #{useruuid,jdbcType=VARCHAR},
+      accountUUID = #{accountuuid,jdbcType=VARCHAR},
+      breakIf = #{breakif,jdbcType=VARCHAR},
+      buildRelationDate = #{buildrelationdate,jdbcType=TIMESTAMP},
+      breakRelationDate = #{breakrelationdate,jdbcType=TIMESTAMP},
+      buildRelationDescription = #{buildrelationdescription,jdbcType=VARCHAR},
+      breakRelationDescription = #{breakrelationdescription,jdbcType=VARCHAR},
+      payTimes = #{paytimes,jdbcType=INTEGER},
+      payTotalMoney = #{paytotalmoney,jdbcType=DECIMAL}
+    where userAccountID = #{useraccountid,jdbcType=BIGINT}
+  </update>
+</mapper>

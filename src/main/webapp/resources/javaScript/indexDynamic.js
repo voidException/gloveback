@@ -104,48 +104,51 @@ new Vue({
         //let tweetUUID= this.getQueryString("tweetUUID");
         let cashUUID= this.getQueryString("cashUUID");
         var that=this;
-        window.addEventListener("scroll", function(event) {
-            var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-            //console.log(scrollTop);
-            if(document.documentElement.scrollHeight == document.documentElement.clientHeight + scrollTop ) {
-
-                var requestParam={
-                    "userIDBehelped":1,
-                    //"cashiD":1,
-                    "page":2,
-                    "pageSize":4,
-                    "timeStamp":"2017-09-04 00:00:00"
-                };
-
-                that.$http.post('http://localhost:8080/glove/moneysource/backuplist',requestParam).then(response => {
-                    // console.log(response.body);
-                    that.$nextTick(function(){
-                        this.lp=response.body.lp.concat(this.lp);
-                    });
-                    // console.log("hahha");
-                    // console.log(this.lp);
-                }, err => {
-                    console.log(err);
-                });
-
-            }
-        });
+        // window.addEventListener("scroll", function(event) {
+        //     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        //     //console.log(scrollTop);
+        //     if(document.documentElement.scrollHeight == document.documentElement.clientHeight + scrollTop ) {
+        //
+        //         var requestParam={
+        //             "cashUUID":cashUUID,
+        //             "page":0,
+        //             "pageSize":8,
+        //             "timeStamp":"2027-09-04 00:00:00"
+        //         };
+        //
+        //         that.$http.post('http://localhost:8080/glove/moneysource/backuplist',requestParam).then(response => {
+        //             // console.log(response.body);
+        //             that.$nextTick(function(){
+        //                 this.lp=response.body.lp.concat(this.lp);
+        //             });
+        //             // console.log("hahha");
+        //             // console.log(this.lp);
+        //         }, err => {
+        //             console.log(err);
+        //         });
+        //
+        //     }
+        // });
 
         //2.这里应该从页面获取参数，
         var param={
-            "userIDBehelped":1,
-            //"cashiD":1,
+            "cashUUID":cashUUID,
             "page":0,
-            "pageSize":2,
-            "timeStamp":"2017-09-04 00:00:00"
+            "pageSize":8,
+            "timeStamp":"2027-09-04 00:00:00"
         };
 
-        this.$http.post('http://localhost:8080/glove/moneysource/backuplist',param).then(response => {
-            //console.log(response.body);
-           this.lp=response.body.lp;
-        }, err => {
-            console.log(err);
-        });
+        setTimeout(function(){
+            that.$http.post('http://localhost:8080/glove/moneysource/backuplist',param).then(response => {
+                // console.log(response.body);
+                that.$nextTick(function(){
+                    that.lp=response.body.lp;
+                });
+            }, err => {
+                console.log(err);
+            });
+        },1000)
+
     },
 
 })

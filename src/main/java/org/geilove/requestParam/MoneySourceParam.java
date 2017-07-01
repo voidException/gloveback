@@ -6,29 +6,20 @@ package org.geilove.requestParam;
 //用于MoneySourceController 的请求参数，获得"支持了"列表
 
 public class MoneySourceParam {
-    //因为一个人可能被帮助2次，所以我用userid和tweetid唯一确定
-    private  Long userIDBehelped; //这个被帮助人的id
 
-    private  Long cashiD;  //这个是与被帮助者关联的tweet 的id
+    private  String   cashUUID;
     private  Integer  page;  //这个是请求的页数
     private  Integer  pageSize ; //这个是请求的每页的大小
     private  String   timeStamp; //这个是"支持了" 的时间，要按照时间获取
 
-    public Long getUserIDBehelped() {
-        return userIDBehelped;
+    public String getCashUUID() {
+        return cashUUID;
     }
 
-    public void setUserIDBehelped(Long userIDBehelped) {
-        this.userIDBehelped = userIDBehelped;
+    public void setCashUUID(String cashUUID) {
+        this.cashUUID = cashUUID;
     }
 
-    public Long getCashiD() {
-        return cashiD;
-    }
-
-    public void setCashiD(Long cashiD) {
-        this.cashiD = cashiD;
-    }
     public Integer getPage() {
         return page;
     }

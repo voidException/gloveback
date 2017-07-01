@@ -45,9 +45,9 @@ public class MoneySourceController {
         Integer page= moneySourceParam.getPage();
         Integer pageSize=moneySourceParam.getPageSize();
         String  timeStamp=moneySourceParam.getTimeStamp();
-        Long  userBeHelpID=moneySourceParam.getUserIDBehelped();
+        String cashUUID=moneySourceParam.getCashUUID();
 
-        map.put("userBeHelpID",userBeHelpID);
+        map.put("cashUUID",cashUUID);
         map.put("page",page);
         map.put("pageSize",pageSize);
         map.put("lastTime",timeStamp);

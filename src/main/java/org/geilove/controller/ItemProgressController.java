@@ -33,7 +33,7 @@ public class ItemProgressController {
 
     @Resource
     private RegisterLoginService rlService;
-    /*获取救助推文的进度更新及其评论*/
+    /*获取救助推文的进度更新及其评论---只能通过itemprogress表的userUUID和cashUUID获取*/
     @RequestMapping(value="/updatelist",method=RequestMethod.POST)
     @ResponseBody
     public Object getProgressUpdateList(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
@@ -43,19 +43,18 @@ public class ItemProgressController {
         if (updateListParam==null){
             progressUpdateRsp.setRetcode(2001);
             progressUpdateRsp.setMsg("参数为空");
-            progressUpdateRsp.setLp(null);
             return  progressUpdateRsp;
         }
 
         Integer page= updateListParam.getPage();
         Integer pageSize=updateListParam.getPageSize();
         String  timeStamp=updateListParam.getTimeStamp();
-        Long  userBeHelpID=updateListParam.getUserIDBehelped();
-        Long tweetid=updateListParam.getTweetid();
-        Long cashid=updateListParam.getCashid();
-        map.put("tweetid",tweetid); //xml中使用了
-        map.put("cashid",cashid); //xml中使用了
-       // map.put("userBeHelpID",userBeHelpID); //xml中未使用，以后要加上
+
+        String userUUID=updateListParam.getUserUUID();  //userUUID
+        String cashUUID=updateListParam.getCashUUID();  //cashUUID
+
+        map.put("userUUID",userUUID); //xml中使用了
+        map.put("cashUUID",cashUUID); //xml中使用了
         map.put("page",page);
         map.put("pageSize",pageSize);
         map.put("lastTime",timeStamp);
@@ -63,7 +62,7 @@ public class ItemProgressController {
         List<ItemProgress>  lip=new ArrayList<ItemProgress>(); //单纯的更新列表
         try{
             lip=itemProgressService.getItemProgressUpdate(map);  //从数据库获取
-            if (lip==null){
+            if (lip==null || lip.size()==0) {
                 progressUpdateRsp.setMsg("暂时没有动态更新哦");
                 progressUpdateRsp.setRetcode(2001);
                 progressUpdateRsp.setLp(null);

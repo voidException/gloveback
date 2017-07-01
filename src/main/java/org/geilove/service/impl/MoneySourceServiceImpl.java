@@ -54,6 +54,11 @@ public class MoneySourceServiceImpl implements MoneySourceService {
 	public  static   void main(String[]args){
 		String uuid="a1e0c875-379a-40ad-b3d3-a17534ae92c41654727c-40f9-42ba-b8a2-d492e2a1d0ed";
 		//String uuid=UUID.randomUUID().toString();
+		int a=1,b=2,c=3;
+		if (a==1){
+			System.out.println(a);
+		}
+
 		System.out.println(uuid);
 		System.out.println(uuid.length());
 		System.out.println(uuid.substring(0,36));
