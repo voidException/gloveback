@@ -5,6 +5,8 @@ import java.util.Date;
 public class UserAccount {
     private Long useraccountid;
 
+    private String useraccountuuid;
+
     private String useruuid;
 
     private String accountuuid;
@@ -23,7 +25,19 @@ public class UserAccount {
 
     private Long paytotalmoney;
 
-    private byte[] useraccountuuid;
+    private String username;
+
+    private String categorytype;
+
+    private Date joindate;
+
+    private Date effectivedate;
+
+    private Date stopdate;
+
+    private String nowstate;
+
+    private Long remainfee;
 
     public Long getUseraccountid() {
         return useraccountid;
@@ -31,6 +45,14 @@ public class UserAccount {
 
     public void setUseraccountid(Long useraccountid) {
         this.useraccountid = useraccountid;
+    }
+
+    public String getUseraccountuuid() {
+        return useraccountuuid;
+    }
+
+    public void setUseraccountuuid(String useraccountuuid) {
+        this.useraccountuuid = useraccountuuid == null ? null : useraccountuuid.trim();
     }
 
     public String getUseruuid() {
@@ -105,11 +127,59 @@ public class UserAccount {
         this.paytotalmoney = paytotalmoney;
     }
 
-    public byte[] getUseraccountuuid() {
-        return useraccountuuid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUseraccountuuid(byte[] useraccountuuid) {
-        this.useraccountuuid = useraccountuuid;
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getCategorytype() {
+        return categorytype;
+    }
+
+    public void setCategorytype(String categorytype) {
+        this.categorytype = categorytype == null ? null : categorytype.trim();
+    }
+
+    public Date getJoindate() {
+        return joindate;
+    }
+
+    public void setJoindate(Date joindate) {
+        this.joindate = joindate;
+    }
+
+    public Date getEffectivedate() {
+        return effectivedate;
+    }
+
+    public void setEffectivedate(Date effectivedate) {
+        this.effectivedate = effectivedate;
+    }
+
+    public Date getStopdate() {
+        return stopdate;
+    }
+
+    public void setStopdate(Date stopdate) {
+        this.stopdate = stopdate;
+    }
+
+    public String getNowstate() {
+        return nowstate;
+    }
+
+    public void setNowstate(String nowstate) {
+        this.nowstate = nowstate == null ? null : nowstate.trim();
+    }
+
+    public Long getRemainfee() {
+        return remainfee;
+    }
+
+    public void setRemainfee(Long remainfee) {
+        this.remainfee = remainfee;
     }
 }

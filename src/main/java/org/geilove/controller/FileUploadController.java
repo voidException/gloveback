@@ -64,7 +64,7 @@ public class FileUploadController {	 //发布推文,带图片的
 	@RequestMapping(value="/multiUpload",method=RequestMethod.POST)
 	@ResponseBody
 	public CommonRsp multiUpload(HttpServletRequest request)throws IllegalStateException, IOException{
-        System.out.println("multiUpload");
+        //System.out.println("multiUpload");
         // 先获取各种数据，然后统一校验，最后对表进行增加和更新
 		CommonRsp commonRsp=new CommonRsp();
         String ipAndport= ServerIP.getiPPort(); //http://172.16.32.52:8080

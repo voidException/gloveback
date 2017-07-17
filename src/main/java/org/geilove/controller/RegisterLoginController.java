@@ -377,9 +377,11 @@ public class RegisterLoginController {
 		String index="front/resetPasswd";
 		return index;
 	}
-	// 2.修改密码  //
+	// 2.修改密码  //适合于web公众号，注意@RequestBody ResetPasswdParam resetPasswdParam 导致app的form方法不能使用
+
 	@RequestMapping(value="/resetpass.do",method=RequestMethod.POST)
 	public @ResponseBody CommonRsp resetPassword(@RequestBody ResetPasswdParam resetPasswdParam ,HttpServletRequest request) {
+		System.out.print("resetpass.do");
 		CommonRsp commonRsp=new CommonRsp();
 		//String  originPass=request.getParameter("originPass");
 		//String  newPass=request.getParameter("newPass");
@@ -428,6 +430,86 @@ public class RegisterLoginController {
 			return commonRsp;
 		}
 		String regPass="^[0-9a-zA-Z]{5,17}$"; //邮箱密码的正则表达式	
+		Pattern patternPW=Pattern.compile(regPass);
+		Matcher matcherNewPW=patternPW.matcher(newPass);
+		Matcher matcherAgainPW=patternPW.matcher(newPass);
+
+		boolean pwb=matcherNewPW.matches();
+		boolean againpwb=matcherAgainPW.matches();
+		if(pwb==false ||againpwb==false){
+			commonRsp.setMsg("密码不符合格式");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
+		//接下来调用更新user表的方法，对密码进行更新
+		User user=new User();
+		user.setUserid(userid);
+		user.setUserpassword(MD5.string2MD5(newPass)); //密码要加密
+		try{
+			int tag=registerLoginService.updateUserSelective(user);
+			if(tag!=1){
+				commonRsp.setMsg("密码更新失败");
+				commonRsp.setRetcode(2001);
+				return commonRsp;
+			}
+		}catch(Exception e){
+			commonRsp.setMsg("密码更新出现异常");
+			commonRsp.setRetcode(2001);
+			return commonRsp;
+		}
+		commonRsp.setMsg("密码更新成功");
+		commonRsp.setRetcode(2000);
+		return commonRsp;
+	}
+
+	@RequestMapping(value="/resetpassapp.do",method=RequestMethod.POST)
+	public @ResponseBody CommonRsp resetPasswordApp(HttpServletRequest request) {
+		//System.out.print("resetpass.do");
+		CommonRsp commonRsp=new CommonRsp();
+		String  originPass=request.getParameter("originPass");
+		String  newPass=request.getParameter("newPass");
+		String  againPass=request.getParameter("againPass");
+		String  token=request.getParameter("token");
+
+		String userPassword="";
+		String useridStr="";
+		Long  userid=0L;
+		String passwdTrue="";
+		try{
+			userPassword=token.substring(0,32); //token是password和userID拼接成的。
+			useridStr=token.substring(32);
+			userid=Long.valueOf(useridStr).longValue();
+			passwdTrue=registerLoginService.selectMD5Password(Long.valueOf(userid));
+
+		}catch ( Exception e){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("非法操作");
+			return commonRsp;
+		}
+
+
+		if(!userPassword.equals(passwdTrue)){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("用户身份验证失败");
+			return commonRsp;
+		}
+		String  md5pass=MD5.string2MD5(originPass); //对原始密码加密
+		if(!md5pass.equals(passwdTrue)){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("用户密码不对，非法");
+			return commonRsp;
+		}
+		if(!againPass.equals(newPass)){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("两次输入新密码不一致");
+			return commonRsp;
+		}
+		if(newPass.length()<6 ||newPass.length()>18 ||againPass.length()<6 ||againPass.length()>18){
+			commonRsp.setRetcode(2001);
+			commonRsp.setMsg("新密码长度不合法");
+			return commonRsp;
+		}
+		String regPass="^[0-9a-zA-Z]{5,17}$"; //邮箱密码的正则表达式
 		Pattern patternPW=Pattern.compile(regPass);
 		Matcher matcherNewPW=patternPW.matcher(newPass);
 		Matcher matcherAgainPW=patternPW.matcher(newPass);
