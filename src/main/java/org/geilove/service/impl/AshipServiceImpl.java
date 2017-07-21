@@ -1,9 +1,11 @@
 package org.geilove.service.impl;
 
 import org.geilove.dao.AccountMapper;
+import org.geilove.dao.PublicMapper;
 import org.geilove.dao.StatisticsMapper;
 import org.geilove.dao.UserAccountMapper;
 import org.geilove.pojo.Account;
+import org.geilove.pojo.Public;
 import org.geilove.pojo.Statistics;
 import org.geilove.pojo.UserAccount;
 import org.geilove.service.AshipService;
@@ -27,6 +29,8 @@ public class AshipServiceImpl implements AshipService {
     @Resource
     private UserAccountMapper  userAccountMapper;
 
+    @Resource
+    private PublicMapper  publicMapper;
 
     @Override
     public Statistics getStatistics(){
@@ -69,6 +73,13 @@ public class AshipServiceImpl implements AshipService {
         int updateTag;
         updateTag=userAccountMapper.updateByAccountUUIDSelective(userAccount);
         return  updateTag;
+    }
+
+    /*********以下是公告**********/
+    @Override
+    public  List<Public> getPublicList(Map<String,Object> map){ //获取公告列表
+         List<Public> publicList=publicMapper.getPublicList(map);
+         return publicList;
     }
 
 }

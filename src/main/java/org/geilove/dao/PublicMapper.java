@@ -2,6 +2,9 @@ package org.geilove.dao;
 
 import org.geilove.pojo.Public;
 
+import java.util.List;
+import java.util.Map;
+
 public interface PublicMapper {
     int deleteByPrimaryKey(Long publicid);
 
@@ -14,4 +17,6 @@ public interface PublicMapper {
     int updateByPrimaryKeySelective(Public record);
 
     int updateByPrimaryKey(Public record);
+
+    List<Public> getPublicList(Map<String,Object> map);
 }

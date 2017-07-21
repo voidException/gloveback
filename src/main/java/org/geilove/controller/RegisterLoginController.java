@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Resource;
@@ -138,7 +139,7 @@ public class RegisterLoginController {
 		}
 		//这里对userPassword 加密存入数据库
 		String pwMD5=Md5Util.getMd5(userRegisterVo.getUserPassword());
-		//System.out.println(pwMD5);
+		userRegister.setUseruuid(UUID.randomUUID().toString()); //用户的UUID
 		userRegister.setUsernickname(userRegisterVo.getUserNickName());
 		userRegister.setUseremail(userRegisterVo.getUserEmail());
 		userRegister.setUserpassword(pwMD5);

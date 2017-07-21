@@ -34,12 +34,27 @@
     diaoChaProcess4, helpDetailOne, helpDetailTwo, img1, img2, img3, img4, img5, img6, 
     img7, img8, img9
   </sql>
+  <!--自定义，选出公示表-->
+    <select id="getPublicList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from public
+        where
+        1=1
+        order by
+        joinDate  desc
+        limit
+        #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
+    </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from public
     where publicID = #{publicid,jdbcType=BIGINT}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from public
     where publicID = #{publicid,jdbcType=BIGINT}

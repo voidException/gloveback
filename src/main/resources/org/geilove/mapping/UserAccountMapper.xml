@@ -41,7 +41,7 @@
         select
         <include refid="Base_Column_List" />
         from userAccount
-        where accountUUID= #{userIdentity} AND buildRelationDescription =#{buildRelationDescription} AND breakIf=#{breakIf}
+        where userUUID= #{userUUID} AND buildRelationDescription =#{buildrelationdescription} AND breakIf=#{breakIf}
         order by buildRelationDate  desc
         limit #{page, jdbcType=INTEGER},#{pageSize, jdbcType=INTEGER}
     </select>

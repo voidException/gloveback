@@ -1,5 +1,6 @@
 package org.geilove.service;
 
+import org.geilove.pojo.Public;
 import org.geilove.pojo.Statistics;
 import  org.geilove.pojo.Account;
 import  org.geilove.pojo.UserAccount;
@@ -25,6 +26,9 @@ public interface AshipService {
     public List<UserAccount>  getUserAccountList(Map<String,Object> map); //获取员工列表
 
     public  int updateByAccountUUIDSelective(UserAccount userAccount);  //根据用户的AccountUUID 进行更新
+
+    /*********以下是公告**********/
+    public  List<Public> getPublicList(Map<String,Object> map);  //
 
 
 }
