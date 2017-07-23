@@ -21,7 +21,6 @@ import org.geilove.vo.TimeLine;
 import org.geilove.vo.UserPartProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;

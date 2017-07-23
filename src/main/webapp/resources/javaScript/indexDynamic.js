@@ -67,7 +67,7 @@ new Vue({
             let  recivernickname=event.target.getAttribute("data-recivernickname");
             let  senderphoto=event.target.getAttribute("data-senderphoto");
             // 相比于"支持了"列表，这个是超集
-            replyDiv.setAttribute("data-itemprogressid",moneysourceid);
+            replyDiv.setAttribute("data-moneysourceid",moneysourceid);
             replyDiv.setAttribute("data-useridreciver",useridreciver);
             replyDiv.setAttribute("data-useruuidreciver",useruuidreciver);
             replyDiv.setAttribute("data-recivernickname",recivernickname);
@@ -139,8 +139,8 @@ new Vue({
         };
 
         setTimeout(function(){
-            that.$http.post('http://localhost:8080/glove/moneysource/backuplist',param).then(response => {
-                // console.log(response.body);
+            that.$http.post('http://localhost:8080/glove/moneysource/backuplist.do',param).then(response => {
+                console.log(response.body);
                 that.$nextTick(function(){
                     that.lp=response.body.lp;
                 });

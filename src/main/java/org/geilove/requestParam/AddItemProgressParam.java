@@ -5,19 +5,18 @@ package org.geilove.requestParam;
  */
 public class AddItemProgressParam {
 
-    private String token; //用户的token
+    private String token; //用户的token,用于权限校验
 
     private Long userid;  //用户的iD
+
+    private String  useruuid;    //用户的uuid
 
     private String userphoto;  //用户的头像Url
 
     private String usernickname;  //用户的昵称
 
-    private String uuid;    //用户的uuid
+    private  String cashUUID;  //对应的资金表的cashUUID
 
-    private String itemuuid; //项目的UUD
-
-    private Long itemid;  //对应推文的iD
 
     private String content;  //更新的内容
 
@@ -31,11 +30,6 @@ public class AddItemProgressParam {
 
     private String imgaddressfive;
 
-    private String imgaddresssix;
-
-    private String upDateType;  //项目更新、项目结束、项目提前结束等
-
-
     public String getToken() {
         return token;
     }
@@ -43,12 +37,21 @@ public class AddItemProgressParam {
     public void setToken(String token) {
         this.token = token;
     }
+
     public Long getUserid() {
         return userid;
     }
 
     public void setUserid(Long userid) {
         this.userid = userid;
+    }
+
+    public String getUseruuid() {
+        return useruuid;
+    }
+
+    public void setUseruuid(String useruuid) {
+        this.useruuid = useruuid;
     }
 
     public String getUserphoto() {
@@ -67,28 +70,12 @@ public class AddItemProgressParam {
         this.usernickname = usernickname;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getCashUUID() {
+        return cashUUID;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getItemuuid() {
-        return itemuuid;
-    }
-
-    public void setItemuuid(String itemuuid) {
-        this.itemuuid = itemuuid;
-    }
-
-    public Long getItemid() {
-        return itemid;
-    }
-
-    public void setItemid(Long itemid) {
-        this.itemid = itemid;
+    public void setCashUUID(String cashUUID) {
+        this.cashUUID = cashUUID;
     }
 
     public String getContent() {
@@ -154,4 +141,11 @@ public class AddItemProgressParam {
     public void setUpDateType(String upDateType) {
         this.upDateType = upDateType;
     }
+
+    private String imgaddresssix;
+
+    private String upDateType;  //项目更新、项目结束、项目提前结束等
+
+
+
 }

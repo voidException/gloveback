@@ -61,14 +61,14 @@ new Vue({
             if (reportContent==null || reportContent.length>140){
                 return
             }
-            //从浏览器url中获取weibo的ID，从sessionStorage中获取token
-            let  loginTag=sessionStorage.getItem("loginTag");
+            //从浏览器url中获取weibo的ID，从localStorage中获取token
+            let  loginTag=localStorage.getItem("loginTag");
             if (loginTag!=="logined"){  //如果没登录，就让用户登录
                 let  loginEmailDiv=document.getElementById("loginEmail");
                 loginEmailDiv.style.display="block";
                 return
             }
-            let userToken=sessionStorage.getItem("userToken"); //token的值
+            let userToken=localStorage.getItem("userToken"); //token的值
             let tweetiD=this.getUrlParam("tweetiD");  //获取weibo的iD
 
 

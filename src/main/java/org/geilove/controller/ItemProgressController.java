@@ -34,7 +34,7 @@ public class ItemProgressController {
     @Resource
     private RegisterLoginService rlService;
     /*获取救助推文的进度更新及其评论---只能通过itemprogress表的userUUID和cashUUID获取*/
-    @RequestMapping(value="/updatelist",method=RequestMethod.POST)
+    @RequestMapping(value="/updatelist.do",method=RequestMethod.POST)
     @ResponseBody
     public Object getProgressUpdateList(@RequestBody ItemProgressListParam updateListParam, HttpServletRequest request ){
         ProgressUpdateRsp progressUpdateRsp=new ProgressUpdateRsp();
@@ -55,8 +55,8 @@ public class ItemProgressController {
 
         map.put("userUUID",userUUID); //xml中使用了
         map.put("cashUUID",cashUUID); //xml中使用了
-        map.put("page",page);
-        map.put("pageSize",pageSize);
+        map.put("page",0);
+        map.put("pageSize",10);
         map.put("lastTime",timeStamp);
 
         List<ItemProgress>  lip=new ArrayList<ItemProgress>(); //单纯的更新列表
@@ -117,7 +117,7 @@ public class ItemProgressController {
     }
 
     /*更新项目的进度*/
-    @RequestMapping(value="/addupdate",method=RequestMethod.POST)
+    @RequestMapping(value="/addupdate.do",method=RequestMethod.POST)
     @ResponseBody
     public Object addItemProgressUpdate(@RequestBody AddItemProgressParam  addItemProgressParam ){
         CommonRsp commonRsp=new CommonRsp();
@@ -145,20 +145,24 @@ public class ItemProgressController {
         }
 
         ItemProgress itemProgress=new ItemProgress();
+        itemProgress.setItemuuid(java.util.UUID.randomUUID().toString());
+
         itemProgress.setUserid(userid);
+        itemProgress.setUuid(addItemProgressParam.getUseruuid());
         itemProgress.setUserphoto(addItemProgressParam.getUserphoto());
         itemProgress.setUsernickname(addItemProgressParam.getUsernickname());
-        itemProgress.setUuid(addItemProgressParam.getUuid());
-        itemProgress.setItemid(addItemProgressParam.getItemid());
-        itemProgress.setItemuuid(addItemProgressParam.getItemuuid());
+
+        itemProgress.setCashuuid(addItemProgressParam.getCashUUID()); //资金表的cashUUID
+
         itemProgress.setContent(addItemProgressParam.getContent());
-        itemProgress.setImgaddressone(addItemProgressParam.getImgaddressone());
-        itemProgress.setImgaddresstwo(addItemProgressParam.getImgaddresstwo());
-        itemProgress.setImgaddressthree(addItemProgressParam.getImgaddressthree());
-        itemProgress.setImgaddressfour(addItemProgressParam.getImgaddressfour());
-        itemProgress.setImgaddressfive(addItemProgressParam.getImgaddressfive());
-        itemProgress.setImgaddresssix(addItemProgressParam.getImgaddresssix());
         itemProgress.setUpdatetime(new Date());
+
+//        itemProgress.setImgaddressone(addItemProgressParam.getImgaddressone());
+//        itemProgress.setImgaddresstwo(addItemProgressParam.getImgaddresstwo());
+//        itemProgress.setImgaddressthree(addItemProgressParam.getImgaddressthree());
+//        itemProgress.setImgaddressfour(addItemProgressParam.getImgaddressfour());
+//        itemProgress.setImgaddressfive(addItemProgressParam.getImgaddressfive());
+//        itemProgress.setImgaddresssix(addItemProgressParam.getImgaddresssix());
 
         try{
             commonRsp=itemProgressService.addOneItemProgress(itemProgress);
@@ -167,13 +171,14 @@ public class ItemProgressController {
             commonRsp.setRetcode(2001);
             return  commonRsp;
         }
-
+        commonRsp.setRetcode(2000);
+        commonRsp.setMsg("更新成功");
         return commonRsp;
     }
 
 
     /*对进度进行评论*/
-    @RequestMapping(value="/addupdatecomment",method=RequestMethod.POST)
+    @RequestMapping(value="/addupdatecomment.do",method=RequestMethod.POST)
     @ResponseBody
     public Object addItemPgComment(@RequestBody AddItemPgCommentParam itemPgCommentParam ){
         CommonRsp commonRsp=new CommonRsp();
@@ -226,7 +231,7 @@ public class ItemProgressController {
     }
 
     /*对进度的评论进行删除(仅评论人可以删除)*/
-    @RequestMapping(value="/deleteitemupdatecomment",method=RequestMethod.POST)
+    @RequestMapping(value="/deleteitemupdatecomment.do",method=RequestMethod.POST)
     @ResponseBody
     public Object deleteItemPgComment(@RequestBody DeleteItemPgCommentParam deleteItemPgCommentParam ){
         CommonRsp commonRsp=new CommonRsp();

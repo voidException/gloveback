@@ -39,7 +39,7 @@ new Vue({
         },
         replyPinglun:function(){
             /*1.先判断用户是否已经登录*/
-            let  loginTag=sessionStorage.getItem("loginTag");
+            let  loginTag=localStorage.getItem("loginTag");
             if (loginTag!=="logined"){  //如果没登录，就让用户登录
                 let  loginEmailDiv=document.getElementById("loginEmail");
                 loginEmailDiv.style.display="block";
@@ -52,13 +52,13 @@ new Vue({
                 return;
             }
             //获取评论人sender的信息(也就是当前登录用户)
-            let useridsender=sessionStorage.getItem("userid"); //获取评论人的userid
-            let useruuidsender=sessionStorage.getItem("useruuid");//获取评论人的uuid
-            let sendernickname=sessionStorage.getItem("usernickname"); //评论人的昵称
-            let senderPhoto=sessionStorage.getItem("userphoto");
+            let useridsender=localStorage.getItem("userid"); //获取评论人的userid
+            let useruuidsender=localStorage.getItem("useruuid");//获取评论人的uuid
+            let sendernickname=localStorage.getItem("usernickname"); //评论人的昵称
+            let senderPhoto=localStorage.getItem("userphoto");
             //获取公共请求参数
             let  replyDiv = document.getElementById ("reply");
-            let  userToken=sessionStorage.getItem("userToken"); //token的值
+            let  userToken=localStorage.getItem("userToken"); //token的值
             let  useridreciver=replyDiv.getAttribute("data-useridreciver"); //获取"被评论"用户的userid
             let  useruuidreciver=replyDiv.getAttribute("data-useruuidreciver");
             let  recivernickname=replyDiv.getAttribute("data-recivernickname");
@@ -85,7 +85,7 @@ new Vue({
                     content:content
                 };
                 this.$http.post('http://localhost:8080/glove/itemprogress/addupdatecomment.do',param).then(response => {
-                    //console.log(response.body);
+                    console.log(response.body);
                     this.cancelPinglun();
                     //这里呢，要显示dialog，
                     this.showDialog("评论成功"); //显示登录结果
@@ -96,7 +96,7 @@ new Vue({
                 });
             };
             if (dataUpdateORdynamic=="dynamic"){ //对支持了进行评论
-                let moneysourceid= replyDiv.getAttribute(" data-moneysourceid");
+                let moneysourceid= replyDiv.getAttribute("data-moneysourceid");
                 let  param={
                     token:userToken,
                     moneysourceid:moneysourceid,
@@ -110,7 +110,7 @@ new Vue({
                     refer:dataReferInteger,
                     pingluntext:content
                 };
-                this.$http.post('http://localhost:8080/glove/moneysource/addmoneysourcecomment',param).then(response => {
+                this.$http.post('http://localhost:8080/glove/moneysource/addmoneysourcecomment.do',param).then(response => {
                     //console.log(response.body);
                     this.cancelPinglun();
                     //这里呢，要显示dialog，

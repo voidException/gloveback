@@ -28,7 +28,7 @@ public class MoneySourceController {
      @Resource
      private RegisterLoginService rlService;
 
-     @RequestMapping(value="/backuplist",method=RequestMethod.POST)
+     @RequestMapping(value="/backuplist.do",method=RequestMethod.POST)
      @ResponseBody
      public Object getMoneySourceList(@RequestBody MoneySourceParam moneySourceParam,HttpServletRequest request ){
          //根据受助人的ID获取这个人的"支持了"列表
@@ -94,6 +94,9 @@ public class MoneySourceController {
                 moneySrcPingLunList=moneySourceService.getMoneySourcePingLuns(map2); //会执行moneySourceIDs.size() 次，性能是个问题
             }catch (Exception e){
                 moneySrcPingLunList=null;
+                dynamicRsp.setRetcode(2001);
+                dynamicRsp.setMsg("抛出异常");
+                return dynamicRsp;
             }
 
             /*
@@ -130,7 +133,7 @@ public class MoneySourceController {
         return commonRsp;
     }
     /*对"支持了" 进行评论*/
-    @RequestMapping(value="/addmoneysourcecomment",method=RequestMethod.POST)
+    @RequestMapping(value="/addmoneysourcecomment.do",method=RequestMethod.POST)
     @ResponseBody
     public Object addMoneySourceComment(@RequestBody MoneySrcPingLunParam moneySrcPingLunParam, HttpServletRequest request ){
         CommonRsp  commonRsp=new CommonRsp();

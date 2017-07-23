@@ -93,7 +93,7 @@ new Vue({
                         "pageSize":5,
                         "timeStamp":"2017-09-04 00:00:00"
                     };
-                    this.$http.post('http://localhost:8080/glove/itemprogress/updatelist',requestParam).then(response => {
+                    this.$http.post('http://localhost:8080/glove/itemprogress/updatelist.do',requestParam).then(response => {
                         // console.log(response.body);
                         this.$nextTick(function(){
                             this.lp=response.body.lp.concat(this.lp);
@@ -105,22 +105,29 @@ new Vue({
                     });
 
         },
-        alertComment: function (){
+        wantUpdate: function (){
+
             //这里先检查用户是否登录了
             //如果用户登录了，存储userToken等等数据，localStorage存储
-            if(localStorage.getItem('userToken')==null){
-                //弹出登录模态框
+            //当前用户必须和url参数用户为同一人，否则不能更新
+            let  userUUIDurl=this.getQueryString("userUUID");  //浏览器里的参数
+            let  userUUIDstorage=localStorage.getItem("userUUID"); //本地存储的userUUID
+            let  userToken=localStorage.getItem('userToken');
+            //相关数据不能为空
+            // if (userUUIDstorage==null || userUUIDurl==null || userToken==null){
+            //       return;
+            // }
+            // // userUUIDurl与userUUIDstorage要相等
+            // if(userUUIDurl!==userUUIDstorage){
+            //     return
+            // }
+            // 弹出进度更新模态框
+            let  modal=document.getElementById("wantUpdate");
+            let  tips=document.getElementById("needUpdate");
+            modal.style.display="block";
+            tips.style.display="block";
 
-                return; //return了，后续代码不执行
 
-            }
-            //弹出进度更新模态框
-            let  modal=document.getElementById("modal");
-            let  tips=document.getElementById("tips");
-            if (modal.style.display=="none" ||modal.style.display==""){
-                modal.style.display="block";
-                tips.style.display="block";
-            }
         },
         getQueryString: function (name) { //获取浏览器参数
             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -146,7 +153,7 @@ new Vue({
         var that=this;
 
         setTimeout(function(){
-            that.$http.post('http://localhost:8080/glove/itemprogress/updatelist',param).then(response => {
+            that.$http.post('http://localhost:8080/glove/itemprogress/updatelist.do',param).then(response => {
                 //console.log(response.body);
                 //this.lp=response.body.lp;
 

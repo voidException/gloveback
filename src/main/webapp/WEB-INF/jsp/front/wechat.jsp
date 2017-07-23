@@ -212,7 +212,7 @@
         <!--实名证实-->
         <div style="display: flex;justify-content: space-between;align-items: center;height: 46px;border-bottom:1px solid rgba(0,0,0,.15);">
             <div>有<span>{{cash.sumbackup}}</span>人实名为Ta证实</div>
-            <div v-on:click="confirmIt">我要证实</div>
+            <div v-on:click="confirmIt" style="cursor: pointer;color: #43AC43;">我要证实</div>
         </div>
         <div style="display: flex;align-items:center;justify-content: space-between;height: 60px">
             <div style="display: flex;justify-content: flex-start">
@@ -236,7 +236,7 @@
                 受助人承诺
             </div>
             <div>承诺诺类型（<span>{{cash.promisetype}}</span>）</div>
-            <div>承诺20年内帮助100人</div>
+            <div>{{cash.promisemiaoshu}}</div>
         </div>
 
     </div>
@@ -246,9 +246,9 @@
 <div id="progressUpdate">
     <div style="display: flex;align-items: center;color: #43AC43;border-bottom: rgba(0,0,0,.15) solid 1px">
         <div style="display: flex;height: 40px;padding-left:10px;width: 50%;justify-content: flex-start;align-items:center;">
-            进度更新(33)
+            进度更新
         </div>
-        <div   v-on:click="alertComment" style="display: flex;height: 40px;padding-right:10px;width: 50%;justify-content: flex-end;align-items:center;">
+        <div   v-on:click="wantUpdate" style=" cursor: pointer;display:flex;height: 40px;padding-right:10px;width: 50%;justify-content: flex-end;align-items:center;">
             我要更新
         </div>
     </div>
@@ -262,7 +262,7 @@
                             <div>{{item.itemProgress.usernickname}}</div>
                             <div style="margin-left: 10px">{{item.itemProgress.backupone}}</div>
                         </div>
-                        <div style="margin-top: 5px">{{item.itemProgress.updatetime}}</div>
+                        <div style="margin-top: 5px">{{item.itemProgress.updatetime|time}}</div>
                     </div>
                 </div>
                 <img
@@ -274,9 +274,10 @@
                     v-bind:data-recivernickname="item.itemProgress.usernickname"
                     v-bind:data-reciverphoto="item.itemProgress.userphoto" />
             </div>
+            <div style="padding-left: 30px;padding-right: 30px">{{item.itemProgress.content}}</div>
             <div style="padding-left: 30px">
                 <template v-for="comment in item.lmp">
-                    <div style="display: flex;background: #F5F5F5;padding-top: 5px;padding-bottom: 5px;margin-right: 10px;margin-left: 20px">
+                    <div style="display: flex;background: #F5F5F5;padding-top: 5px;padding-bottom: 5px;margin-right: 10px;margin-left: 0px">
                         <div  style="color: #4284B6;">
                             <span  v-on:click="commentReplyToUpdate" style="cursor: pointer;"
                                    v-bind:data-itemprogressid="comment.itemprogressid"
@@ -329,7 +330,7 @@
                             <div style="margin-left: 10px">支持了</div>
                             <div style="margin-left: 10px">{{item.moneySource.moneynum}}</div>
                         </div>
-                        <div style="margin-top: 5px">{{item.moneySource.helptime}}</div>
+                        <div style="margin-top: 5px">{{item.moneySource.helptime |time}}</div>
                     </div>
                 </div>
                 <img src="http://onejf30n8.bkt.clouddn.com/gongzhongpinglun2.png" style="height: 18px;width: 18px;cursor: pointer;"
@@ -341,7 +342,7 @@
                      v-bind:data-recivernickname="item.moneySource.backupone"
                      v-bind:data-reciverphoto="item.moneySource.backuptwo"/>
             </div>
-            <div style="padding-left: 30px">
+            <div style="padding-left: 10px">
                 <template v-for="comment in item.lmp">
                     <div style="display: flex;background: #F5F5F5;padding-top: 5px;padding-bottom: 5px;margin-right: 10px;margin-left: 20px">
                         <div  style="color: #4284B6;">
@@ -390,6 +391,26 @@
             <div class="cancelReplayReport">
                 <div class="cancelReport"  v-on:click="cancelReport"> 取消</div>
                 <div  id="applyReport" class="cancelReport"  v-on:click="applyReport" data-RCTag="">提交</div>
+            </div>
+        </div>
+    </div>
+
+    <!--这个"我要更新-wangUpdate"-->
+    <div id="wantUpdate" class="modal">
+        <div id="needUpdate" class="tips">
+            <div class="doComment">进度更新</div>
+            <div style="margin-right: 15px;margin-left: 15px">
+                <textarea id="updateTxt"   class="commentText"  rows="6" cols="3"  placeholder="140字以内"></textarea>
+            </div>
+            <div class="cancelReplay">
+                <div class="cancel"  v-on:click="cancelWantUpdate">取消</div>
+                <!--data-updateORdynamic 区分是对进度更新还是支持动态的，data-refer区分参见refer-->
+                <div  id="reply2"  class="cancel"
+                      v-on:click="doUpdate"
+                      data-updateORdynamic=""
+                      data-refer="">
+                    更新
+                </div>
             </div>
         </div>
     </div>
@@ -486,6 +507,7 @@
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalCommonInput.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalReport.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalPingLun.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/resources/javaScript/modalWantUpdate.js"></script>
 </body>
 </html>
 

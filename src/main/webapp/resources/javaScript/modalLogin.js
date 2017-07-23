@@ -83,14 +83,37 @@ new Vue({
                 this.showDialog(response.body.msg); //显示登录结果
                 //存储或者改变相应的值
                 if (response.body.retcode==2000){
-                    sessionStorage.setItem("userToken",response.body.data.backupfour);
-                    sessionStorage.setItem("usernickname",response.body.data.usernickname);
-                    sessionStorage.setItem("userphoto",response.body.data.userphoto);
-                    sessionStorage.setItem("userid",response.body.data.userid);
-                    sessionStorage.setItem("useruuid",response.body.data.backupten);
-
-                    sessionStorage.setItem("loginTag","logined");  //登录标志
-                    //console.log(sessionStorage.getItem("usernickname"));
+                    localStorage.setItem("userToken",response.body.data.backupfour);
+                    localStorage.setItem("loginTag","logined");  //登录标志
+                    //console.log(localStorage.getItem("usernickname"));
+                    localStorage.setItem("userid",response.body.data.userid);
+                    localStorage.setItem("usernickname",response.body.data.usernickname);
+                    localStorage.setItem("useremail",response.body.data.useremail);
+                    localStorage.setItem("usertype",response.body.data.usertype);
+                    localStorage.setItem("certificatetype",response.body.data.certificatetype);
+                    localStorage.setItem("realname",response.body.data.realname);
+                    localStorage.setItem("selfintroduce",response.body.data.selfintroduce);
+                    localStorage.setItem("usertag",response.body.data.usertag);
+                    localStorage.setItem("address",response.body.data.address);
+                    localStorage.setItem("msgpubcount",response.body.data.msgpubcount);
+                    localStorage.setItem("fanscount",response.body.data.fanscount);
+                    localStorage.setItem("followcount",response.body.data.followcount);
+                    localStorage.setItem("notsay",response.body.data.notsay);
+                    localStorage.setItem("userphoto",response.body.data.userphoto);
+                    localStorage.setItem("backupone",response.body.data.backupone);
+                    localStorage.setItem("backuptwo",response.body.data.backuptwo);
+                    localStorage.setItem("backupthree",response.body.data.backupthree);
+                    localStorage.setItem("backupfour",response.body.data.backupfour);
+                    localStorage.setItem("backupfive",response.body.data.backupfive);
+                    localStorage.setItem("backupsix",response.body.data.backupsix);
+                    localStorage.setItem("userhelpsman",response.body.data.userhelpsman);
+                    localStorage.setItem("userdonate",response.body.data.userdonate);
+                    localStorage.setItem("amountaccept",response.body.data.amountaccept);
+                    localStorage.setItem("acceptmoney",response.body.data.acceptmoney);
+                    localStorage.setItem("backupten",response.body.data.backupten);
+                    localStorage.setItem("userhelpsman",response.body.data.userhelpsman);
+                    localStorage.setItem("userUUID",response.body.data.useruuid)
+                    localStorage.setItem("useruuid",response.body.data.useruuid)
                 }
 
             }, err => {
