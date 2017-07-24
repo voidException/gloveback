@@ -17,7 +17,11 @@
 
 <div  id="userSelfHelp" class="userSelfHelp">
     <template v-for="item in lp">
-        <div  v-on:click="goTimeline" style="cursor:pointer ;">
+        <!-- 把userUUID cashUUID 等绑定到下面的div中-->
+        <div  v-on:click="goTimeline" style="cursor:pointer;"
+              v-bind:data-cashuuid="item.cashuuid"
+              v-bind:data-useruuidtweet="item.useruuidtweet"
+              v-bind:data-tweetUUID="item.backupneight">
             <div  class="photoName">
                 <img :src="item.backupeleven" style="width: 40px;height: 40px;border-radius: 20px ">
                 <div class="userName">{{item.backupnine}}</div>

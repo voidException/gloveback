@@ -25,8 +25,6 @@ new Vue({
                 that.$nextTick(function(){
                     this.lp=response.body.lp.concat(this.lp);
                 });
-                // console.log("hahha");
-                // console.log(this.lp);
             }
 
         }, err => {
@@ -42,8 +40,12 @@ new Vue({
                 return  unescape(r[2]);
             return null;
         },
-        goTimeline:function () {
-            window.location.href="http://localhost:8080/glove/path/pages/shareTotimeline/1000?tweetiD=28&useriD=2&cashiD=10"
+        goTimeline:function (event) {//取得div中的cashUUID 和userUUID ，然后拼装
+            let userUUID=event.target.getAttribute("data-useruuidtweet");
+            let cashuuid=event.target.getAttribute("data-cashuuid");
+            let tweetUUID=event.target.getAttribute("data-tweetUUID");
+            let url="http://localhost:8080/glove/path/pages/shareTotimeline.do?userUUID"+userUUID+"&cashUUID"+cashuuid+"&tweetUUID"+tweetUUID
+            window.location.href=url;
         }
     }
 
