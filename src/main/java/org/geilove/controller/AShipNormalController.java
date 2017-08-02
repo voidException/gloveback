@@ -7,6 +7,7 @@ import org.geilove.pojo.Account;
 import org.geilove.pojo.Public;
 import org.geilove.pojo.UserAccount;
 import org.geilove.requestParam.AddEmployeeParam;
+import org.geilove.requestParam.MyEmployeeParam;
 import org.geilove.response.CommonRsp;
 import org.geilove.response.PublicListRsp;
 import org.geilove.response.UserAccountRsp;
@@ -115,15 +116,17 @@ public class AShipNormalController {
     //获得我的员工列表
     @RequestMapping(value="/getMyEmployee.do",method=RequestMethod.POST)
     @ResponseBody
-    public Object getMyEmployee(HttpServletRequest  getMyEmployeeParam){//这个是获取我的员工列表
+    public Object getMyEmployee(@RequestBody MyEmployeeParam myEmployeeParam, HttpServletRequest  getMyEmployeeParam){//这个是获取我的员工列表
        /*   userUUID:用户的uuid
        *    userType:person 或者business
        */
         UserAccountRsp  userAccountRsp=new UserAccountRsp();
         //1.直接从userAccount表根据userUUID 和breakIf 和buildRelationDescription 来查看我的员工
 
-        String  userUUID=getMyEmployeeParam.getParameter("userUUID");
-        String buildrelationdescription= getMyEmployeeParam.getParameter("buildrelationdescription");
+//        String  userUUID=getMyEmployeeParam.getParameter("userUUID");
+//        String buildrelationdescription= getMyEmployeeParam.getParameter("buildrelationdescription");
+        String userUUID=myEmployeeParam.getUserUUID();
+        String buildrelationdescription=myEmployeeParam.getBuildrelationdescription();
 
         Map<String,Object> map=new HashMap<>();
         map.put("userUUID",userUUID);

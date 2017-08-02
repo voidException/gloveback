@@ -44,7 +44,7 @@ new Vue({
             let userUUID=event.target.getAttribute("data-useruuidtweet");
             let cashuuid=event.target.getAttribute("data-cashuuid");
             let tweetUUID=event.target.getAttribute("data-tweetUUID");
-            let url="http://localhost:8080/glove/path/pages/shareTotimeline.do?userUUID"+userUUID+"&cashUUID"+cashuuid+"&tweetUUID"+tweetUUID
+            let url="http://localhost:8080/glove/path/pages/shareTotimeline.do?userUUID="+userUUID+"&tweetUUID="+tweetUUID+"&cashUUID="+cashuuid
             window.location.href=url;
         }
     }
