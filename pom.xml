@@ -374,7 +374,12 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-
+    <!--alipay sdk-->
+    <dependency>
+      <groupId>com.alipay</groupId>
+      <artifactId>sdk-java</artifactId>
+      <version>20170829142630</version>
+    </dependency>
   </dependencies>
   <!--<build>-->
     <!--<finalName>glove</finalName>-->
