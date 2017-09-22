@@ -82,6 +82,7 @@
           <element id="library" level="project" name="Maven: javax.transaction:jta:1.1" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.7.4" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aspects:4.3.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.6" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.6" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.6" />
@@ -118,6 +119,7 @@
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.1" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: com.alipay:sdk-java:20170829142630" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -24,24 +24,38 @@ package org.geilove.utilAlipay.config;
 public class AlipayConfig {
 
     //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-    // 合作身份者ID，以2088开头由16位纯数字组成的字符串
-    public static String partner = "";
-    // 商户的私钥
-    public static String private_key = "";
+
+    public  static  String  gateway_url="https://openapi.alipay.com/gateway.do";  //固定值
+
+    // APPID
+    public static String app_id = "2017081908269445";
+    // 商户的私钥 AES密钥
+    public static String alipay_private_key = "L9B6it/YLFdaA873wm242Q==";
+
+    public  static  String  format="json";
+
+    public static String charset = "utf-8";
+
+    //应用的公钥
+    public  static String  alipayApp_public_key="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsz4FnWv2m5R1LT8EcKU2KG1gi3250eTUZWTHxumFWdA9cyLen+IYKtkAN4jH4lGL69UiHcgFj9WzK4wRJZGOs/LJLNMD8q0rXBHJeSF2/V7ei6JxxkPKAWn4fTb9prYoBLXVsyP59V5+n1pJchSeIHJdZ5QRxdWZslRfkb/oYkf68MiWhOE6nx2XAy/D1eIH2BKNVtCYhocjzWC4JVYAF8oCX2Dv/bp9Dm9X4u/XPgWpkkEsChb11AbryT0pb5EiH4RHmNyVsa0JQZVPcLlPmQxbgVepD7NOFs9XdBtbJijyuLBVY5gm+4NwC9Fa1DW3Y15UslCFsgnysFN7+Ug67wIDAQAB";
 
     // 支付宝的公钥，无需修改该值
-    public static String ali_public_key  = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
-
-    //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-
-
-    // 调试用，创建TXT日志文件夹路径
-    public static String log_path = "D:\\";
-
-    // 字符编码格式 目前支持 gbk 或 utf-8
-    public static String input_charset = "utf-8";
+    public static String alipay_public_key  = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhT0ikGs8LX5iGEZB4GejBgcjxcqslHvovBlZp3K5iXSYmhCC5FpOfmlNAiwlA6n2MXgX526b/FxUfmoUtWVl/SYKBHdDgIhATblXVcsH2S+jBoCLWdL3t4m4a1g1QxhgaPlnI7rJDwnGhsKj0cKmwgAdI2DGjtDn7C9ZP4wLolwb0sxGO4xWHrEdBj49GkbSoH5rzaIR2vfhdz70L7tQlz9TNAUhXWtuSvnlCYnKVBO+K5CZUWwim3ppGQUFRk5+KfpW+bxSg0cmgJ5BRFm1SFjZ1kg6DTr2lD+ndHTOMyX4w+9bZvM1fneD4MIG87iIOWDyxaYhCpj7g4W5XwghwwIDAQAB";
 
     // 签名方式 不需修改
-    public static String sign_type = "RSA";
+    public static String sign_type = "RSA2";
+
+    //
+    public static String product_code="QUICK_MSECURITY_PAY"; //销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
+
+    //订单超时关闭时间
+    public  static  String  timeout_express="30m";
+
+    //回调通知地址
+    public  static String  notify_url="http://www.putaohuzhu.cn/glove/auth/authredirect.do";
+
+    //日志输出地址
+    public  static  String  log_path="/";
+
 
 }
