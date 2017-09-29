@@ -10,8 +10,11 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+import org.geilove.pojo.PayMoney;
 import org.geilove.requestParam.AlipayOrderParam;
 import org.geilove.response.AlipayOrderRsp;
+import org.geilove.service.AlipayService;
+import org.geilove.service.AlipayService;
 import org.geilove.utilAlipay.config.AlipayConfig;
 
 import org.springframework.stereotype.Controller;
@@ -42,25 +45,75 @@ public class AlipayController {
      * 支付下订单，生成预订单
      */
 
+    @Resource
+    private AlipayService alipayService;
+
+    class OrderThread extends Thread{
+        public PayMoney payMoney;
+
+        public  OrderThread(PayMoney payMoney){
+            this.payMoney=payMoney;
+        }
+        public  void run(){
+            alipayService.insertPrePayMoneyRecord(this.payMoney); //初步入库
+        }
+    }
+
+    //内部类，用于异步通知处理业务逻辑
+    class AlipayNotifyThread  extends  Thread {
+
+        public PayMoney payMoney;
+
+        public AlipayNotifyThread(PayMoney  payMoney){  //构造方法
+
+            this.payMoney=payMoney;
+        }
+        public  void  run(){
+            // aliNotify这里面完成所有逻辑
+             alipayService.aliNotify(this.payMoney);//这个是获得通知后进一步处理业务
+            // System.out.print(moneySource.getMoneynum());
+        }
+    }
+
     @RequestMapping(value="/getOrder.do",method=RequestMethod.POST)
     @ResponseBody
-    public Object payOrder(  @RequestBody AlipayOrderParam httpequest){
+    public Object payOrder(@RequestBody AlipayOrderParam httpRequest){
+
         AlipayOrderRsp alipayOrderRsp=new AlipayOrderRsp();
 
-        if (httpequest==null){
+        if (httpRequest==null){
             alipayOrderRsp.setRetcode(2001);
             alipayOrderRsp.setMsg("请求参数为空");
             alipayOrderRsp.setOderStr(null);
             return  alipayOrderRsp;
         }
 
-        String  body=httpequest.getBody();           //对一笔交易的具体描述信息。httpequest传输过来 userUUID
-        String  subject="中青年互助计划";              //商品的标题/交易标题/.  httpequest传输过来(互助类别)categoryType
-        String  out_trade_no="outtradeno20170931";                     // 商户订单号，本地生成 payMoneyUUID
-        String  total_amount=httpequest.getAmount(); //App传来的总金额
-        String  passback_params="accountUUIDuserNameaihaitao";        //公众回传参数，这里我放进去App传过来的accountUUID和userName，
-
+        String  body=httpRequest.getUserUUID();     //对一笔交易的具体描述信息。httpequest传输过来 userUUID
+        String  subject=httpRequest.getCategoryType();  //商品的标题/交易标题/.  httpequest传输过来(互助类别)categoryType
+        String  out_trade_no=getOutTradeNo();           // 商户订单号，本地生成 payMoneyUUID
+        String  total_amount=httpRequest.getAmount(); //App传来的总金额
         String  seller_id="2088911776278734";        //合作者账号，PID，非必须
+
+        String  userName=httpRequest.getUserName();
+        String  accountUUID=httpRequest.getAccountUUID();
+        String  passback_params=accountUUID+userName;    //公众回传参数，这里我放进去App传过来的accountUUID和userName，
+        /*在这里应该开启线程，把该订单信息存入缴纳充值记录表（PayMoney）*/
+        PayMoney payMoney=new PayMoney();
+        payMoney.setTradeStatus("WAIT_BUYER_PAY"); //等待商家付款
+        payMoney.setUseruuid(body); //userUUID
+        payMoney.setAccountuuid(accountUUID); //被充值用户的身份证号
+        payMoney.setCategorytype(subject); //互助类型
+        payMoney.setOutTradeNo(out_trade_no); //商户订单号
+        payMoney.setTotalAmount(total_amount); //充值的金额
+        payMoney.setSellerId(seller_id); //卖家支付宝用户号2088开头
+        OrderThread  orderThread=new OrderThread(payMoney);
+        try {
+            orderThread.start(); //开启线程,避免出现问题
+        }catch (Exception e){
+            alipayOrderRsp.setRetcode(2001);
+            alipayOrderRsp.setOderStr("orderThread抛出异常");
+            return alipayOrderRsp;
+        }
 
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gateway_url,
                 AlipayConfig.app_id, AlipayConfig.alipay_private_key,
@@ -102,7 +155,7 @@ public class AlipayController {
         return alipayOrderRsp;  //返回结果
     }
 
-    /*alipay 支付异步通知*/
+    /*alipay 支付异步通知  http://www.putaohuzhu.cn/glove/alipay/notify.do */
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value="/notify.do",method=RequestMethod.POST)
     public void alipayNotify(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
@@ -135,19 +188,52 @@ public class AlipayController {
 
         if (flag) {
             if ("TRADE_SUCCESS".equals(params.get("trade_status"))) {
+
+                //trade_status
+                String trade_status="TRADE_SUCCESS"; //交易状态号
+                //notify_timeStr 通知时间
+                String  notify_timeStr=params.get("notify_time");
+                //notify_time
+                //Date notify_time=new Date();
+                //app_id
+                String  app_id=params.get("app_id");
                 // 订单金额
-                String amount = params.get("total_amount");
+                String total_amount = params.get("total_amount");
                 // 商户订单号
                 String out_trade_no = params.get("out_trade_no");
                 // 支付宝交易号
                 String trade_no = params.get("trade_no");
+                // 互助类别
+                String  categorytype=params.get("subject");
+                //userUUID
+                String  userUUID=params.get("body");
+                //passback_params 包含accountUUID和userName
+                String  passback_params=params.get("passback_params");
+                //accountUUID
+                String  accountUUID=passback_params.substring(0,18);
+                //seller_id
+                String  seller_id=params.get("seller_id");
                 // 买家支付宝用户号
                 String buyer_id = params.get("buyer_id");
                 // 交易创建时间 格式为yyyy-MM-dd HH:mm:ss
-                String gmt_create = params.get("gmt_create");
-                // ...
-                // 获取自己填充得信息如subject等，
+                //String gmt_create = params.get("gmt_create");
 
+                PayMoney  payMoney=new PayMoney();
+                payMoney.setTradeStatus(trade_status);
+                payMoney.setNotifyTime(new Date());
+                payMoney.setAppId(app_id);
+                payMoney.setTotalAmount(total_amount); //总金额
+                payMoney.setOutTradeNo(out_trade_no); //本地生成的订单
+                payMoney.setTradeNo(trade_no); //支付宝自己生成的交易单
+                payMoney.setCategorytype(categorytype); //互助的类别
+                payMoney.setUseruuid(userUUID); //用户的uuid
+                payMoney.setPassbackParams(passback_params);
+                payMoney.setAccountuuid(accountUUID); //账号的UUID
+                payMoney.setSellerId(seller_id); //卖家的id
+                payMoney.setBuyerId(buyer_id); //买家的支付宝账号
+                //用线程的方法更新,先查询数据库确认是否有此次交易，校验通过后，更新相应的数据库表
+                AlipayNotifyThread  alipayNotifyThread=new AlipayNotifyThread(payMoney);
+                alipayNotifyThread.start();
 
                 out.print("success");
                 //logger.debug("-----支付宝异步通知成功----");
@@ -160,6 +246,19 @@ public class AlipayController {
             //logger.debug("-----支付宝异步通知，订单验证错误----");
         out.print("failure");
     } //notify
+
+
+    private static String getOutTradeNo() {
+        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        Date date = new Date();
+        String key = format.format(date);
+
+        Random r = new Random();
+        key = key + r.nextInt();
+        key = key.substring(0, 15);
+        key="putao"+key;
+        return key;
+    }
 
 
     /*alipay 支付异步通知*/
@@ -212,16 +311,7 @@ public class AlipayController {
         return  "success";
     }
 
-    private static String getOutTradeNo() {
-        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
-        Date date = new Date();
-        String key = format.format(date);
 
-        Random r = new Random();
-        key = key + r.nextInt();
-        key = key.substring(0, 15);
-        return key;
-    }
 }
 
 

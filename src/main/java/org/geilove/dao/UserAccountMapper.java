@@ -26,4 +26,7 @@ public interface UserAccountMapper {
     UserAccount selectByBreakIf(Map<String, Object> map); //自定义,根据用户的身份证号和breakIf和buildRelationDescription选择出来
 
     List<UserAccount> getUserAccountList(Map<String,Object> map); //获取一个用户下面关联的家庭成员或者公司员工
+
+    UserAccount  selectByUUID(Map<String,String> map);  //根据userUUID，accountUUID，categorytype查询是否有用户加入这个计划
+
 }

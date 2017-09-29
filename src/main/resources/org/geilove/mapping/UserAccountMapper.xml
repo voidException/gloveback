@@ -12,7 +12,7 @@
         <result column="buildRelationDescription" property="buildrelationdescription" jdbcType="VARCHAR" />
         <result column="breakRelationDescription" property="breakrelationdescription" jdbcType="VARCHAR" />
         <result column="payTimes" property="paytimes" jdbcType="INTEGER" />
-        <result column="payTotalMoney" property="paytotalmoney" jdbcType="DECIMAL" />
+        <result column="payTotalMoney" property="paytotalmoney" jdbcType="VARCHAR" />
         <result column="userName" property="username" jdbcType="VARCHAR" />
         <result column="categoryType" property="categorytype" jdbcType="VARCHAR" />
         <result column="joinDate" property="joindate" jdbcType="TIMESTAMP" />
@@ -68,7 +68,7 @@
         values (#{useraccountid,jdbcType=BIGINT}, #{useraccountuuid,jdbcType=VARCHAR}, #{useruuid,jdbcType=VARCHAR},
         #{accountuuid,jdbcType=VARCHAR}, #{breakif,jdbcType=VARCHAR}, #{buildrelationdate,jdbcType=TIMESTAMP},
         #{breakrelationdate,jdbcType=TIMESTAMP}, #{buildrelationdescription,jdbcType=VARCHAR},
-        #{breakrelationdescription,jdbcType=VARCHAR}, #{paytimes,jdbcType=INTEGER}, #{paytotalmoney,jdbcType=DECIMAL},
+        #{breakrelationdescription,jdbcType=VARCHAR}, #{paytimes,jdbcType=INTEGER}, #{paytotalmoney,jdbcType=VARCHAR},
         #{username,jdbcType=VARCHAR}, #{categorytype,jdbcType=VARCHAR}, #{joindate,jdbcType=TIMESTAMP},
         #{effectivedate,jdbcType=TIMESTAMP}, #{stopdate,jdbcType=TIMESTAMP}, #{nowstate,jdbcType=VARCHAR},
         #{remainfee,jdbcType=DECIMAL})
@@ -163,7 +163,7 @@
                 #{paytimes,jdbcType=INTEGER},
             </if>
             <if test="paytotalmoney != null" >
-                #{paytotalmoney,jdbcType=DECIMAL},
+                #{paytotalmoney,jdbcType=VARCHAR},
             </if>
             <if test="username != null" >
                 #{username,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
                 payTimes = #{paytimes,jdbcType=INTEGER},
             </if>
             <if test="paytotalmoney != null" >
-                payTotalMoney = #{paytotalmoney,jdbcType=DECIMAL},
+                payTotalMoney = #{paytotalmoney,jdbcType=VARCHAR},
             </if>
             <if test="username != null" >
                 userName = #{username,jdbcType=VARCHAR},
@@ -256,7 +256,7 @@
         buildRelationDescription = #{buildrelationdescription,jdbcType=VARCHAR},
         breakRelationDescription = #{breakrelationdescription,jdbcType=VARCHAR},
         payTimes = #{paytimes,jdbcType=INTEGER},
-        payTotalMoney = #{paytotalmoney,jdbcType=DECIMAL},
+        payTotalMoney = #{paytotalmoney,jdbcType=VARCHAR},
         userName = #{username,jdbcType=VARCHAR},
         categoryType = #{categorytype,jdbcType=VARCHAR},
         joinDate = #{joindate,jdbcType=TIMESTAMP},

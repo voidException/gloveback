@@ -23,7 +23,7 @@ public class UserAccount {
 
     private Integer paytimes;
 
-    private Long paytotalmoney;
+    private String paytotalmoney;
 
     private String username;
 
@@ -119,12 +119,12 @@ public class UserAccount {
         this.paytimes = paytimes;
     }
 
-    public Long getPaytotalmoney() {
+    public String getPaytotalmoney() {
         return paytotalmoney;
     }
 
-    public void setPaytotalmoney(Long paytotalmoney) {
-        this.paytotalmoney = paytotalmoney;
+    public void setPaytotalmoney(String paytotalmoney) {
+        this.paytotalmoney = paytotalmoney == null ? null : paytotalmoney.trim();
     }
 
     public String getUsername() {

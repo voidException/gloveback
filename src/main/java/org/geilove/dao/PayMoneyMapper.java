@@ -2,6 +2,8 @@ package org.geilove.dao;
 
 import org.geilove.pojo.PayMoney;
 
+import java.util.Map;
+
 public interface PayMoneyMapper {
     int deleteByPrimaryKey(Long paymoneyid);
 
@@ -14,4 +16,7 @@ public interface PayMoneyMapper {
     int updateByPrimaryKeySelective(PayMoney record);
 
     int updateByPrimaryKey(PayMoney record);
+
+    PayMoney selectByMapKeys(Map<String,String> map);
+
 }

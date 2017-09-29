@@ -6,10 +6,10 @@ package org.geilove.requestParam;
 public class AlipayOrderParam {
 
     private  String  amount;  //钱数，单位元
-    private  String  body;
-    private  String  outTradeNo;
-    private  String  accountUUID; // 也即身份证号
-
+    private  String  userUUID;   //userUUID
+    private  String  accountUUID;    // 也即身份证号
+    private  String  userName;      //用户姓名
+    private  String  categoryType;   //互助的类型，如中青年互助计划
 
     public String getAmount() {
         return amount;
@@ -19,20 +19,12 @@ public class AlipayOrderParam {
         this.amount = amount;
     }
 
-    public String getBody() {
-        return body;
+    public String getUserUUID() {
+        return userUUID;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public String getOutTradeNo() {
-        return outTradeNo;
-    }
-
-    public void setOutTradeNo(String outTradeNo) {
-        this.outTradeNo = outTradeNo;
+    public void setUserUUID(String userUUID) {
+        this.userUUID = userUUID;
     }
 
     public String getAccountUUID() {
@@ -42,4 +34,22 @@ public class AlipayOrderParam {
     public void setAccountUUID(String accountUUID) {
         this.accountUUID = accountUUID;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCategoryType() {
+        return categoryType;
+    }
+
+    public void setCategoryType(String categoryType) {
+        this.categoryType = categoryType;
+    }
+
+
 }
